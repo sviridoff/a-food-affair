@@ -6,10 +6,6 @@ function App() {
   return (
     <div className='gameplay-container'>
       <div className='user-stats-section'>
-        <div className='user-coins'>
-          <div className='user-coins_logo'></div>
-          9999999
-        </div>
         <div className='user-lives'>
           <div className='user-lives_logo'></div>
           <div className='user-lives_logo'></div>
