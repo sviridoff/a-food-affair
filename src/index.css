@@ -1,13 +1,201 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --border-color: #242322;
+  --menu-btn-width: 35px;
+}
+
+.gameplay-container {
+  background: #f7f5f2;
+  float: left;
+}
+
+.game-logo {
+  float: left;
+  border: 4px solid var(--border-color);
+  width: 200px;
+  height: 60px;
+  margin: 5px;
+}
+
+.user-stats-section {
+  border: 4px solid var(--border-color);
+  padding: 5px;
+  margin: 5px;
+  float: left;
+}
+
+.user-lives {
+  border: 4px solid var(--border-color);
+  display: inline-block;
+  padding: 5px;
+  margin: 5px;
+}
+
+.user-lives_logo {
+  background: #242322;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  display: inline-block;
+  margin-right: 5px; 
+  vertical-align: bottom;
+}
+
+.user-coins {
+  border: 4px solid var(--border-color);
+  display: inline-block;
+  padding: 5px;
+  margin: 5px;
+}
+
+.user-coins_logo {
+  background: #242322;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: bottom;
+}
+
+.diner-section {
+  border: 4px solid var(--border-color);
+  padding: 5px;
+  margin: 5px;
+  float: left;
+}
+
+.table-section {
+  border: 4px solid var(--border-color);
+  padding: 5px;
+  margin: 5px;
+  float: left;
+}
+
+.client-btn {
+  border-radius: 8px;
+  border: 4px solid var(--border-color);
+  background: #dfebc7;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  float: left;
+}
+
+.kitchen-section {
+  border: 4px solid var(--border-color);
+  padding: 5px;
+  margin: 5px;
+  float: left;
+}
+
+.dish-btn {
+  border-radius: 8px;
+  border: 4px solid var(--border-color);
+  background: #c8e0e8;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  float: left;
+}
+
+.trash-btn {
+  border-radius: 8px;
+  border: 4px solid var(--border-color);
+  background: #ebcbc7;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  float: left;
+}
+
+.recipes-btn {
+  border-radius: 8px;
+  border: 4px solid var(--border-color);
+  background: #f2eec7;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  float: left;
+}
+
+.menu-controls {
+  border: 4px solid var(--border-color);
+  float: left;
+  padding: 5px;
+  margin: 5px;
+}
+
+.sound-btn {
+  background: #242322;
+  width: var(--menu-btn-width);
+  height: var(--menu-btn-width);
+  border-radius: 100%;
+  float: left;
+  margin-right: 10px;
+}
+
+.pause-btn {
+  background: #242322;
+  width: var(--menu-btn-width);
+  height: var(--menu-btn-width);
+  border-radius: 100%;
+  float: left;
+  margin-right: 10px;
+}
+
+.replay-btn {
+  background: #242322;
+  width: var(--menu-btn-width);
+  height: var(--menu-btn-width);
+  border-radius: 100%;
+  float: left;
 }
