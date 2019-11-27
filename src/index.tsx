@@ -8,16 +8,23 @@ function App() {
       <div className='user-stats-section'>
         <div className='user-lives'>
           <div className='user-lives_logo'></div>
-          <div className='user-lives_logo'></div>
-          <div className='user-lives_logo'></div>
+          x 8
         </div>
       </div>
-      <div className=''>
+      <div className='body-container'>
         <div className='game-logo'>a Food Affair</div>
         <div className='diner-section'>
           <div className='table-section'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+          </div>
+          <div className='table-section'>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
           </div>
           <div className='table-section'>
             <div className='client-btn'></div>
@@ -26,6 +33,45 @@ function App() {
             <div className='client-btn'></div>
           </div>
           <div className='table-section'>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+          </div>
+          <div className='table-section'>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+          </div>
+          <div className='table-section'>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+          </div>
+          <div className='table-section'>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+          </div>
+          <div className='table-section'>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+          </div>
+          <div className='table-section'>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+          </div>
+          <div className='table-section'>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn'></div>
+          </div>
+          <div className='table-section table-section--last'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
@@ -42,7 +88,6 @@ function App() {
         <div className='dish-btn'></div>
         <div className='dish-btn'></div>
         <div className='dish-btn'></div>
-        <div className='recipes-btn'></div>
       </div>
     </div>
   );

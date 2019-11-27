@@ -132,34 +132,43 @@ table {
   --border-color: #242322;
   --background-color: #f7f5f2;
   --menu-btn-width: 35px;
-  --border-size: 4px;
+  --border-size: 3px;
+  --dish-btn-width: 50px;
 }
 
 .gameplay-container {
   background: var(--background-color);
-  float: left;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100vh;
+}
+
+.body-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  height: 200px;
 }
 
 .game-logo {
-  float: left;
-  border: var(--border-size) solid var(--border-color);
+  border: 1px dashed var(--border-color);
   width: 200px;
-  height: 60px;
-  margin: 5px;
+  height: var(--dish-btn-width);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
 }
 
 .user-stats-section {
-  border: var(--border-size) solid var(--border-color);
-  padding: 5px;
-  margin: 5px;
-  float: left;
+  border-bottom: 2px solid var(--border-color);
+  flex: initial;
 }
 
 .user-lives {
-  border: var(--border-size) solid var(--border-color);
   display: inline-block;
   padding: 5px;
-  margin: 5px;
 }
 
 .user-lives_logo {
@@ -172,43 +181,51 @@ table {
   vertical-align: bottom;
 }
 
+.user-lives_logo--last {
+  margin: 0;
+}
+
 .diner-section {
-  border: var(--border-size) solid var(--border-color);
-  padding: 5px;
-  margin: 5px;
-  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex: 1;
+  overflow: hidden;
+  z-index: 2;
 }
 
 .table-section {
   border: var(--border-size) solid var(--border-color);
-  padding: 5px;
-  margin: 5px;
+  margin-top: 5px;
   float: left;
+}
+
+.table-section--last {
+  margin-bottom: 5px;
 }
 
 .client-btn {
   border-radius: 8px;
   border: var(--border-size) solid var(--border-color);
   background: #dfebc7;
-  width: 60px;
-  height: 60px;
+  width: var(--dish-btn-width);
+  height: var(--dish-btn-width);
   margin: 5px;
   float: left;
 }
 
 .kitchen-section {
-  border: var(--border-size) solid var(--border-color);
+  border-top: 2px solid var(--border-color);
   padding: 5px;
-  margin: 5px;
-  float: left;
 }
 
 .dish-btn {
   border-radius: 8px;
   border: var(--border-size) solid var(--border-color);
   background: #c8e0e8;
-  width: 60px;
-  height: 60px;
+  width: var(--dish-btn-width);
+  height: var(--dish-btn-width);
   margin: 5px;
   float: left;
 }
@@ -217,17 +234,19 @@ table {
   border-radius: 8px;
   border: var(--border-size) solid var(--border-color);
   background: #ebcbc7;
-  width: 60px;
-  height: 60px;
+  width: var(--dish-btn-width);
+  height: var(--dish-btn-width);
   margin: 5px;
   float: left;
 }
 
 .menu-controls {
-  border: var(--border-size) solid var(--border-color);
-  float: left;
+  border: 1px dashed var(--border-color);
   padding: 5px;
-  margin: 5px;
+  bottom: 0px;
+  right: 0px;
+  position: absolute;
+  z-index: 3;
 }
 
 .sound-btn {
@@ -236,7 +255,8 @@ table {
   height: var(--menu-btn-width);
   border-radius: 100%;
   float: left;
-  margin-right: 10px;
+  margin-bottom: 5px;
+  clear: both;
 }
 
 .pause-btn {
@@ -245,7 +265,8 @@ table {
   height: var(--menu-btn-width);
   border-radius: 100%;
   float: left;
-  margin-right: 10px;
+  margin-bottom: 5px;
+  clear: both;
 }
 
 .replay-btn {
@@ -254,4 +275,5 @@ table {
   height: var(--menu-btn-width);
   border-radius: 100%;
   float: left;
+  clear: both;
 }
