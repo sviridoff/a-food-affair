@@ -72,9 +72,15 @@ function App() {
             <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section table-section--last'>
-            <div className='client-btn'></div>
-            <div className='client-btn'></div>
-            <div className='client-btn client-btn--last'></div>
+            <div className='client-btn'>
+              <div className='client-clock'></div>
+            </div>
+            <div className='client-btn'>
+            <div className='client-clock'></div>
+            </div>
+            <div className='client-btn client-btn--last'>
+              <div className='client-clock'></div>
+            </div>
           </div>
         </div>
         <div className='menu-controls'>
@@ -85,8 +91,17 @@ function App() {
       </div>
       <div className='kitchen-section'>
         <div className='trash-btn'></div>
-        <div className='dish-btn'></div>
-        <div className='dish-btn'></div>
+        <div className='dish-btn'>
+          <div className='dish-food'></div>
+          <div className='dish-food'></div>
+          <div className='dish-food'></div>
+        </div>
+        <div className='dish-btn'>
+          <div className='dish-food'></div>
+          <div className='dish-food'></div>
+          <div className='dish-food'></div>
+          <div className='dish-food'></div>
+        </div>
         <div className='dish-btn dish-btn--last'></div>
       </div>
     </div>

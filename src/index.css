@@ -200,13 +200,13 @@ table {
 .table-section {
   border: 2px solid var(--border-color);
   border-radius: 8px;
-  margin-top: 5px;
+  margin-top: 8px;
   padding: 5px;
   float: left;
 }
 
 .table-section--last {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .client-btn {
@@ -217,15 +217,26 @@ table {
   height: var(--dish-btn-width);
   margin-right: 5px;
   float: left;
+  position: relative;
 }
 
 .client-btn--last {
   margin-right: 0;
 }
 
+.client-clock {
+  background: #242322;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  top: 2px;
+  right: 2px;
+  position: absolute;
+}
+
 .kitchen-section {
   border-top: 2px solid var(--border-color);
-  padding: 10px;
+  padding: 8px;
 }
 
 .dish-btn {
@@ -238,18 +249,28 @@ table {
   float: left;
 }
 
+.dish-food {
+  background: var(--background-color);
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  float: left;
+}
+
 .dish-btn--last {
   margin-right: 0;
 }
 
 .trash-btn {
-  border-radius: 8px;
-  border: var(--border-size) solid var(--border-color);
   background: #ebcbc7;
-  width: var(--dish-btn-width);
-  height: var(--dish-btn-width);
+  width: var(--menu-btn-width);
+  height: var(--menu-btn-width);
+  border-radius: 100%;
   margin-right: 10px;
   float: left;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
 }
 
 .menu-controls {
