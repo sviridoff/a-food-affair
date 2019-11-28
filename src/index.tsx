@@ -18,63 +18,63 @@ function App() {
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
-            <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
-            <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
-            <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
+          </div>
+          <div className='table-section'>
             <div className='client-btn'></div>
+            <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
-            <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
+          </div>
+          <div className='table-section'>
             <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
-            <div className='client-btn'></div>
-          </div>
-          <div className='table-section'>
-            <div className='client-btn'></div>
-            <div className='client-btn'></div>
-          </div>
-          <div className='table-section'>
-            <div className='client-btn'></div>
-            <div className='client-btn'></div>
-            <div className='client-btn'></div>
-            <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
           <div className='table-section table-section--last'>
             <div className='client-btn'></div>
             <div className='client-btn'></div>
-            <div className='client-btn'></div>
+            <div className='client-btn client-btn--last'></div>
           </div>
         </div>
         <div className='menu-controls'>
@@ -87,7 +87,7 @@ function App() {
         <div className='trash-btn'></div>
         <div className='dish-btn'></div>
         <div className='dish-btn'></div>
-        <div className='dish-btn'></div>
+        <div className='dish-btn dish-btn--last'></div>
       </div>
     </div>
   );

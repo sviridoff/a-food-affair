@@ -154,16 +154,18 @@ table {
 .game-logo {
   border: 1px dashed var(--border-color);
   width: 200px;
-  height: var(--dish-btn-width);
+  height: 60px;
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 5;
 }
 
 .user-stats-section {
-  border-bottom: 2px solid var(--border-color);
-  flex: initial;
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  width: 100%;
 }
 
 .user-lives {
@@ -199,6 +201,7 @@ table {
   border: 2px solid var(--border-color);
   border-radius: 8px;
   margin-top: 5px;
+  padding: 5px;
   float: left;
 }
 
@@ -212,13 +215,17 @@ table {
   background: #dfebc7;
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
-  margin: 5px;
+  margin-right: 5px;
   float: left;
+}
+
+.client-btn--last {
+  margin-right: 0;
 }
 
 .kitchen-section {
   border-top: 2px solid var(--border-color);
-  padding: 5px;
+  padding: 10px;
 }
 
 .dish-btn {
@@ -227,8 +234,12 @@ table {
   background: #c8e0e8;
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
-  margin: 5px;
+  margin-right: 10px;
   float: left;
+}
+
+.dish-btn--last {
+  margin-right: 0;
 }
 
 .trash-btn {
@@ -237,7 +248,7 @@ table {
   background: #ebcbc7;
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
-  margin: 5px;
+  margin-right: 10px;
   float: left;
 }
 
