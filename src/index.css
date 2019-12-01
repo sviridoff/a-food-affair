@@ -248,7 +248,7 @@ table {
 }
 
 .dish-food {
-  background: var(--background-color);
+  background: var(--border-color);
   width: 25px;
   height: 25px;
   border-radius: 100%;

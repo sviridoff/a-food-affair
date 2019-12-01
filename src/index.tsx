@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
 import './index.css';
 import { ReactComponent as LogoSvg } from './LogoSvg.svg';
+import store from './store';
 
 function App() {
   return (
@@ -79,7 +82,7 @@ function App() {
               <div className='client-clock'></div>
             </div>
             <div className='client-btn'>
-            <div className='client-clock'></div>
+              <div className='client-clock'></div>
             </div>
             <div className='client-btn client-btn--last'>
               <div className='client-clock'></div>
@@ -111,4 +114,9 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
