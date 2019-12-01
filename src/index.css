@@ -129,8 +129,8 @@ table {
 }
 
 :root {
-  --border-color: #242322;
-  --background-color: #f7f5f2;
+  --border-color: #483e37;
+  --background-color: #e3dedb;
   --menu-btn-width: 35px;
   --border-size: 3px;
   --dish-btn-width: 50px;
@@ -152,13 +152,11 @@ table {
 }
 
 .game-logo {
-  border: 1px dashed var(--border-color);
-  width: 200px;
-  height: 60px;
+  width: 130px;
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 5;
+  top: 5px;
+  right: 5px;
+  z-index: 1;
 }
 
 .user-stats-section {
@@ -174,7 +172,7 @@ table {
 }
 
 .user-lives_logo {
-  background: #242322;
+  background: var(--border-color);
   width: 20px;
   height: 20px;
   border-radius: 100%;
@@ -225,7 +223,7 @@ table {
 }
 
 .client-clock {
-  background: #242322;
+  background: var(--border-color);
   width: 15px;
   height: 15px;
   border-radius: 100%;
@@ -283,7 +281,7 @@ table {
 }
 
 .sound-btn {
-  background: #242322;
+  background: var(--border-color);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
   border-radius: 100%;
@@ -293,7 +291,7 @@ table {
 }
 
 .pause-btn {
-  background: #242322;
+  background: var(--border-color);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
   border-radius: 100%;
@@ -303,7 +301,7 @@ table {
 }
 
 .replay-btn {
-  background: #242322;
+  background: var(--border-color);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
   border-radius: 100%;

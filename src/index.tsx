@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { ReactComponent as LogoSvg } from './LogoSvg.svg';
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
         </div>
       </div>
       <div className='body-container'>
-        <div className='game-logo'>a Food Affair</div>
+        <div className='game-logo'>
+          <LogoSvg width='100%' height='100%' />
+        </div>
         <div className='diner-section'>
           <div className='table-section'>
             <div className='client-btn'></div>
