@@ -3,37 +3,44 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './kitchen.css';
-import { TState, TDish } from '../../store';
+import { TState, TDish } from '../../types';
 import { selectDishes } from '../../selectors';
+import { selectDish, TSelectDish } from '../../reducers/dishesReducer';
 
 const mapStateToProps = (state: TState) => ({
   dishes: selectDishes(state),
 });
 
-const connector = connect(mapStateToProps);
+const connector = connect(mapStateToProps, { selectDish });
 
 type TReduxProps = ConnectedProps<typeof connector>;
 type TProps = TReduxProps & {};
 
-const dishBtnClass = (dishes: TDish[], index: number) =>
+const dishBtnClass = (dish: TDish, dishes: TDish[], index: number) =>
   classnames(
     'kitchen__dish-btn',
-    { 'kitchen__dish-btn--last': index + 1 === dishes.length }
+    {
+      'kitchen__dish-btn--last': index + 1 === dishes.length,
+      'kitchen__dish-btn--selected': dish.isSelected,
+    }
   );
 
-const dishesList = (dishes: TDish[]) =>
+const dishesList = (dishes: TDish[], selectDish: TSelectDish) =>
   dishes.map((dish, index) =>
-    <div className={dishBtnClass(dishes, index)} key={dish.id}>
+    <div
+      className={dishBtnClass(dish, dishes, index)}
+      onClick={() => selectDish({ dish })}
+      key={dish.id}>
       <div className='kitchen__dish-food'></div>
       <div className='kitchen__dish-food'></div>
       <div className='kitchen__dish-food'></div>
     </div>);
 
 const Kitchen: FunctionComponent<TProps> =
-  ({ dishes }) =>
+  ({ dishes, selectDish }) =>
     <div className='kitchen'>
       <div className='kitchen__trash-btn'></div>
-      {dishesList(dishes)}
+      {dishesList(dishes, selectDish)}
     </div>;
 
 export default connector(Kitchen);

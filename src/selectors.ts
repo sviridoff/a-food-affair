@@ -1,4 +1,4 @@
-import { TState } from "./store";
+import { TState } from "./types";
 
 export const selectDishes = (state: TState) =>
   Object.values(state.dishes.data);

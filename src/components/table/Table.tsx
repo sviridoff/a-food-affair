@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './table.css';
-import { TState, TTable, TClient } from '../../store';
+import { TState, TTable, TClient } from '../../types';
 import { selectClients } from '../../selectors';
 
 type TOwnProps = {

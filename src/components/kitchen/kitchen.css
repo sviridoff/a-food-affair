@@ -36,3 +36,7 @@
   margin-right: 10px;
   float: left;
 }
+
+.kitchen__dish-btn--selected {
+  border: var(--border-size) solid var(--border-color-selected);
+}

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import './diner.css';
-import { TState, TTable } from '../../store';
+import { TState, TTable } from '../../types';
 import { selectTables } from '../../selectors';
 import Table from '../table/Table';
 

@@ -130,6 +130,7 @@ table {
 
 :root {
   --border-color: #483e37;
+  --border-color-selected: #8499ba;
   --background-color: #e3dedb;
   --menu-btn-width: 35px;
   --border-size: 3px;
