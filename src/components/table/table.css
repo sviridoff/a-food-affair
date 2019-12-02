@@ -1,0 +1,36 @@
+.table {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  margin-top: 8px;
+  padding: 5px;
+  float: left;
+}
+
+.table--last {
+  margin-bottom: 8px;
+}
+
+.table__client-btn {
+  border-radius: 8px;
+  border: var(--border-size) solid var(--border-color);
+  background: #dfebc7;
+  width: var(--dish-btn-width);
+  height: var(--dish-btn-width);
+  margin-right: 5px;
+  float: left;
+  position: relative;
+}
+
+.table__client-btn--last {
+  margin-right: 0;
+}
+
+.table__client-clock {
+  background: var(--border-color);
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  top: 2px;
+  right: 2px;
+  position: absolute;
+}

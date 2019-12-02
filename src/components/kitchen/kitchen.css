@@ -1,0 +1,38 @@
+.kitchen {
+  border-top: 2px solid var(--border-color);
+  padding: 8px;
+}
+
+.kitchen__dish-food {
+  background: var(--border-color);
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  float: left;
+}
+
+.kitchen__trash-btn {
+  background: #ebcbc7;
+  width: var(--menu-btn-width);
+  height: var(--menu-btn-width);
+  border-radius: 100%;
+  margin-right: 10px;
+  float: left;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+}
+
+.kitchen__dish-btn--last {
+  margin-right: 0 !important;
+}
+
+.kitchen__dish-btn {
+  border-radius: 8px;
+  border: var(--border-size) solid var(--border-color);
+  background: #c8e0e8;
+  width: var(--dish-btn-width);
+  height: var(--dish-btn-width);
+  margin-right: 10px;
+  float: left;
+}
