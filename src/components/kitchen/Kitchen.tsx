@@ -13,8 +13,7 @@ const mapStateToProps = (state: TState) => ({
 
 const connector = connect(mapStateToProps, { selectDish });
 
-type TReduxProps = ConnectedProps<typeof connector>;
-type TProps = TReduxProps & {};
+type TProps = ConnectedProps<typeof connector>;
 
 const dishBtnClass = (dish: TDish, dishes: TDish[], index: number) =>
   classnames(

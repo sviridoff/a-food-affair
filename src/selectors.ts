@@ -1,18 +1,20 @@
-import { TState } from "./types";
+import { createSelector } from 'reselect';
 
-export const selectDishes = (state: TState) =>
-  Object.values(state.dishes.data);
+import { TState, TDishes, TTables, TClients } from './types';
 
-export const selectTables = (state: TState) =>
-  Object.values(state.tables.data);
+export const selectDishes = createSelector(
+  (state: TState) => state.dishes,
+  (dishes: TDishes) => Object.values(dishes.data),
+);
 
-export const selectClient = (id: string) =>
-  (state: TState) =>
-    state.clients.data[id];
+export const selectTables = createSelector(
+  (state: TState) => state.tables,
+  (tables: TTables) => Object.values(tables.data),
+);
 
-export const selectClients = (tableId: string) =>
-  (state: TState) => {
-    const tableClients = state.tables.clients[tableId] || []
-    return tableClients.map(clientId => selectClient(clientId)(state))
-  };
-
+export const makeSelectClients = () => createSelector(
+  (state: TState, tableId: string) => state.tables.clients[tableId] || [],
+  (state: TState, tableId: string) => state.clients,
+  (tableClients: string[], clients: TClients) =>
+    tableClients.map(clientId => clients.data[clientId]),
+);

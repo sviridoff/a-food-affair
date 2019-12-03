@@ -12,8 +12,7 @@ const mapStateToProps = (state: TState) => ({
 
 const connector = connect(mapStateToProps);
 
-type TReduxProps = ConnectedProps<typeof connector>;
-type TProps = TReduxProps & {};
+type TProps = ConnectedProps<typeof connector>;
 
 const tablesList = (tables: TTable[]) =>
   tables.map((table, index) =>

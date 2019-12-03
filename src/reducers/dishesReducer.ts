@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { TDish, TDishes } from '../types';
 
 const initialState: TDishes = {

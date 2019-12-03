@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { TTables } from '../types';
 
 const initialState: TTables = {

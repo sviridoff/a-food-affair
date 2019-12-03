@@ -4,21 +4,24 @@ import classnames from 'classnames';
 
 import './table.css';
 import { TState, TTable, TClient } from '../../types';
-import { selectClients } from '../../selectors';
+import { makeSelectClients } from '../../selectors';
 
 type TOwnProps = {
   table: TTable,
   isLast: boolean,
 };
 
-const mapStateToProps = (state: TState, ownProps: TOwnProps) => ({
-  clients: selectClients(ownProps.table.id)(state),
-});
+const makeMapStateToProps = () => {
+  const selectClients = makeSelectClients();
 
-const connector = connect(mapStateToProps);
+  return (state: TState, ownProps: TOwnProps) => ({
+    clients: selectClients(state, ownProps.table.id),
+  });
+};
 
-type TReduxProps = ConnectedProps<typeof connector>;
-type TProps = TReduxProps & TOwnProps;
+const connector = connect(makeMapStateToProps);
+
+type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
 const clientClass = (cleints: TClient[], index: number) =>
   classnames(
