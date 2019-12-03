@@ -24,6 +24,7 @@ export type TDish = {
 
 export type TDishes = {
   data: { [key: string]: TDish },
+  ids: string[],
 };
 
 export type TState = ReturnType<typeof reducer>;

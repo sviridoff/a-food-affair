@@ -1,10 +1,20 @@
 import { createSelector } from 'reselect';
 
-import { TState, TDishes, TTables, TClients } from './types';
+import { TState, TDishes, TTables, TClients, TDish } from './types';
 
 export const selectDishes = createSelector(
   (state: TState) => state.dishes,
   (dishes: TDishes) => Object.values(dishes.data),
+);
+
+export const selectDishesIds = createSelector(
+  (state: TState) => state.dishes.ids,
+  (dishesIds: string[]) => dishesIds,
+);
+
+export const selectDish = createSelector(
+  (state: TState, dishId: string) => state.dishes.data[dishId],
+  (dish: TDish) => dish,
 );
 
 export const selectTables = createSelector(

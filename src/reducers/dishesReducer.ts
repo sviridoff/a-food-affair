@@ -17,6 +17,7 @@ const initialState: TDishes = {
       isSelected: false,
     },
   },
+  ids: ['d1', 'd2', 'd3'],
 };
 
 type SelectDishProps = {
@@ -28,6 +29,10 @@ const dishesSlice = createSlice({
   initialState,
   reducers: {
     selectDish(state, action: PayloadAction<SelectDishProps>) {
+      Object.values(state.data).forEach(dish => {
+        dish.isSelected = false;
+      });
+
       const id = action.payload.dish.id;
 
       state.data[id].isSelected =
@@ -40,8 +45,6 @@ const dishesSlice = createSlice({
   }
 });
 
-export const { selectDish } = dishesSlice.actions;
-
-export type TSelectDish = typeof selectDish;
+export const actions = dishesSlice.actions;
 
 export default dishesSlice.reducer;

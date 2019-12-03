@@ -3,14 +3,6 @@
   padding: 8px;
 }
 
-.kitchen__dish-food {
-  background: var(--border-color);
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-  float: left;
-}
-
 .kitchen__trash-btn {
   background: #ebcbc7;
   width: var(--menu-btn-width);
@@ -21,22 +13,4 @@
   top: 50%;
   position: relative;
   transform: translateY(-50%);
-}
-
-.kitchen__dish-btn--last {
-  margin-right: 0 !important;
-}
-
-.kitchen__dish-btn {
-  border-radius: 8px;
-  border: var(--border-size) solid var(--border-color);
-  background: #c8e0e8;
-  width: var(--dish-btn-width);
-  height: var(--dish-btn-width);
-  margin-right: 10px;
-  float: left;
-}
-
-.kitchen__dish-btn--selected {
-  border: var(--border-size) solid var(--border-color-selected);
 }
