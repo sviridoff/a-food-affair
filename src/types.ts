@@ -25,6 +25,16 @@ export type TDish = {
 export type TDishes = {
   data: { [key: string]: TDish },
   ids: string[],
+  ingredients: { [key: string]: string[] },
 };
+
+export type TIngredient = {
+  id: string,
+}
+
+export type TIngredients = {
+  data: { [key: string]: TIngredient },
+  ids: string[],
+}
 
 export type TState = ReturnType<typeof reducer>;

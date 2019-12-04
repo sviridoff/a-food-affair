@@ -16,7 +16,7 @@
   border: var(--border-size) solid var(--border-color-selected);
 }
 
-.dish__food {
+.dish__ingredient {
   background: var(--border-color);
   width: 25px;
   height: 25px;

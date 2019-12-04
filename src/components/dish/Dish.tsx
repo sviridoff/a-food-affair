@@ -3,8 +3,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './dish.css';
-import { TDish, TState } from '../../types';
-import { selectDish } from '../../selectors';
+import { TDish, TState, TIngredient } from '../../types';
+import { selectDish, makeSelectIngredients } from '../../selectors';
 import { actions } from '../../reducers/dishesReducer';
 
 type TOwnProps = {
@@ -12,19 +12,32 @@ type TOwnProps = {
   dishId: string,
 };
 
-const mapStateToProps = (state: TState, ownProps: TOwnProps) => ({
-  dish: selectDish(state, ownProps.dishId),
-});
+const makeMapStateToProps = () => {
+  const selectIngredients = makeSelectIngredients();
+
+  return (state: TState, ownProps: TOwnProps) => {
+    const ingredients = selectIngredients(state, ownProps.dishId);
+
+    return {
+      dish: selectDish(state, ownProps.dishId),
+      ingredients,
+    };
+  };
+};
 
 const mapDispatchToProps = ({
   selectDish: actions.selectDish,
 });
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(makeMapStateToProps, mapDispatchToProps);
 
 type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
-const dishBtnClass = (dish: TDish, isLast: boolean) =>
+const ingredientsList = (ingredients: TIngredient[]) =>
+  ingredients.map(ingredient =>
+    <div className='dish__ingredient' key={ingredient.id}></div>);
+
+const dishClass = (dish: TDish, isLast: boolean) =>
   classnames(
     'dish',
     {
@@ -34,13 +47,11 @@ const dishBtnClass = (dish: TDish, isLast: boolean) =>
   );
 
 const Dish: FunctionComponent<TProps> =
-  ({ dish, isLast, selectDish }) =>
+  ({ dish, isLast, selectDish, ingredients }) =>
     <div
-      className={dishBtnClass(dish, isLast)}
+      className={dishClass(dish, isLast)}
       onClick={() => selectDish({ dish })}>
-      <div className='dish__food'></div>
-      <div className='dish__food'></div>
-      <div className='dish__food'></div>
+      {ingredientsList(ingredients)}
     </div>
 
 export default connector(Dish);

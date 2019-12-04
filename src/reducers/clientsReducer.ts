@@ -22,10 +22,10 @@ const initialState: TClients = {
   },
 };
 
-const clientsSlice = createSlice({
+const slice = createSlice({
   name: 'clients',
   initialState,
   reducers: {}
 });
 
-export default clientsSlice.reducer;
+export default slice.reducer;

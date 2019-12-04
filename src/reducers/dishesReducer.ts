@@ -18,13 +18,17 @@ const initialState: TDishes = {
     },
   },
   ids: ['d1', 'd2', 'd3'],
+  ingredients: {
+    d1: ['i1', 'i2'],
+    d2: ['i3'],
+  }
 };
 
 type SelectDishProps = {
   dish: TDish,
 };
 
-const dishesSlice = createSlice({
+const slice = createSlice({
   name: 'dishes',
   initialState,
   reducers: {
@@ -45,6 +49,6 @@ const dishesSlice = createSlice({
   }
 });
 
-export const actions = dishesSlice.actions;
+export const actions = slice.actions;
 
-export default dishesSlice.reducer;
+export default slice.reducer;

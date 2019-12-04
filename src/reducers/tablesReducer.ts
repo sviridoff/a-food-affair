@@ -21,10 +21,10 @@ const initialState: TTables = {
   },
 };
 
-const tablesSlice = createSlice({
+const slice = createSlice({
   name: 'tables',
   initialState,
   reducers: {}
 });
 
-export default tablesSlice.reducer;
+export default slice.reducer;

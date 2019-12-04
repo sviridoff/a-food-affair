@@ -1,16 +1,20 @@
 import { createSelector } from 'reselect';
 
-import { TState, TDishes, TTables, TClients, TDish } from './types';
+import {
+  TState,
+  TDishes,
+  TTables,
+  TClients,
+  TDish,
+  TIngredients
+} from './types';
 
 export const selectDishes = createSelector(
   (state: TState) => state.dishes,
   (dishes: TDishes) => Object.values(dishes.data),
 );
 
-export const selectDishesIds = createSelector(
-  (state: TState) => state.dishes.ids,
-  (dishesIds: string[]) => dishesIds,
-);
+export const selectDishesIds = (state: TState) => state.dishes.ids;
 
 export const selectDish = createSelector(
   (state: TState, dishId: string) => state.dishes.data[dishId],
@@ -22,9 +26,24 @@ export const selectTables = createSelector(
   (tables: TTables) => Object.values(tables.data),
 );
 
-export const makeSelectClients = () => createSelector(
-  (state: TState, tableId: string) => state.tables.clients[tableId] || [],
-  (state: TState, tableId: string) => state.clients,
-  (tableClients: string[], clients: TClients) =>
-    tableClients.map(clientId => clients.data[clientId]),
-);
+export const makeSelectClients = () => {
+  const emptyArray: string[] = [];
+
+  return createSelector(
+    (state: TState, tableId: string) => state.tables.clients[tableId] || emptyArray,
+    (state: TState) => state.clients,
+    (clientsIds: string[], clients: TClients) =>
+      clientsIds.map(id => clients.data[id]),
+  );
+}
+
+export const makeSelectIngredients = () => {
+  const emptyArray: string[] = [];
+
+  return createSelector(
+    (state: TState, dishId: string) => state.dishes.ingredients[dishId] || emptyArray,
+    (state: TState) => state.ingredients,
+    (ingredientsIds: string[], ingredients: TIngredients) =>
+      ingredientsIds.map(id => ingredients.data[id])
+  );
+};
