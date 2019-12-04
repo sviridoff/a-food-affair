@@ -15,14 +15,10 @@ type TOwnProps = {
 const makeMapStateToProps = () => {
   const selectIngredients = makeSelectIngredients();
 
-  return (state: TState, ownProps: TOwnProps) => {
-    const ingredients = selectIngredients(state, ownProps.dishId);
-
-    return {
-      dish: selectDish(state, ownProps.dishId),
-      ingredients,
-    };
-  };
+  return (state: TState, ownProps: TOwnProps) => ({
+    dish: selectDish(state, ownProps.dishId),
+    ingredients: selectIngredients(state, ownProps.dishId),
+  });
 };
 
 const mapDispatchToProps = ({
