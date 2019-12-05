@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { TDish, TDishes } from '../types';
+import { TDishes } from '../types';
 
 const initialState: TDishes = {
   data: {
@@ -25,7 +25,7 @@ const initialState: TDishes = {
 };
 
 type SelectDishProps = {
-  dish: TDish,
+  dishId: string,
 };
 
 const slice = createSlice({
@@ -37,12 +37,19 @@ const slice = createSlice({
         dish.isSelected = false;
       });
 
-      const id = action.payload.dish.id;
+      const id = action.payload.dishId;
 
       state.data[id].isSelected =
         state.data[id].isSelected
           ? false
           : true;
+
+      return state;
+    },
+    deselectAllDishes(state) {
+      Object.values(state.data).forEach(dish => {
+        dish.isSelected = false;
+      });
 
       return state;
     },

@@ -27,10 +27,11 @@ export const selectTables = createSelector(
 );
 
 export const makeSelectClients = () => {
-  const emptyArray: string[] = [];
+  const defaultClientsIds: string[] = [];
 
   return createSelector(
-    (state: TState, tableId: string) => state.tables.clients[tableId] || emptyArray,
+    (state: TState, tableId: string) =>
+      state.tables.clients[tableId] || defaultClientsIds,
     (state: TState) => state.clients,
     (clientsIds: string[], clients: TClients) =>
       clientsIds.map(id => clients.data[id]),
@@ -38,12 +39,18 @@ export const makeSelectClients = () => {
 }
 
 export const makeSelectIngredients = () => {
-  const emptyArray: string[] = [];
+  const defaultIngredientsIds: string[] = [];
 
   return createSelector(
-    (state: TState, dishId: string) => state.dishes.ingredients[dishId] || emptyArray,
+    (state: TState, dishId: string) =>
+      state.dishes.ingredients[dishId] || defaultIngredientsIds,
     (state: TState) => state.ingredients,
     (ingredientsIds: string[], ingredients: TIngredients) =>
       ingredientsIds.map(id => ingredients.data[id])
   );
 };
+
+export const selectIngredients = createSelector(
+  (state: TState) => state.ingredients,
+  (ingredients: TIngredients) => Object.values(ingredients.data),
+);

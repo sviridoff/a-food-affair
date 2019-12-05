@@ -3,9 +3,9 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './dish.css';
-import { TDish, TState, TIngredient } from '../../types';
+import { TState, TIngredient } from '../../types';
 import { selectDish, makeSelectIngredients } from '../../selectors';
-import { actions } from '../../reducers/dishesReducer';
+import { showIngredientsStore } from '../../actions';
 
 type TOwnProps = {
   isLast: boolean,
@@ -21,9 +21,9 @@ const makeMapStateToProps = () => {
   });
 };
 
-const mapDispatchToProps = ({
-  selectDish: actions.selectDish,
-});
+const mapDispatchToProps = {
+  showIngredientsStore,
+};
 
 const connector = connect(makeMapStateToProps, mapDispatchToProps);
 
@@ -33,21 +33,32 @@ const ingredientsList = (ingredients: TIngredient[]) =>
   ingredients.map(ingredient =>
     <div className='dish__ingredient' key={ingredient.id}></div>);
 
-const dishClass = (dish: TDish, isLast: boolean) =>
+const dishClass = (isSelected: boolean, isLast: boolean) =>
   classnames(
     'dish',
     {
       'dish--last': isLast,
-      'dish--selected': dish.isSelected,
+      'dish--selected': isSelected,
     }
   );
 
 const Dish: FunctionComponent<TProps> =
-  ({ dish, isLast, selectDish, ingredients }) =>
-    <div
-      className={dishClass(dish, isLast)}
-      onClick={() => selectDish({ dish })}>
-      {ingredientsList(ingredients)}
-    </div>
+  ({
+    dish,
+    dishId,
+    isLast,
+    ingredients,
+    showIngredientsStore
+  }) => {
+    const onClick = () => showIngredientsStore();
+
+    return (
+      <div
+        className={dishClass(dish.isSelected, isLast)}
+        onClick={onClick}>
+        {ingredientsList(ingredients)}
+      </div>
+    );
+  };
 
 export default connector(Dish);

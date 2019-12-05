@@ -1,0 +1,33 @@
+.ingredients-store {
+  z-index: 6;
+  position: absolute;
+  width: 100%;
+  background: var(--background-color);
+  min-height: 100vh;
+  height: 100vh;
+  display: none;
+}
+
+.ingredients-store--visible {
+  display: block;
+}
+
+.ingredients-store__ingredient {
+  background: var(--border-color);
+  width: var(--dish-btn-width);
+  height: var(--dish-btn-width);
+  margin-right: 10px;
+  border-radius: 100%;
+  float: left;
+
+  text-align: center;
+  color: var(--background-color);
+}
+
+.ingredients-store__close-btn {
+  background: var(--border-color);
+  width: var(--menu-btn-width);
+  height: var(--menu-btn-width);
+  border-radius: 100%;
+  float: left;
+}

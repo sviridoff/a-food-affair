@@ -23,15 +23,17 @@ const connector = connect(makeMapStateToProps);
 
 type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
-const clientClass = (cleints: TClient[], index: number) =>
+const clientClass = (isLast: boolean) =>
   classnames(
     'table__client-btn',
-    { 'table__client-btn--last': index + 1 === cleints.length },
+    { 'table__client-btn--last': isLast },
   );
 
 const clientsList = (clients: TClient[]) =>
   clients.map((client, index) =>
-    <div className={clientClass(clients, index)} key={client.id}>
+    <div
+      className={clientClass(index + 1 === clients.length)}
+      key={client.id}>
       <div className='table__client-clock'></div>
     </div>
   );
