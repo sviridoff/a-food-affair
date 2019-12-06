@@ -1,48 +1,60 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import classnames from 'classnames';
 
 import './ingredientsStore.css';
 import { connect, ConnectedProps } from 'react-redux';
 import { TState, TIngredient } from '../../types';
 import { selectIngredients } from '../../selectors';
-import { actions } from '../../reducers/uiReducer';
+import { chooseIngredient, closeIngredientsStore } from '../../actions';
 
 const mapStateToProps = (state: TState) => ({
   ingredients: selectIngredients(state),
   isIngredientsStoreVisible: state.ui.isIngredientsStoreVisible,
 });
 
-const mapDispatchToProps = ({
-  hideIngredientsStore: actions.hideIngredientsStore,
-});
+const mapDispatchToProps = {
+  chooseIngredient,
+  closeIngredientsStore,
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type TProps = ConnectedProps<typeof connector>;
 
-const ingredientsList = (ingredients: TIngredient[]) =>
-  ingredients.map(ingredient =>
-    <div
-      className='ingredients-store__ingredient'
-      key={ingredient.id}>
-      {ingredient.id}
-    </div>
-  );
+const ingredientsList =
+  (
+    ingredients: TIngredient[],
+    chooseIngredient: (ingredientId: string) => void,
+  ) =>
+    ingredients.map(ingredient =>
+      <div
+        className='ingredients-store__ingredient'
+        key={ingredient.id}
+        onClick={() => chooseIngredient(ingredient.id)}>
+        {ingredient.id}
+      </div>
+    );
 
-const ingredientsStoreClass = (isIngredientsStoreVisible: boolean) =>
-  classnames(
-    'ingredients-store',
-    { 'ingredients-store--visible': isIngredientsStoreVisible },
-  );
+const ingredientsStoreClass =
+  (isIngredientsStoreVisible: boolean) =>
+    classnames(
+      'ingredients-store',
+      { 'ingredients-store--visible': isIngredientsStoreVisible },
+    );
 
-const IngredientsStore: FunctionComponent<TProps> =
-  ({ ingredients, isIngredientsStoreVisible, hideIngredientsStore }) =>
+const IngredientsStore: FC<TProps> =
+  ({
+    ingredients,
+    isIngredientsStoreVisible,
+    chooseIngredient,
+    closeIngredientsStore,
+  }) =>
     <div
       className={ingredientsStoreClass(isIngredientsStoreVisible)}>
-      {ingredientsList(ingredients)}
+      {ingredientsList(ingredients, chooseIngredient)}
       <div
         className='ingredients-store__close-btn'
-        onClick={hideIngredientsStore}></div>
+        onClick={closeIngredientsStore}></div>
     </div>
 
 export default connector(IngredientsStore);

@@ -45,8 +45,11 @@ export const makeSelectIngredients = () => {
     (state: TState, dishId: string) =>
       state.dishes.ingredients[dishId] || defaultIngredientsIds,
     (state: TState) => state.ingredients,
-    (ingredientsIds: string[], ingredients: TIngredients) =>
-      ingredientsIds.map(id => ingredients.data[id])
+    (ingredientsIds: string[], ingredients: TIngredients) => {
+      return ingredientsIds
+        .map(id => ingredients.data[id])
+        .reverse();
+    }
   );
 };
 

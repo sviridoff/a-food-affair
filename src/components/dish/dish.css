@@ -22,4 +22,25 @@
   height: 25px;
   border-radius: 100%;
   float: left;
+
+  text-align: center;
+  color: var(--background-color);
+}
+
+.dish__ingredient--main {
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+
+.dish__ellipsis {
+  background: var(--background-color);
+  width: 25px;
+  height: 25px;
+  line-height: 15px;
+  border-radius: 100%;
+  float: left;
+
+  text-align: center;
+  color: var(--border-color);
 }

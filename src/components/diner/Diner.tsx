@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import './diner.css';
@@ -21,7 +21,7 @@ const tablesList = (tables: TTable[]) =>
       table={table}
       key={table.id} />);
 
-const Diner: FunctionComponent<TProps> =
+const Diner: FC<TProps> =
   ({ tables }) =>
     <div className='diner'>
       {tablesList(tables)}

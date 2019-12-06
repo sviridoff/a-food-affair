@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
@@ -44,7 +44,7 @@ const tableClass = (isLast: boolean) =>
     { 'table--last': isLast },
   );
 
-const Table: FunctionComponent<TProps> =
+const Table: FC<TProps> =
   ({ clients, isLast }) =>
     <div className={tableClass(isLast)}>
       {clientsList(clients)}

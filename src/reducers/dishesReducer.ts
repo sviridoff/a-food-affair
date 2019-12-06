@@ -19,40 +19,76 @@ const initialState: TDishes = {
   },
   ids: ['d1', 'd2', 'd3'],
   ingredients: {
-    d1: ['i1', 'i2'],
+    d1: ['i1', 'i2', 'i2', 'i3', 'i4'],
     d2: ['i3'],
   }
 };
 
-type SelectDishProps = {
+type TSelectProps = {
   dishId: string,
+};
+
+type TAddIngredientsProps = {
+  dishId: string,
+  ingredients: string[],
+};
+
+type TAddIngredientProp = {
+  dishId: string,
+  ingredientId: string,
 };
 
 const slice = createSlice({
   name: 'dishes',
   initialState,
   reducers: {
-    selectDish(state, action: PayloadAction<SelectDishProps>) {
-      Object.values(state.data).forEach(dish => {
-        dish.isSelected = false;
-      });
+    select(state, action: PayloadAction<TSelectProps>) {
+      const dishId = action.payload.dishId;
 
-      const id = action.payload.dishId;
-
-      state.data[id].isSelected =
-        state.data[id].isSelected
-          ? false
-          : true;
+      state.data[dishId].isSelected = true;
 
       return state;
     },
-    deselectAllDishes(state) {
-      Object.values(state.data).forEach(dish => {
-        dish.isSelected = false;
-      });
+    deselect(state, action: PayloadAction<TSelectProps>) {
+      const dishId = action.payload.dishId;
+
+      state.data[dishId].isSelected = false;
 
       return state;
     },
+    addIngredients(state, action: PayloadAction<TAddIngredientsProps>) {
+      const { dishId, ingredients } = action.payload;
+
+      state.ingredients[dishId] = state.ingredients[dishId] || [];
+      state.ingredients[dishId] =
+        state.ingredients[dishId].concat(ingredients);
+
+      return state;
+    },
+    addIngredient(state, action: PayloadAction<TAddIngredientProp>) {
+      const { dishId, ingredientId } = action.payload;
+
+      state.ingredients[dishId] = state.ingredients[dishId] || [];
+      state.ingredients[dishId].push(ingredientId);
+    },
+    removeAllIngredients(state, action: PayloadAction<TSelectProps>) {
+      const dishId = action.payload.dishId;
+
+      state.ingredients[dishId] = [];
+
+      return state;
+    },
+    resetSelected(state) {
+      const selectedDish = Object.values(state.data)
+        .find(dish => dish.isSelected);
+
+      if (selectedDish) {
+        state.data[selectedDish.id].isSelected = false;
+        state.ingredients[selectedDish.id] = [];
+      }
+
+      return state;
+    }
   }
 });
 

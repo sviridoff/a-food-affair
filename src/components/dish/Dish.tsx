@@ -1,11 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './dish.css';
 import { TState, TIngredient } from '../../types';
 import { selectDish, makeSelectIngredients } from '../../selectors';
-import { showIngredientsStore } from '../../actions';
+import { chooseDish } from '../../actions';
+
+const maxIngredientsPerDish = 4;
 
 type TOwnProps = {
   isLast: boolean,
@@ -21,17 +23,29 @@ const makeMapStateToProps = () => {
   });
 };
 
-const mapDispatchToProps = {
-  showIngredientsStore,
-};
+const mapDispatchToProps = { chooseDish };
 
 const connector = connect(makeMapStateToProps, mapDispatchToProps);
 
 type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
+const ingredientClass = (length: number) =>
+  classnames(
+    'dish__ingredient',
+    {
+      'dish__ingredient--main': length === 1,
+    }
+  );
+
 const ingredientsList = (ingredients: TIngredient[]) =>
-  ingredients.map(ingredient =>
-    <div className='dish__ingredient' key={ingredient.id}></div>);
+  ingredients
+    .slice(0, ingredients.length <= maxIngredientsPerDish ? ingredients.length : 3)
+    .map((ingredient, index) =>
+      <div
+        className={ingredientClass(ingredients.length)}
+        key={`${ingredient.id}-${index}`}>
+        {ingredient.id}
+      </div>);
 
 const dishClass = (isSelected: boolean, isLast: boolean) =>
   classnames(
@@ -42,21 +56,23 @@ const dishClass = (isSelected: boolean, isLast: boolean) =>
     }
   );
 
-const Dish: FunctionComponent<TProps> =
+const Dish: FC<TProps> =
   ({
     dish,
     dishId,
     isLast,
     ingredients,
-    showIngredientsStore
+    chooseDish
   }) => {
-    const onClick = () => showIngredientsStore();
+    const onClick = () => chooseDish(dishId);
 
     return (
       <div
         className={dishClass(dish.isSelected, isLast)}
         onClick={onClick}>
         {ingredientsList(ingredients)}
+        {ingredients.length > maxIngredientsPerDish &&
+          <div className='dish__ellipsis'>...</div>}
       </div>
     );
   };
