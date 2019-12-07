@@ -5,8 +5,10 @@ import {
   TDishes,
   TTables,
   TClients,
+  TClient,
   TDish,
-  TIngredients
+  TIngredients,
+  TIngredient,
 } from './types';
 
 export const selectDishes = createSelector(
@@ -56,4 +58,35 @@ export const makeSelectIngredients = () => {
 export const selectIngredients = createSelector(
   (state: TState) => state.ingredients,
   (ingredients: TIngredients) => Object.values(ingredients.data),
+);
+
+export const selectClient = createSelector(
+  (state: TState, clientId: string) => state.clients.data[clientId],
+  (client: TClient) => client,
+);
+
+export const selectClientRecipe = createSelector(
+  (state: TState, clientId: string) => state.clients.recipes[clientId],
+  (recipe: string) => recipe,
+);
+
+export const selectClientIngredients = createSelector(
+  (state: TState) => state.ui.selectedRecipe,
+  (state: TState) => state.recipes.ingredients,
+  (state: TState) => state.ingredients.data,
+  (
+    recipeId: string | null,
+    recipesIngredients: { [key: string]: string[] },
+    ingredientsData: { [key: string]: TIngredient },
+  ) => {
+    let ingredients: TIngredient[] = [];
+
+    if (recipeId) {
+      const ingredientsIds = recipesIngredients[recipeId];
+      ingredients = ingredientsIds
+        .map(id => ingredientsData[id]);
+    }
+
+    return ingredients;
+  }
 );

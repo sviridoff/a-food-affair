@@ -1,11 +1,13 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
 
 import clientsReducer from './reducers/clientsReducer';
 import dishesReducer from './reducers/dishesReducer';
 import tablesReducer from './reducers/tablesReducer';
 import ingredientsReducer from './reducers/ingredientsReducer';
 import uiReducer from './reducers/uiReducer';
-import thunk from 'redux-thunk';
+import recipesReducer from './reducers/recipesReducer';
+import profileReducer from './reducers/profileReducer';
 
 export const reducer = combineReducers({
   clients: clientsReducer,
@@ -13,6 +15,8 @@ export const reducer = combineReducers({
   tables: tablesReducer,
   ingredients: ingredientsReducer,
   ui: uiReducer,
+  recipes: recipesReducer,
+  profile: profileReducer,
 });
 
 export default configureStore({

@@ -9,17 +9,15 @@ import store from './store';
 import Kitchen from './components/kitchen/Kitchen';
 import Diner from './components/diner/Diner';
 import IngredientsStore from './components/ingredientsStore/IngredientsStore';
+import Profile from './components/profile/Profile';
+import Recipes from './components/recipes/Recipes';
 
 const App = () =>
   <>
+    <Recipes />
     <IngredientsStore />
     <div className='gameplay-container'>
-      <div className='user-stats-section'>
-        <div className='user-lives'>
-          <div className='user-lives_logo'></div>
-          x 8
-        </div>
-      </div>
+      <Profile />
       <div className='body-container'>
         <div className='game-logo'>
           <LogoSvg width='100%' height='100%' />

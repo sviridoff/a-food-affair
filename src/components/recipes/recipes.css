@@ -1,4 +1,4 @@
-.ingredients-store {
+.recipes {
   z-index: 6;
   position: absolute;
   width: 100%;
@@ -8,11 +8,11 @@
   display: none;
 }
 
-.ingredients-store--visible {
+.recipes--visible {
   display: block;
 }
 
-.ingredients-store__ingredient {
+.recipes__ingredient {
   background: var(--border-color);
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
@@ -25,7 +25,7 @@
   line-height: 50px;
 }
 
-.ingredients-store__close-btn {
+.recipe__close-btn {
   background: var(--border-color);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);

@@ -1,0 +1,24 @@
+.client {
+  border-radius: 8px;
+  border: var(--border-size) solid var(--border-color);
+  background: #dfebc7;
+  width: var(--dish-btn-width);
+  height: var(--dish-btn-width);
+  margin-right: 5px;
+  float: left;
+  position: relative;
+}
+
+.client--last {
+  margin-right: 0;
+}
+
+.client__clock {
+  background: var(--border-color);
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  top: 2px;
+  right: 2px;
+  position: absolute;
+}

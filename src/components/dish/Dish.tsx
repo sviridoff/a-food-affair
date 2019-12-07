@@ -37,15 +37,16 @@ const ingredientClass = (length: number) =>
     }
   );
 
-const ingredientsList = (ingredients: TIngredient[]) =>
-  ingredients
-    .slice(0, ingredients.length <= maxIngredientsPerDish ? ingredients.length : 3)
-    .map((ingredient, index) =>
-      <div
-        className={ingredientClass(ingredients.length)}
-        key={`${ingredient.id}-${index}`}>
-        {ingredient.id}
-      </div>);
+const ingredientsList =
+  (ingredients: TIngredient[]) =>
+    ingredients
+      .slice(0, ingredients.length <= maxIngredientsPerDish ? ingredients.length : 3)
+      .map((ingredient, index) =>
+        <div
+          className={ingredientClass(ingredients.length)}
+          key={`${ingredient.id}-${index}`}>
+          {ingredient.id}
+        </div>);
 
 const dishClass = (isSelected: boolean, isLast: boolean) =>
   classnames(

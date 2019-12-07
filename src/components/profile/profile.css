@@ -1,0 +1,21 @@
+.profile {
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+}
+
+.profile__lives {
+  display: inline-block;
+  padding: 5px;
+}
+
+.profile__lives__logo {
+  background: var(--border-color);
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: 100%;
+  display: inline-block;
+  vertical-align: bottom;
+}

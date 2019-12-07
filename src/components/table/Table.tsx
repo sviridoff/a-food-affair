@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import './table.css';
 import { TState, TTable, TClient } from '../../types';
 import { makeSelectClients } from '../../selectors';
+import Client from '../client/Client';
 
 type TOwnProps = {
   table: TTable,
@@ -23,20 +24,12 @@ const connector = connect(makeMapStateToProps);
 
 type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
-const clientClass = (isLast: boolean) =>
-  classnames(
-    'table__client-btn',
-    { 'table__client-btn--last': isLast },
-  );
-
 const clientsList = (clients: TClient[]) =>
   clients.map((client, index) =>
-    <div
-      className={clientClass(index + 1 === clients.length)}
-      key={client.id}>
-      <div className='table__client-clock'></div>
-    </div>
-  );
+    <Client
+      key={client.id}
+      clientId={client.id}
+      isLast={index + 1 === clients.length} />);
 
 const tableClass = (isLast: boolean) =>
   classnames(

@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk'
 import { Action } from '@reduxjs/toolkit'
 
-import store, { reducer } from "./store";
+import { reducer } from "./store";
 
 export type TTable = {
   id: string,
@@ -18,6 +18,7 @@ export type TClient = {
 
 export type TClients = {
   data: { [key: string]: TClient },
+  recipes: { [key: string]: string },
 };
 
 export type TDish = {
@@ -42,7 +43,22 @@ export type TIngredients = {
 
 export type TUi = {
   isIngredientsStoreVisible: boolean,
+  isRecipesVisible: boolean,
+  selectedRecipe: string | null,
 };
+
+export type TRecipe = {
+  id: string,
+};
+
+export type TRecipes = {
+  data: { [key: string]: TIngredient },
+  ingredients: { [key: string]: string[] },
+};
+
+export type TProfile = {
+  lives: number,
+}
 
 export type TState = ReturnType<typeof reducer>;
 

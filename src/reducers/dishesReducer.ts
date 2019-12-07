@@ -49,6 +49,7 @@ const slice = createSlice({
 
       return state;
     },
+
     deselect(state, action: PayloadAction<TSelectProps>) {
       const dishId = action.payload.dishId;
 
@@ -56,6 +57,7 @@ const slice = createSlice({
 
       return state;
     },
+
     addIngredients(state, action: PayloadAction<TAddIngredientsProps>) {
       const { dishId, ingredients } = action.payload;
 
@@ -65,12 +67,14 @@ const slice = createSlice({
 
       return state;
     },
+
     addIngredient(state, action: PayloadAction<TAddIngredientProp>) {
       const { dishId, ingredientId } = action.payload;
 
       state.ingredients[dishId] = state.ingredients[dishId] || [];
       state.ingredients[dishId].push(ingredientId);
     },
+
     removeAllIngredients(state, action: PayloadAction<TSelectProps>) {
       const dishId = action.payload.dishId;
 
@@ -78,6 +82,7 @@ const slice = createSlice({
 
       return state;
     },
+
     resetSelected(state) {
       const selectedDish = Object.values(state.data)
         .find(dish => dish.isSelected);

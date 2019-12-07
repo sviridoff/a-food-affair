@@ -30,32 +30,6 @@
   z-index: 1;
 }
 
-.user-stats-section {
-  position: absolute;
-  top: 0;
-  z-index: 5;
-  width: 100%;
-}
-
-.user-lives {
-  display: inline-block;
-  padding: 5px;
-}
-
-.user-lives_logo {
-  background: var(--border-color);
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  display: inline-block;
-  margin-right: 5px;
-  vertical-align: bottom;
-}
-
-.user-lives_logo--last {
-  margin: 0;
-}
-
 .menu-controls {
   border: 1px dashed var(--border-color);
   padding: 5px;

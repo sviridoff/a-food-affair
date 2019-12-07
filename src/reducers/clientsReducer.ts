@@ -20,6 +20,13 @@ const initialState: TClients = {
       id: 'c5',
     },
   },
+  recipes: {
+    c1: 'r1',
+    c2: 'r2',
+    c3: 'r2',
+    c4: 'r2',
+    c5: 'r2',
+  },
 };
 
 const slice = createSlice({
