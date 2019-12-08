@@ -4,16 +4,14 @@ import { connect, ConnectedProps } from 'react-redux';
 import './kitchen.css';
 import { TState } from '../../types';
 import { selectDishesIds } from '../../selectors';
-import { actions as dishesActions } from '../../reducers/dishesReducer';
+import { clearDish } from '../../actions';
 import Dish from '../dish/Dish';
 
 const mapStateToProps = (state: TState) => ({
   dishesIds: selectDishesIds(state),
 });
 
-const mapDispatchToProps = {
-  resetSelected: dishesActions.resetSelected,
-};
+const mapDispatchToProps = { clearDish };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
@@ -27,11 +25,11 @@ const dishesList = (dishesIds: string[]) =>
       key={dishId} />);
 
 const Kitchen: FC<TProps> =
-  ({ dishesIds, resetSelected }) =>
+  ({ dishesIds, clearDish }) =>
     <div className='kitchen'>
       <div
         className='kitchen__trash-btn'
-        onClick={resetSelected}></div>
+        onClick={clearDish}></div>
       {dishesList(dishesIds)}
     </div>;
 

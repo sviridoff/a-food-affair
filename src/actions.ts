@@ -28,7 +28,7 @@ export const chooseDish = (dishId: string): TThunk =>
           }));
           dispatch(dishesActions.removeAllIngredients({ dishId: selectedDish }));
           dispatch(uiActions.selectDish({ dishId: null }));
-          dispatch(dishesActions.deselect({ dishId: selectedDish }));
+          dispatch(dishesActions.unselect({ dishId: selectedDish }));
         }
 
         if (!selectedDish) {
@@ -48,7 +48,7 @@ export const chooseDish = (dishId: string): TThunk =>
       }
 
       if (isSelected) {
-        dispatch(dishesActions.deselect({ dishId }));
+        dispatch(dishesActions.unselect({ dishId }));
         dispatch(uiActions.selectDish({ dishId: null }));
       }
     });
@@ -101,7 +101,7 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk =>
           }));
           dispatch(dishesActions.removeAllIngredients({ dishId }));
           dispatch(uiActions.selectDish({ dishId: null }));
-          dispatch(dishesActions.deselect({ dishId }));
+          dispatch(dishesActions.unselect({ dishId }));
         }
 
         if (!areEqual) {
@@ -111,7 +111,7 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk =>
           }));
           dispatch(dishesActions.removeAllIngredients({ dishId }));
           dispatch(uiActions.selectDish({ dishId: null }));
-          dispatch(dishesActions.deselect({ dishId }));
+          dispatch(dishesActions.unselect({ dishId }));
           dispatch(profileActions.decreaseLive());
         }
 
@@ -149,3 +149,18 @@ const checkForRemoveTable =
       dispatch(clientsActions.removeClients({ clientsIds: tableClientsIds }));
     }
   }
+
+
+export const clearDish = (): TThunk =>
+  (dispatch, getState) => {
+    batch(() => {
+      const { ui } = getState();
+      const dishId = ui.selectedDish;
+
+      if (dishId) {
+        dispatch(dishesActions.unselect({ dishId }));
+        dispatch(dishesActions.removeAllIngredients({ dishId }));
+        dispatch(uiActions.selectDish({ dishId: null }));
+      }
+    });
+  };

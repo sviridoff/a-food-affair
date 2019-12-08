@@ -50,7 +50,7 @@ const slice = createSlice({
       return state;
     },
 
-    deselect(state, action: PayloadAction<TSelectProps>) {
+    unselect(state, action: PayloadAction<TSelectProps>) {
       const dishId = action.payload.dishId;
 
       state.data[dishId].isSelected = false;
@@ -82,18 +82,6 @@ const slice = createSlice({
 
       return state;
     },
-
-    resetSelected(state) {
-      const selectedDish = Object.values(state.data)
-        .find(dish => dish.isSelected);
-
-      if (selectedDish) {
-        state.data[selectedDish.id].isSelected = false;
-        state.ingredients[selectedDish.id] = [];
-      }
-
-      return state;
-    }
   }
 });
 
