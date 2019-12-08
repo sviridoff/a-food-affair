@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TTables } from '../types';
 
@@ -21,10 +21,25 @@ const initialState: TTables = {
   },
 };
 
+type TRemoveTableProps = {
+  tableId: string,
+};
+
 const slice = createSlice({
   name: 'tables',
   initialState,
-  reducers: {}
+  reducers: {
+    removeTable(state, action: PayloadAction<TRemoveTableProps>) {
+      const tableId = action.payload.tableId;
+
+      delete state.data[tableId];
+      delete state.clients[tableId];
+
+      return state;
+    }
+  }
 });
+
+export const actions = slice.actions;
 
 export default slice.reducer;

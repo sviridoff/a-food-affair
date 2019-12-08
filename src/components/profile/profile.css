@@ -8,6 +8,7 @@
 .profile__lives {
   display: inline-block;
   padding: 5px;
+  margin-right: 5px;
 }
 
 .profile__lives__logo {
@@ -19,3 +20,19 @@
   display: inline-block;
   vertical-align: bottom;
 }
+
+.profile__coins {
+  display: inline-block;
+  padding: 5px;
+}
+
+.profile__coins__logo {
+  background: var(--border-color);
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: 100%;
+  display: inline-block;
+  vertical-align: bottom;
+}
+

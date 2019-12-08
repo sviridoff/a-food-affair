@@ -3,8 +3,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './table.css';
-import { TState, TTable, TClient } from '../../types';
-import { makeSelectClients } from '../../selectors';
+import { TState, TTable } from '../../types';
+import { selectClients } from '../../selectors';
 import Client from '../client/Client';
 
 type TOwnProps = {
@@ -12,23 +12,20 @@ type TOwnProps = {
   isLast: boolean,
 };
 
-const makeMapStateToProps = () => {
-  const selectClients = makeSelectClients();
-
-  return (state: TState, ownProps: TOwnProps) => ({
+const mapStateToProps =
+  (state: TState, ownProps: TOwnProps) => ({
     clients: selectClients(state, ownProps.table.id),
   });
-};
 
-const connector = connect(makeMapStateToProps);
+const connector = connect(mapStateToProps);
 
 type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
-const clientsList = (clients: TClient[]) =>
-  clients.map((client, index) =>
+const clientsList = (clients: string[]) =>
+  clients.map((id, index) =>
     <Client
-      key={client.id}
-      clientId={client.id}
+      key={id}
+      clientId={id}
       isLast={index + 1 === clients.length} />);
 
 const tableClass = (isLast: boolean) =>

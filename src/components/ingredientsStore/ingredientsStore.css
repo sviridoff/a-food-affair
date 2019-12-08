@@ -3,8 +3,8 @@
   position: absolute;
   width: 100%;
   background: var(--background-color);
-  min-height: 100vh;
-  height: 100vh;
+  min-height: 50vh;
+  height: 50vh;
   display: none;
 }
 

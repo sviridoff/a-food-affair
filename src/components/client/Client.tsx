@@ -39,6 +39,7 @@ const Client: FC<TProps> =
       )}
       className={clientClass(isLast)}>
       {client.status}
+      {recipeId}
       <div className='client__clock'></div>
     </div>;
 

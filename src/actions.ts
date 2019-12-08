@@ -1,25 +1,27 @@
-import { TThunk, ClientStatus } from "./types"
+import { TThunk, ClientStatus, TState } from "./types"
 import { batch } from "react-redux";
 
 import { actions as dishesActions } from './reducers/dishesReducer';
 import { actions as uiActions } from './reducers/uiReducer';
 import { actions as clientsActions } from './reducers/clientsReducer';
+import { actions as tablesActions } from './reducers/tablesReducer';
+import { actions as profileActions } from './reducers/profileReducer';
 
 export const chooseDish = (dishId: string): TThunk =>
   (dispatch, getState) => {
-    const { dishes, ui } = getState();
-    const isSelected = dishes.data[dishId].isSelected;
+    batch(() => {
+      const { dishes, ui } = getState();
+      const isSelected = dishes.data[dishId].isSelected;
 
-    if (!isSelected) {
-      const selectedDish = ui.selectedDish && dishId !== ui.selectedDish
-        ? ui.selectedDish
-        : null;
+      if (!isSelected) {
+        const selectedDish = ui.selectedDish && dishId !== ui.selectedDish
+          ? ui.selectedDish
+          : null;
 
-      if (selectedDish) {
-        const ingredients =
-          dishes.ingredients[selectedDish] || [];
+        if (selectedDish) {
+          const ingredients =
+            dishes.ingredients[selectedDish] || [];
 
-        batch(() => {
           dispatch(dishesActions.addIngredients({
             dishId,
             ingredients,
@@ -27,35 +29,29 @@ export const chooseDish = (dishId: string): TThunk =>
           dispatch(dishesActions.removeAllIngredients({ dishId: selectedDish }));
           dispatch(uiActions.selectDish({ dishId: null }));
           dispatch(dishesActions.deselect({ dishId: selectedDish }));
-        });
-      }
+        }
 
-      if (!selectedDish) {
-        const ingredients = dishes.ingredients[dishId] || [];
-        const hasIngredients = Boolean(ingredients.length);
+        if (!selectedDish) {
+          const ingredients = dishes.ingredients[dishId] || [];
+          const hasIngredients = Boolean(ingredients.length);
 
-        if (hasIngredients) {
-          batch(() => {
+          if (hasIngredients) {
             dispatch(dishesActions.select({ dishId }));
             dispatch(uiActions.selectDish({ dishId }));
-          });
-        }
+          }
 
-        if (!hasIngredients) {
-          batch(() => {
+          if (!hasIngredients) {
             dispatch(uiActions.selectDish({ dishId }));
             dispatch(uiActions.showIngredientsStore());
-          });
+          }
         }
       }
-    }
 
-    if (isSelected) {
-      batch(() => {
+      if (isSelected) {
         dispatch(dishesActions.deselect({ dishId }));
         dispatch(uiActions.selectDish({ dishId: null }));
-      });
-    }
+      }
+    });
   };
 
 export const chooseIngredient = (ingredientId: string): TThunk =>
@@ -87,18 +83,18 @@ export const closeIngredientsStore = (): TThunk =>
 
 export const chooseClient = (clientId: string, recipeId: string): TThunk =>
   (dispatch, getState) => {
-    const { ui, recipes, dishes } = getState();
-    const dishId = ui.selectedDish;
+    batch(() => {
+      const { ui, recipes, dishes } = getState();
+      const dishId = ui.selectedDish;
 
-    if (dishId) {
-      const recipeIngredients = recipes.ingredients[recipeId].slice().slice();
-      const dishIngredients = dishes.ingredients[dishId].slice().sort();
-      const areEqual = recipeIngredients.length === dishIngredients.length
-        && recipeIngredients
-          .every((ingredient, index) => ingredient === dishIngredients[index]);
+      if (dishId) {
+        const recipeIngredients = recipes.ingredients[recipeId].slice().slice();
+        const dishIngredients = dishes.ingredients[dishId].slice().sort();
+        const areEqual = recipeIngredients.length === dishIngredients.length
+          && recipeIngredients
+            .every((ingredient, index) => ingredient === dishIngredients[index]);
 
-      if (areEqual) {
-        batch(() => {
+        if (areEqual) {
           dispatch(clientsActions.updateStatus({
             status: ClientStatus.OK,
             clientId,
@@ -106,11 +102,9 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk =>
           dispatch(dishesActions.removeAllIngredients({ dishId }));
           dispatch(uiActions.selectDish({ dishId: null }));
           dispatch(dishesActions.deselect({ dishId }));
-        });
-      }
+        }
 
-      if (!areEqual) {
-        batch(() => {
+        if (!areEqual) {
           dispatch(clientsActions.updateStatus({
             status: ClientStatus.KO,
             clientId,
@@ -118,14 +112,40 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk =>
           dispatch(dishesActions.removeAllIngredients({ dishId }));
           dispatch(uiActions.selectDish({ dishId: null }));
           dispatch(dishesActions.deselect({ dishId }));
-        });
-      }
-    }
+          dispatch(profileActions.decreaseLive());
+        }
 
-    if (!dishId) {
-      batch(() => {
+        checkForRemoveTable(dispatch, getState, clientId);
+      }
+
+      if (!dishId) {
         dispatch(uiActions.selectRecipe({ recipeId }));
         dispatch(uiActions.showRecipes());
-      });
-    }
+      }
+    });
   };
+
+const checkForRemoveTable =
+  (dispatch: any, getState: () => TState, clientId: string) => {
+    const { clients, tables } = getState();
+
+    const tableId = clients.tables[clientId];
+    const tableClientsIds = tables.clients[tableId];
+    const isTableAttended = tableClientsIds
+      .every(id => clients.data[id].status !== ClientStatus.WIP);
+
+    if (isTableAttended) {
+      const coins = tableClientsIds.reduce((prev, id) => {
+        const client = clients.data[id];
+        prev += client.status === ClientStatus.OK ? client.coins : 0;
+        return prev;
+      }, 0);
+
+      if (coins) {
+        dispatch(profileActions.increseCoins({ coins }));
+      }
+
+      dispatch(tablesActions.removeTable({ tableId }));
+      dispatch(clientsActions.removeClients({ clientsIds: tableClientsIds }));
+    }
+  }

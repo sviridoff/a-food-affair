@@ -21,11 +21,14 @@ export type TTables = {
 export type TClient = {
   id: string,
   status: ClientStatus,
+  coins: number,
 };
 
 export type TClients = {
   data: { [key: string]: TClient },
   recipes: { [key: string]: string },
+  ids: string[],
+  tables: { [key: string]: string },
 };
 
 export type TDish = {
@@ -66,6 +69,7 @@ export type TRecipes = {
 
 export type TProfile = {
   lives: number,
+  coins: number,
 }
 
 export type TState = ReturnType<typeof reducer>;

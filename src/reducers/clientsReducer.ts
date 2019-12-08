@@ -7,22 +7,27 @@ const initialState: TClients = {
     c1: {
       id: 'c1',
       status: ClientStatus.WIP,
+      coins: 100,
     },
     c2: {
       id: 'c2',
       status: ClientStatus.WIP,
+      coins: 100,
     },
     c3: {
       id: 'c3',
       status: ClientStatus.WIP,
+      coins: 100,
     },
     c4: {
       id: 'c4',
       status: ClientStatus.WIP,
+      coins: 100,
     },
     c5: {
       id: 'c5',
       status: ClientStatus.WIP,
+      coins: 100,
     },
   },
   recipes: {
@@ -32,21 +37,47 @@ const initialState: TClients = {
     c4: 'r2',
     c5: 'r2',
   },
+  ids: ['c1', 'c2', 'c3', 'c4', 'c5'],
+  tables: {
+    c1: 't1',
+    c2: 't1',
+    c3: 't2',
+    c4: 't3',
+    c5: 't3',
+  }
 };
 
-type TUpdateStatusProp = {
+type TUpdateStatusProps = {
   status: ClientStatus,
   clientId: string,
+};
+
+type TRemoveClientsProps = {
+  clientsIds: string[],
 };
 
 const slice = createSlice({
   name: 'clients',
   initialState,
   reducers: {
-    updateStatus(state, action: PayloadAction<TUpdateStatusProp>) {
+    updateStatus(state, action: PayloadAction<TUpdateStatusProps>) {
       const { status, clientId } = action.payload;
 
       state.data[clientId].status = status;
+
+      return state;
+    },
+
+    removeClients(state, action: PayloadAction<TRemoveClientsProps>) {
+      const clientsIds = action.payload.clientsIds;
+
+      clientsIds.forEach(id => {
+        delete state.data[id];
+        delete state.recipes[id];
+        delete state.tables[id];
+      });
+
+      state.ids = state.ids.filter(id => !clientsIds.includes(id));
 
       return state;
     }

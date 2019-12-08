@@ -25,17 +25,11 @@ export const selectTables = createSelector(
   (tablesData: { [key: string]: TTable }) => Object.values(tablesData),
 );
 
-export const makeSelectClients = () => {
-  const defaultClientsIds: string[] = [];
-
-  return createSelector(
-    (state: TState, tableId: string) =>
-      state.tables.clients[tableId] || defaultClientsIds,
-    (state: TState) => state.clients.data,
-    (clientsIds: string[], clientsData: { [key: string]: TClient }) =>
-      clientsIds.map(id => clientsData[id]),
-  );
-}
+export const selectClients = createSelector(
+  (state: TState, tableId: string) =>
+    state.tables.clients[tableId] || [],
+  (clientsIds: string[]) => clientsIds,
+);
 
 export const makeSelectIngredients = () => {
   const defaultIngredientsIds: string[] = [];
