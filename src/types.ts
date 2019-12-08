@@ -3,6 +3,12 @@ import { Action } from '@reduxjs/toolkit'
 
 import { reducer } from "./store";
 
+export enum ClientStatus {
+  WIP,
+  OK,
+  KO,
+};
+
 export type TTable = {
   id: string,
 };
@@ -14,6 +20,7 @@ export type TTables = {
 
 export type TClient = {
   id: string,
+  status: ClientStatus,
 };
 
 export type TClients = {
@@ -45,6 +52,7 @@ export type TUi = {
   isIngredientsStoreVisible: boolean,
   isRecipesVisible: boolean,
   selectedRecipe: string | null,
+  selectedDish: string | null,
 };
 
 export type TRecipe = {

@@ -6,10 +6,15 @@ const initialState: TUi = {
   isIngredientsStoreVisible: false,
   isRecipesVisible: false,
   selectedRecipe: null,
+  selectedDish: null,
 };
 
 type TSelectRecipeProp = {
-  recipeId: string,
+  recipeId: string | null,
+};
+
+type TSelectDishProp = {
+  dishId: string | null,
 };
 
 const slice = createSlice({
@@ -42,6 +47,10 @@ const slice = createSlice({
 
     selectRecipe(state, action: PayloadAction<TSelectRecipeProp>) {
       state.selectedRecipe = action.payload.recipeId;
+    },
+
+    selectDish(state, action: PayloadAction<TSelectDishProp>) {
+      state.selectedDish = action.payload.dishId;
     }
   }
 });

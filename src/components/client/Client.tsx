@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import { connect, ConnectedProps, batch } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './client.css';
-import { TState } from '../../types';
+import { TState, ClientStatus } from '../../types';
 import { selectClient, selectClientRecipe } from '../../selectors';
-import { actions as uiActions } from '../../reducers/uiReducer';
+import { chooseClient } from '../../actions';
 
 type TOwnProps = {
   clientId: string;
@@ -18,10 +18,7 @@ const mapStateToProps =
     recipeId: selectClientRecipe(state, ownProps.clientId),
   });
 
-const mapDispatchToProps = {
-  selectRecipe: uiActions.selectRecipe,
-  showRecipes: uiActions.showRecipes,
-};
+const mapDispatchToProps = { chooseClient };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
@@ -34,15 +31,14 @@ const clientClass = (isLast: boolean) =>
   );
 
 const Client: FC<TProps> =
-  ({ isLast, selectRecipe, recipeId, showRecipes }) =>
+  ({ isLast, clientId, client, recipeId, chooseClient }) =>
     <div
-      className={clientClass(isLast)}
-      onClick={() => {
-        batch(() => {
-          selectRecipe({ recipeId });
-          showRecipes();
-        });
-      }}>
+      {...(
+        client.status === ClientStatus.WIP
+        && { onClick: () => chooseClient(clientId, recipeId) }
+      )}
+      className={clientClass(isLast)}>
+      {client.status}
       <div className='client__clock'></div>
     </div>;
 
