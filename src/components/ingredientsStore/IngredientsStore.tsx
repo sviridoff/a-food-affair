@@ -51,10 +51,14 @@ const IngredientsStore: FC<TProps> =
   }) =>
     <div
       className={ingredientsStoreClass(isIngredientsStoreVisible)}>
-      {ingredientsList(ingredients, chooseIngredient)}
-      <div
-        className='ingredients-store__close-btn'
-        onClick={closeIngredientsStore}></div>
+      <div className='ingredients-store__list'>
+        {ingredientsList(ingredients, chooseIngredient)}
+      </div>
+      <div className='ingredients-store__controls'>
+        <div
+          className='ingredients-store__close-btn'
+          onClick={closeIngredientsStore}></div>
+      </div>
     </div>
 
 export default connector(IngredientsStore);

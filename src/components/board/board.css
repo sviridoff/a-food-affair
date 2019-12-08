@@ -1,13 +1,4 @@
-:root {
-  --border-color: #483e37;
-  --border-color-selected: #8499ba;
-  --background-color: #e3dedb;
-  --menu-btn-width: 35px;
-  --border-size: 3px;
-  --dish-btn-width: 50px;
-}
-
-.gameplay-container {
+.board {
   background: var(--background-color);
   display: flex;
   flex-direction: column;
@@ -15,14 +6,18 @@
   height: 100vh;
 }
 
-.body-container {
+.board--fade {
+  filter: blur(10px);
+}
+
+.board__body-container {
   position: relative;
   flex: 1;
   display: flex;
   height: 200px;
 }
 
-.game-logo {
+.board__game-logo {
   width: 130px;
   position: absolute;
   top: 5px;
@@ -30,7 +25,7 @@
   z-index: 1;
 }
 
-.menu-controls {
+.board__menu-controls {
   border: 1px dashed var(--border-color);
   padding: 5px;
   bottom: 0px;
@@ -39,7 +34,7 @@
   z-index: 3;
 }
 
-.sound-btn {
+.board__sound-btn {
   background: var(--border-color);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
@@ -49,7 +44,7 @@
   clear: both;
 }
 
-.pause-btn {
+.board__pause-btn {
   background: var(--border-color);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
@@ -59,7 +54,7 @@
   clear: both;
 }
 
-.replay-btn {
+.board__replay-btn {
   background: var(--border-color);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
