@@ -6,5 +6,5 @@
   flex: 1;
   overflow: hidden;
   z-index: 2;
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 0.2rem solid var(--border-color);
 }

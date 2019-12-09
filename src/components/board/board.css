@@ -7,29 +7,29 @@
 }
 
 .board--fade {
-  filter: blur(10px);
+  filter: blur(1rem);
 }
 
 .board__body-container {
   position: relative;
   flex: 1;
   display: flex;
-  height: 200px;
+  height: 20rem;
 }
 
 .board__game-logo {
-  width: 130px;
+  width: 13rem;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 0.5rem;
+  right: 0.5rem;
   z-index: 1;
 }
 
 .board__menu-controls {
-  border: 1px dashed var(--border-color);
-  padding: 5px;
-  bottom: 0px;
-  right: 0px;
+  border: 0.1rem dashed var(--border-color);
+  padding: 0.5rem;
+  bottom: 0;
+  right: 0;
   position: absolute;
   z-index: 3;
 }
@@ -40,7 +40,7 @@
   height: var(--menu-btn-width);
   border-radius: 100%;
   float: left;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   clear: both;
 }
 
@@ -50,7 +50,7 @@
   height: var(--menu-btn-width);
   border-radius: 100%;
   float: left;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   clear: both;
 }
 

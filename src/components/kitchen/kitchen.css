@@ -1,12 +1,12 @@
 .kitchen {
-  border-top: 2px solid var(--background-color);
-  padding: 8px 8px 40px 8px;
+  border-top: 0.2rem solid var(--background-color);
+  padding: 0.8rem 0.8rem 4rem 0.8rem;
   background: repeating-linear-gradient(
     to right,
     #e3a3a1,
-    #e3a3a1 25px,
-    var(--background-color) 25px,
-    var(--background-color) 50px
+    #e3a3a1 2.5rem,
+    var(--background-color) 2.5rem,
+    var(--background-color) 5rem
   );
 }
 
@@ -15,7 +15,7 @@
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
   border-radius: 100%;
-  margin-right: 10px;
+  margin-right: 1rem;
   float: left;
   top: 50%;
   position: relative;

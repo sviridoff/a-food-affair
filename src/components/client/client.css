@@ -1,10 +1,10 @@
 .client {
-  border-radius: 8px;
+  border-radius: 0.8rem;
   border: var(--border-size) solid var(--border-color);
   background: #dfebc7;
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
-  margin-right: 5px;
+  margin-right: 0.5rem;
   float: left;
   position: relative;
 }
@@ -15,10 +15,10 @@
 
 .client__clock {
   background: var(--border-color);
-  width: 15px;
-  height: 15px;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 100%;
-  top: 2px;
-  right: 2px;
+  top: 0.2rem;
+  right: 0.2rem;
   position: absolute;
 }

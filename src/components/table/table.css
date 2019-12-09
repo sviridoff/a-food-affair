@@ -1,11 +1,11 @@
 .table {
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  margin-top: 8px;
-  padding: 5px;
+  border: 0.2rem solid var(--border-color);
+  border-radius: 0.8rem;
+  margin-top: 0.8rem;
+  padding: 0.5rem;
   float: left;
 }
 
 .table--last {
-  margin-bottom: 8px;
+  margin-bottom: 0.8rem;
 }

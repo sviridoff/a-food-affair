@@ -1,10 +1,10 @@
 .dish {
-  border-radius: 8px;
+  border-radius: 0.8rem;
   border: var(--border-size) solid var(--border-color);
   background: #c8e0e8;
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
-  margin-right: 10px;
+  margin-right: 1rem;
   float: left;
 }
 
@@ -18,14 +18,14 @@
 
 .dish__ingredient {
   background: var(--border-color);
-  width: 25px;
-  height: 25px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 100%;
   float: left;
 
   text-align: center;
   color: var(--background-color);
-  line-height: 24px;
+  line-height: 2.4rem;
 }
 
 .dish__ingredient--main {
@@ -33,14 +33,14 @@
   width: 100%;
   height: 100%;
 
-  line-height: 50px;
+  line-height: 5rem;
 }
 
 .dish__ellipsis {
   background: var(--background-color);
-  width: 25px;
-  height: 25px;
-  line-height: 15px;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 1.5rem;
   border-radius: 100%;
   float: left;
 

@@ -16,14 +16,14 @@
 .ingredients-store__list {
   display: flex;
   justify-content: center;
-  margin: 0 20px 20px 40px;
+  margin: 0 2rem 2rem 4rem;
   flex-wrap: wrap;
 }
 
 .ingredients-store__controls {
   display: flex;
   justify-content: flex-end;
-  margin-right: 40px;
+  margin-right: 4rem;
 }
 
 .ingredients-store__ingredient {
@@ -31,12 +31,12 @@
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
   border-radius: 100%;
-  margin-right: 20px;
-  margin-top: 20px;
+  margin-right: 2rem;
+  margin-top: 2rem;
 
   text-align: center;
   color: var(--background-color);
-  line-height: 50px;
+  line-height: 5rem;
 }
 
 .ingredients-store__close-btn {
