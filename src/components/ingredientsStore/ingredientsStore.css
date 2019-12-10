@@ -16,7 +16,8 @@
 .ingredients-store__list {
   display: flex;
   justify-content: center;
-  margin: 0 2rem 2rem 4rem;
+  margin: 0 2rem 4rem 4rem;
+  margin-top: 40%;
   flex-wrap: wrap;
 }
 

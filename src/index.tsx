@@ -8,9 +8,11 @@ import store from './store';
 import IngredientsStore from './components/ingredientsStore/IngredientsStore';
 import Recipes from './components/recipes/Recipes';
 import Board from './components/board/Board';
+import Startpage from './components/startpage/Startpage';
 
 ReactDOM.render(
   <Provider store={store}>
+    <Startpage />
     <Recipes />
     <IngredientsStore />
     <Board />

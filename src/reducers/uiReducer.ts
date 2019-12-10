@@ -5,6 +5,7 @@ import { TUi } from '../types';
 const initialState: TUi = {
   isIngredientsStoreVisible: false,
   isRecipesVisible: false,
+  isStartpageVisible: true,
   selectedRecipe: null,
   selectedDish: null,
 };
@@ -41,6 +42,18 @@ const slice = createSlice({
 
     hideRecipes(state) {
       state.isRecipesVisible = false;
+
+      return state;
+    },
+
+    showStartpage(state) {
+      state.isStartpageVisible = true;
+
+      return state;
+    },
+
+    hideStartpage(state) {
+      state.isStartpageVisible = false;
 
       return state;
     },

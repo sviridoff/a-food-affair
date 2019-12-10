@@ -54,6 +54,7 @@ export type TIngredients = {
 export type TUi = {
   isIngredientsStoreVisible: boolean,
   isRecipesVisible: boolean,
+  isStartpageVisible: boolean,
   selectedRecipe: string | null,
   selectedDish: string | null,
 };
@@ -70,7 +71,18 @@ export type TRecipes = {
 export type TProfile = {
   lives: number,
   coins: number,
-}
+  level: number,
+};
+
+export type TLevel = {
+  id: string,
+  dishes: number,
+};
+
+export type TLevels = {
+  data: { [key: string]: TLevel },
+  recipes: { [key: string]: string[] },
+};
 
 export type TState = ReturnType<typeof reducer>;
 

@@ -36,7 +36,14 @@ const slice = createSlice({
       delete state.clients[tableId];
 
       return state;
-    }
+    },
+
+    restartTables(state) {
+      state.data = {};
+      state.clients = {};
+
+      return state;
+    },
   }
 });
 

@@ -163,4 +163,18 @@ export const clearDish = (): TThunk =>
         dispatch(uiActions.selectDish({ dishId: null }));
       }
     });
+  };       
+
+export const startgame = (): TThunk =>
+  (dispatch, getState) => {
+    batch(() => {
+      const { levels, profile } = getState();
+      const level = levels.data[profile.level];
+
+      dispatch(dishesActions.restartDishes({
+        dishes: level.dishes,
+      }));
+      dispatch(tablesActions.restartTables());
+      dispatch(uiActions.hideStartpage());
+    });
   };

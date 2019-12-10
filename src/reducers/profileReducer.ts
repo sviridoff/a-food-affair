@@ -5,6 +5,7 @@ import { TProfile } from '../types';
 const initialState: TProfile = {
   lives: 8,
   coins: 0,
+  level: 1,
 };
 
 type TIncreaseCoinsProps = {

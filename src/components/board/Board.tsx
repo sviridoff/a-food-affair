@@ -12,7 +12,8 @@ import { TState } from '../../types';
 const mapStateToProps =
   (state: TState) => ({
     isFaded: state.ui.isIngredientsStoreVisible
-      || state.ui.isRecipesVisible,
+      || state.ui.isRecipesVisible
+      || state.ui.isStartpageVisible,
   });
 
 const connector = connect(mapStateToProps);

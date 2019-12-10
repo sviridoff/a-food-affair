@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import uuid from 'uuid/v4';
 
-import { TDishes } from '../types';
+import { TDishes, TDish } from '../types';
 
 const initialState: TDishes = {
   data: {
@@ -12,12 +13,8 @@ const initialState: TDishes = {
       id: 'd2',
       isSelected: false,
     },
-    d3: {
-      id: 'd3',
-      isSelected: false,
-    },
   },
-  ids: ['d1', 'd2', 'd3'],
+  ids: ['d1', 'd2'],
   ingredients: {
     d1: ['i1', 'i2', 'i2', 'i3', 'i4'],
     d2: ['i3'],
@@ -33,9 +30,13 @@ type TAddIngredientsProps = {
   ingredients: string[],
 };
 
-type TAddIngredientProp = {
+type TAddIngredientProps = {
   dishId: string,
   ingredientId: string,
+};
+
+type TCreateDishesProps = {
+  dishes: number,
 };
 
 const slice = createSlice({
@@ -68,7 +69,7 @@ const slice = createSlice({
       return state;
     },
 
-    addIngredient(state, action: PayloadAction<TAddIngredientProp>) {
+    addIngredient(state, action: PayloadAction<TAddIngredientProps>) {
       const { dishId, ingredientId } = action.payload;
 
       state.ingredients[dishId] = state.ingredients[dishId] || [];
@@ -82,6 +83,27 @@ const slice = createSlice({
 
       return state;
     },
+
+    restartDishes(state, action: PayloadAction<TCreateDishesProps>) {
+      const dishes = action.payload.dishes;
+
+      const newDishes: TDish[] = Array.from(new Array(dishes))
+        .map(() => ({
+          id: uuid(),
+          isSelected: false,
+        }));
+
+      state.data = newDishes.reduce<{ [key: string]: TDish }>((prev, curr) => {
+        prev[curr.id] = curr;
+        return prev;
+      }, {});
+
+      state.ids = newDishes.map(dish => dish.id);
+
+      state.ingredients = {};
+
+      return state;
+    }
   }
 });
 

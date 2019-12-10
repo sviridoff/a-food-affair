@@ -8,6 +8,7 @@ import ingredientsReducer from './reducers/ingredientsReducer';
 import uiReducer from './reducers/uiReducer';
 import recipesReducer from './reducers/recipesReducer';
 import profileReducer from './reducers/profileReducer';
+import levelsReducer from './reducers/levelsReducer';
 
 export const reducer = combineReducers({
   clients: clientsReducer,
@@ -17,6 +18,7 @@ export const reducer = combineReducers({
   ui: uiReducer,
   recipes: recipesReducer,
   profile: profileReducer,
+  levels: levelsReducer,
 });
 
 export default configureStore({
