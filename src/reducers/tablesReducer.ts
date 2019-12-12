@@ -25,6 +25,14 @@ type TRemoveTableProps = {
   tableId: string,
 };
 
+type TAddTableProps = {
+  clients: {
+    id: string,
+    recipeId: string,
+  }[],
+  tableId: string,
+};
+
 const slice = createSlice({
   name: 'tables',
   initialState,
@@ -44,6 +52,18 @@ const slice = createSlice({
 
       return state;
     },
+
+    addTable(state, action: PayloadAction<TAddTableProps>) {
+      const { clients, tableId } = action.payload;
+
+      state.data[tableId] = {
+        id: tableId,
+      };
+
+      state.clients[tableId] = clients.map(c => c.id);
+
+      return state;
+    }
   }
 });
 

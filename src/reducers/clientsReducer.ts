@@ -56,6 +56,14 @@ type TRemoveClientsProps = {
   clientsIds: string[],
 };
 
+type TAddClientsProps = {
+  clients: {
+    id: string,
+    recipeId: string,
+  }[],
+  tableId: string,
+};
+
 const slice = createSlice({
   name: 'clients',
   initialState,
@@ -78,6 +86,26 @@ const slice = createSlice({
       });
 
       state.ids = state.ids.filter(id => !clientsIds.includes(id));
+
+      return state;
+    },
+
+    addClients(state, action: PayloadAction<TAddClientsProps>) {
+      const { clients, tableId } = action.payload;
+
+      clients.forEach(client => {
+        state.data[client.id] = {
+          id: client.id,
+          status: ClientStatus.WIP,
+          coins: 100, // TODO.
+        };
+
+        state.recipes[client.id] = client.recipeId;
+
+        state.tables[client.id] = tableId;
+      });
+
+      state.ids = state.ids.concat(clients.map(c => c.id));
 
       return state;
     }

@@ -21,7 +21,11 @@ export const reducer = combineReducers({
   levels: levelsReducer,
 });
 
+const middleware = process.env.NODE_ENV !== 'production' ?
+  [require('redux-immutable-state-invariant').default(), thunk] :
+  [thunk];
+
 export default configureStore({
   reducer,
-  middleware: [thunk],
+  middleware,
 });

@@ -1,5 +1,6 @@
 import { TThunk, ClientStatus, TState } from "./types"
 import { batch } from "react-redux";
+import uuid from 'uuid/v4';
 
 import { actions as dishesActions } from './reducers/dishesReducer';
 import { actions as uiActions } from './reducers/uiReducer';
@@ -163,7 +164,7 @@ export const clearDish = (): TThunk =>
         dispatch(uiActions.selectDish({ dishId: null }));
       }
     });
-  };       
+  };
 
 export const startgame = (): TThunk =>
   (dispatch, getState) => {
@@ -177,4 +178,32 @@ export const startgame = (): TThunk =>
       dispatch(tablesActions.restartTables());
       dispatch(uiActions.hideStartpage());
     });
+
+    createTable(dispatch, getState);
   };
+
+
+const createTable = (dispatch: any, getState: any) => {
+  const { levels, profile } = getState();
+
+  const levelId = profile.level;
+  const tableId = uuid();
+  const clients = [{
+    id: uuid(),
+    recipeId: levels.recipes[levelId][0],
+  }, {
+    id: uuid(),
+    recipeId: levels.recipes[levelId][0],
+  }];
+
+  batch(() => {
+    dispatch(tablesActions.addTable({
+      clients,
+      tableId,
+    }));
+    dispatch(clientsActions.addClients({
+      clients,
+      tableId,
+    }));
+  });
+}
