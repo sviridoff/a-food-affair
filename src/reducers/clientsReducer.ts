@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { mergeDeepWith, concat } from 'ramda';
 
 import { TClients, ClientStatus } from '../types';
 
@@ -57,11 +58,7 @@ type TRemoveClientsProps = {
 };
 
 type TAddClientsProps = {
-  clients: {
-    id: string,
-    recipeId: string,
-  }[],
-  tableId: string,
+  clients: TClients,
 };
 
 const slice = createSlice({
@@ -90,22 +87,21 @@ const slice = createSlice({
       return state;
     },
 
+    restartClients(state) {
+      state = {
+        data: {},
+        recipes: {},
+        ids: [],
+        tables: {},
+      };
+
+      return state;
+    },
+
     addClients(state, action: PayloadAction<TAddClientsProps>) {
-      const { clients, tableId } = action.payload;
+      const clients = action.payload.clients;
 
-      clients.forEach(client => {
-        state.data[client.id] = {
-          id: client.id,
-          status: ClientStatus.WIP,
-          coins: 100, // TODO.
-        };
-
-        state.recipes[client.id] = client.recipeId;
-
-        state.tables[client.id] = tableId;
-      });
-
-      state.ids = state.ids.concat(clients.map(c => c.id));
+      state = mergeDeepWith(concat, state, clients);
 
       return state;
     }

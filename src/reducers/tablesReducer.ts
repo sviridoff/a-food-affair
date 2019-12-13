@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { mergeDeepWith, concat } from 'ramda';
 
 import { TTables } from '../types';
 
@@ -26,11 +27,7 @@ type TRemoveTableProps = {
 };
 
 type TAddTableProps = {
-  clients: {
-    id: string,
-    recipeId: string,
-  }[],
-  tableId: string,
+  tables: TTables,
 };
 
 const slice = createSlice({
@@ -54,13 +51,9 @@ const slice = createSlice({
     },
 
     addTable(state, action: PayloadAction<TAddTableProps>) {
-      const { clients, tableId } = action.payload;
+      const tables = action.payload.tables;
 
-      state.data[tableId] = {
-        id: tableId,
-      };
-
-      state.clients[tableId] = clients.map(c => c.id);
+      state = mergeDeepWith(concat, state, tables);
 
       return state;
     }

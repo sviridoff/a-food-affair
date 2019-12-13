@@ -77,6 +77,7 @@ export type TProfile = {
 export type TLevel = {
   id: string,
   dishes: number,
+  maxClients: number,
 };
 
 export type TLevels = {

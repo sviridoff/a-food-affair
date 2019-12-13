@@ -7,10 +7,12 @@ const initialState: TLevels = {
     '1': {
       id: '1',
       dishes: 2,
+      maxClients: 3,
     },
     '2': {
       id: '2',
       dishes: 2,
+      maxClients: 3,
     },
   },
   recipes: {

@@ -1,7 +1,7 @@
-import { TThunk, ClientStatus, TState } from "./types"
-import { batch } from "react-redux";
+import { batch } from 'react-redux';
 import uuid from 'uuid/v4';
 
+import { TThunk, ClientStatus, TState, TClients, TTables, TLevel } from './types'
 import { actions as dishesActions } from './reducers/dishesReducer';
 import { actions as uiActions } from './reducers/uiReducer';
 import { actions as clientsActions } from './reducers/clientsReducer';
@@ -176,6 +176,7 @@ export const startgame = (): TThunk =>
         dishes: level.dishes,
       }));
       dispatch(tablesActions.restartTables());
+      dispatch(clientsActions.restartClients());
       dispatch(uiActions.hideStartpage());
     });
 
@@ -187,23 +188,47 @@ const createTable = (dispatch: any, getState: any) => {
   const { levels, profile } = getState();
 
   const levelId = profile.level;
+  const level: TLevel = levels.data[levelId];
   const tableId = uuid();
-  const clients = [{
-    id: uuid(),
-    recipeId: levels.recipes[levelId][0],
-  }, {
-    id: uuid(),
-    recipeId: levels.recipes[levelId][0],
-  }];
+  const clientsIds = Array.from(new Array(level.maxClients))
+    .map(uuid);
+
+  const clients: TClients = {
+    data: {},
+    recipes: {},
+    ids: [],
+    tables: {},
+  };
+
+  clientsIds.forEach(clientId => {
+    const recipe = Math.floor(Math.random() * levels.recipes[levelId].length);
+
+    clients.data[clientId] = {
+      id: clientId,
+      status: ClientStatus.WIP,
+      coins: 100,
+    };
+
+    clients.recipes[clientId] = levels.recipes[levelId][recipe];
+
+    clients.ids.push(clientId);
+
+    clients.tables[clientId] = tableId;
+  });
+
+  const tables: TTables = {
+    data: {
+      [tableId]: {
+        id: tableId,
+      }
+    },
+    clients: {
+      [tableId]: clientsIds,
+    },
+  };
 
   batch(() => {
-    dispatch(tablesActions.addTable({
-      clients,
-      tableId,
-    }));
-    dispatch(clientsActions.addClients({
-      clients,
-      tableId,
-    }));
+    dispatch(clientsActions.addClients({ clients }));
+    dispatch(tablesActions.addTable({ tables }));
   });
 }
