@@ -16,6 +16,7 @@ export type TTable = {
 export type TTables = {
   data: { [key: string]: TTable },
   clients: { [key: string]: string[] },
+  ids: string[],
 };
 
 export type TClient = {

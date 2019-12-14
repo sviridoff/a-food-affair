@@ -3,6 +3,9 @@ import { mergeDeepWith, concat } from 'ramda';
 
 import { TClients, ClientStatus } from '../types';
 
+const concatValues = (l: any, r: any) =>
+  Array.isArray(l) ? concat(l, r) : r;
+
 const initialState: TClients = {
   data: {
     c1: {
@@ -101,7 +104,7 @@ const slice = createSlice({
     addClients(state, action: PayloadAction<TAddClientsProps>) {
       const clients = action.payload.clients;
 
-      state = mergeDeepWith(concat, state, clients);
+      state = mergeDeepWith(concatValues, state, clients);
 
       return state;
     }

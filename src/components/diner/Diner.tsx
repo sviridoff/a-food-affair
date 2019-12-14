@@ -2,29 +2,29 @@ import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import './diner.css';
-import { TState, TTable } from '../../types';
-import { selectTables } from '../../selectors';
+import { TState } from '../../types';
+import { selectTablesIds } from '../../selectors';
 import Table from '../table/Table';
 
 const mapStateToProps = (state: TState) => ({
-  tables: selectTables(state),
+  tablesIds: selectTablesIds(state),
 });
 
 const connector = connect(mapStateToProps);
 
 type TProps = ConnectedProps<typeof connector>;
 
-const tablesList = (tables: TTable[]) =>
-  tables.map((table, index) =>
+const tablesList = (tablesIds: string[]) =>
+  tablesIds.map((tableId, index) =>
     <Table
-      isLast={tables.length === index + 1}
-      table={table}
-      key={table.id} />);
+      isLast={tablesIds.length === index + 1}
+      tableId={tableId}
+      key={tableId} />);
 
 const Diner: FC<TProps> =
-  ({ tables }) =>
+  ({ tablesIds }) =>
     <div className='diner'>
-      {tablesList(tables)}
+      {tablesList(tablesIds)}
     </div>;
 
 export default connector(Diner);

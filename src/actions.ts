@@ -181,6 +181,8 @@ export const startgame = (): TThunk =>
     });
 
     createTable(dispatch, getState);
+    createTable(dispatch, getState);
+    createTable(dispatch, getState);
   };
 
 
@@ -190,8 +192,9 @@ const createTable = (dispatch: any, getState: any) => {
   const levelId = profile.level;
   const level: TLevel = levels.data[levelId];
   const tableId = uuid();
-  const clientsIds = Array.from(new Array(level.maxClients))
-    .map(uuid);
+  const clientsRandom = Math.floor(Math.random() * (level.maxClients - 1)) + 1;
+  const clientsIds = Array.from(new Array(clientsRandom))
+    .map(() => uuid());
 
   const clients: TClients = {
     data: {},
@@ -225,6 +228,7 @@ const createTable = (dispatch: any, getState: any) => {
     clients: {
       [tableId]: clientsIds,
     },
+    ids: [tableId],
   };
 
   batch(() => {

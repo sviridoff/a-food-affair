@@ -20,6 +20,8 @@ export const selectDish = createSelector(
   (dish: TDish) => dish,
 );
 
+export const selectTablesIds = (state: TState) => state.tables.ids;
+
 export const selectTables = createSelector(
   (state: TState) => state.tables.data,
   (tablesData: { [key: string]: TTable }) => Object.values(tablesData),

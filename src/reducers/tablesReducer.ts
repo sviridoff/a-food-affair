@@ -3,6 +3,9 @@ import { mergeDeepWith, concat } from 'ramda';
 
 import { TTables } from '../types';
 
+const concatValues = (l: any, r: any) =>
+  Array.isArray(l) ? concat(l, r) : r;
+
 const initialState: TTables = {
   data: {
     t1: {
@@ -20,6 +23,7 @@ const initialState: TTables = {
     t2: ['c3'],
     t3: ['c4', 'c5'],
   },
+  ids: ['t1', 't2', 't3']
 };
 
 type TRemoveTableProps = {
@@ -44,8 +48,11 @@ const slice = createSlice({
     },
 
     restartTables(state) {
-      state.data = {};
-      state.clients = {};
+      state = {
+        data: {},
+        clients: {},
+        ids: [],
+      };
 
       return state;
     },
@@ -53,7 +60,7 @@ const slice = createSlice({
     addTable(state, action: PayloadAction<TAddTableProps>) {
       const tables = action.payload.tables;
 
-      state = mergeDeepWith(concat, state, tables);
+      state = mergeDeepWith(concatValues, state, tables);
 
       return state;
     }

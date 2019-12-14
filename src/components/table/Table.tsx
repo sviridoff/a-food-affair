@@ -3,18 +3,18 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './table.css';
-import { TState, TTable } from '../../types';
+import { TState } from '../../types';
 import { selectClients } from '../../selectors';
 import Client from '../client/Client';
 
 type TOwnProps = {
-  table: TTable,
+  tableId: string,
   isLast: boolean,
 };
 
 const mapStateToProps =
   (state: TState, ownProps: TOwnProps) => ({
-    clients: selectClients(state, ownProps.table.id),
+    clients: selectClients(state, ownProps.tableId),
   });
 
 const connector = connect(mapStateToProps);
