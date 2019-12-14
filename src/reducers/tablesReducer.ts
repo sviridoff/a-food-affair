@@ -43,6 +43,7 @@ const slice = createSlice({
 
       delete state.data[tableId];
       delete state.clients[tableId];
+      state.ids = state.ids.filter(id => tableId !== id);
 
       return state;
     },
