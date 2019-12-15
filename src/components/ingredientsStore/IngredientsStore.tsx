@@ -3,13 +3,13 @@ import classnames from 'classnames';
 
 import './ingredientsStore.css';
 import { connect, ConnectedProps } from 'react-redux';
-import { TState, TIngredient, VisibleModalType } from '../../types';
-import { selectIngredients } from '../../selectors';
+import { TState, VisibleModalType } from '../../types';
+import { selectLevelIngredientsIds } from '../../selectors';
 import { chooseIngredient, closeIngredientsStore } from '../../actions';
 
 const mapStateToProps =
   (state: TState) => ({
-    ingredients: selectIngredients(state),
+    ingredientsIds: selectLevelIngredientsIds(state),
     isVisible:
       state.ui.modalType === VisibleModalType.INGREDIENTS_STORE,
   });
@@ -25,15 +25,15 @@ type TProps = ConnectedProps<typeof connector>;
 
 const ingredientsList =
   (
-    ingredients: TIngredient[],
+    ingredientsIds: string[],
     chooseIngredient: (ingredientId: string) => void,
   ) =>
-    ingredients.map(ingredient =>
+    ingredientsIds.map(ingredientId =>
       <div
         className='ingredients-store__ingredient'
-        key={ingredient.id}
-        onClick={() => chooseIngredient(ingredient.id)}>
-        {ingredient.id}
+        key={ingredientId}
+        onClick={() => chooseIngredient(ingredientId)}>
+        {ingredientId}
       </div>
     );
 
@@ -46,7 +46,7 @@ const ingredientsStoreClass =
 
 const IngredientsStore: FC<TProps> =
   ({
-    ingredients,
+    ingredientsIds,
     isVisible,
     chooseIngredient,
     closeIngredientsStore,
@@ -54,7 +54,7 @@ const IngredientsStore: FC<TProps> =
     <div
       className={ingredientsStoreClass(isVisible)}>
       <div className='ingredients-store__list'>
-        {ingredientsList(ingredients, chooseIngredient)}
+        {ingredientsList(ingredientsIds, chooseIngredient)}
       </div>
       <div className='ingredients-store__controls'>
         <div

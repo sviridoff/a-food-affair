@@ -55,10 +55,16 @@ export const makeSelectIngredients = () => {
   );
 };
 
-export const selectIngredients = createSelector(
-  (state: TState) => state.ingredients.data,
-  (ingredientsData: { [key: string]: TIngredient }) =>
-    Object.values(ingredientsData),
+export const selectLevelIngredientsIds = createSelector(
+  (state: TState) => state.profile.level,
+  (state: TState) => state.levels.recipes,
+  (state: TState) => state.recipes.ingredients,
+  (
+    level: number,
+    levelsRecipes: { [key: string]: string[] },
+    recipeIngredients: { [key: string]: string[] },
+  ) => levelsRecipes[level]
+    .flatMap(recipeId => recipeIngredients[recipeId]),
 );
 
 export const selectClient = createSelector(
