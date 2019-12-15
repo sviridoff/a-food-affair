@@ -3,14 +3,16 @@ import classnames from 'classnames';
 
 import './ingredientsStore.css';
 import { connect, ConnectedProps } from 'react-redux';
-import { TState, TIngredient } from '../../types';
+import { TState, TIngredient, VisibleModalType } from '../../types';
 import { selectIngredients } from '../../selectors';
 import { chooseIngredient, closeIngredientsStore } from '../../actions';
 
-const mapStateToProps = (state: TState) => ({
-  ingredients: selectIngredients(state),
-  isIngredientsStoreVisible: state.ui.isIngredientsStoreVisible,
-});
+const mapStateToProps =
+  (state: TState) => ({
+    ingredients: selectIngredients(state),
+    isVisible:
+      state.ui.modalType === VisibleModalType.INGREDIENTS_STORE,
+  });
 
 const mapDispatchToProps = {
   chooseIngredient,
@@ -36,21 +38,21 @@ const ingredientsList =
     );
 
 const ingredientsStoreClass =
-  (isIngredientsStoreVisible: boolean) =>
+  (isVisible: boolean) =>
     classnames(
       'ingredients-store',
-      { 'ingredients-store--visible': isIngredientsStoreVisible },
+      { 'ingredients-store--visible': isVisible },
     );
 
 const IngredientsStore: FC<TProps> =
   ({
     ingredients,
-    isIngredientsStoreVisible,
+    isVisible,
     chooseIngredient,
     closeIngredientsStore,
   }) =>
     <div
-      className={ingredientsStoreClass(isIngredientsStoreVisible)}>
+      className={ingredientsStoreClass(isVisible)}>
       <div className='ingredients-store__list'>
         {ingredientsList(ingredients, chooseIngredient)}
       </div>

@@ -52,10 +52,16 @@ export type TIngredients = {
   ids: string[],
 };
 
+export enum VisibleModalType {
+  NONE,
+  INGREDIENTS_STORE,
+  RECIPES,
+  STARTPAGE,
+  RESTARTPAGE,
+};
+
 export type TUi = {
-  isIngredientsStoreVisible: boolean,
-  isRecipesVisible: boolean,
-  isStartpageVisible: boolean,
+  modalType: VisibleModalType,
   selectedRecipe: string | null,
   selectedDish: string | null,
 };

@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { TUi } from '../types';
+import { TUi, VisibleModalType } from '../types';
 
 const initialState: TUi = {
-  isIngredientsStoreVisible: false,
-  isRecipesVisible: false,
-  isStartpageVisible: true,
+  modalType: VisibleModalType.STARTPAGE,
   selectedRecipe: null,
   selectedDish: null,
+};
+
+type TSelectVisibleModalType = {
+  modalType: VisibleModalType,
 };
 
 type TSelectRecipeProp = {
@@ -22,38 +24,11 @@ const slice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    showIngredientsStore(state) {
-      state.isIngredientsStoreVisible = true;
-
-      return state;
-    },
-
-    hideIngredientsStore(state) {
-      state.isIngredientsStoreVisible = false;
-
-      return state;
-    },
-
-    showRecipes(state) {
-      state.isRecipesVisible = true;
-
-      return state;
-    },
-
-    hideRecipes(state) {
-      state.isRecipesVisible = false;
-
-      return state;
-    },
-
-    showStartpage(state) {
-      state.isStartpageVisible = true;
-
-      return state;
-    },
-
-    hideStartpage(state) {
-      state.isStartpageVisible = false;
+    selectVisibleModalType(
+      state,
+      action: PayloadAction<TSelectVisibleModalType>
+    ) {
+      state.modalType = action.payload.modalType;
 
       return state;
     },

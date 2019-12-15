@@ -1,7 +1,14 @@
 import { batch } from 'react-redux';
 import uuid from 'uuid/v4';
 
-import { TThunk, ClientStatus, TState, TClients, TTables, TLevel } from './types'
+import {
+  TThunk,
+  ClientStatus,
+  TClients,
+  TTables,
+  TLevel,
+  VisibleModalType
+} from './types';
 import { actions as dishesActions } from './reducers/dishesReducer';
 import { actions as uiActions } from './reducers/uiReducer';
 import { actions as clientsActions } from './reducers/clientsReducer';
@@ -43,7 +50,9 @@ export const chooseDish = (dishId: string): TThunk<void> =>
 
           if (!hasIngredients) {
             dispatch(uiActions.selectDish({ dishId }));
-            dispatch(uiActions.showIngredientsStore());
+            dispatch(uiActions.selectVisibleModalType({
+              modalType: VisibleModalType.INGREDIENTS_STORE,
+            }));
           }
         }
       }
@@ -64,7 +73,9 @@ export const chooseIngredient = (ingredientId: string): TThunk<void> =>
       batch(() => {
         dispatch(dishesActions.addIngredient({ dishId, ingredientId }));
         dispatch(uiActions.selectDish({ dishId: null }));
-        dispatch(uiActions.hideIngredientsStore());
+        dispatch(uiActions.selectVisibleModalType({
+          modalType: VisibleModalType.NONE,
+        }));
       });
     }
   };
@@ -77,7 +88,9 @@ export const closeIngredientsStore = (): TThunk<void> =>
     if (dishId) {
       batch(() => {
         dispatch(uiActions.selectDish({ dishId: null }));
-        dispatch(uiActions.hideIngredientsStore());
+        dispatch(uiActions.selectVisibleModalType({
+          modalType: VisibleModalType.NONE,
+        }));
       });
     }
   };
@@ -89,7 +102,7 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =
       const dishId = ui.selectedDish;
 
       if (dishId) {
-        const recipeIngredients = recipes.ingredients[recipeId].slice().slice();
+        const recipeIngredients = recipes.ingredients[recipeId].slice().sort();
         const dishIngredients = dishes.ingredients[dishId].slice().sort();
         const areEqual = recipeIngredients.length === dishIngredients.length
           && recipeIngredients
@@ -100,9 +113,6 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =
             status: ClientStatus.OK,
             clientId,
           }));
-          dispatch(dishesActions.removeAllIngredients({ dishId }));
-          dispatch(uiActions.selectDish({ dishId: null }));
-          dispatch(dishesActions.unselect({ dishId }));
         }
 
         if (!areEqual) {
@@ -110,24 +120,38 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =
             status: ClientStatus.KO,
             clientId,
           }));
-          dispatch(dishesActions.removeAllIngredients({ dishId }));
-          dispatch(uiActions.selectDish({ dishId: null }));
-          dispatch(dishesActions.unselect({ dishId }));
           dispatch(profileActions.decreaseLive());
+          dispatch(checkForEndgame());
         }
 
-        checkForRemoveTable(dispatch, getState, clientId);
+        dispatch(dishesActions.removeAllIngredients({ dishId }));
+        dispatch(uiActions.selectDish({ dishId: null }));
+        dispatch(dishesActions.unselect({ dishId }));
+        dispatch(checkForRemoveTable(clientId));
       }
 
       if (!dishId) {
         dispatch(uiActions.selectRecipe({ recipeId }));
-        dispatch(uiActions.showRecipes());
+        dispatch(uiActions.selectVisibleModalType({
+          modalType: VisibleModalType.RECIPES,
+        }));
       }
     });
   };
 
-const checkForRemoveTable =
-  (dispatch: any, getState: () => TState, clientId: string) => {
+const checkForEndgame = (): TThunk<void> =>
+  (dispatch, getState) => {
+    const { profile } = getState();
+
+    if (profile.lives < 0) {
+      dispatch(uiActions.selectVisibleModalType({
+        modalType: VisibleModalType.RESTARTPAGE,
+      }));
+    }
+  }
+
+const checkForRemoveTable = (clientId: string): TThunk<void> =>
+  (dispatch, getState) => {
     const { clients, tables } = getState();
 
     const tableId = clients.tables[clientId];
@@ -179,7 +203,10 @@ export const startgame = (): TThunk<void> =>
       }));
       dispatch(tablesActions.restartTables());
       dispatch(clientsActions.restartClients());
-      dispatch(uiActions.hideStartpage());
+      dispatch(profileActions.restartProfile());
+      dispatch(uiActions.selectVisibleModalType({
+        modalType: VisibleModalType.NONE,
+      }));
     });
 
     timer = window.setInterval(() => {
@@ -192,7 +219,6 @@ export const startgame = (): TThunk<void> =>
       }
     }, 500);
   };
-
 
 export const createTable = (): TThunk<void> =>
   (dispatch, getState) => {

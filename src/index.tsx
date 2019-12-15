@@ -9,10 +9,12 @@ import IngredientsStore from './components/ingredientsStore/IngredientsStore';
 import Recipes from './components/recipes/Recipes';
 import Board from './components/board/Board';
 import Startpage from './components/startpage/Startpage';
+import Restartpage from './components/restartpage/Restartpage';
 
 ReactDOM.render(
   <Provider store={store}>
     <Startpage />
+    <Restartpage />
     <Recipes />
     <IngredientsStore />
     <Board />

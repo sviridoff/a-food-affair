@@ -7,13 +7,11 @@ import Profile from '../profile/Profile';
 import Diner from '../diner/Diner';
 import Kitchen from '../kitchen/Kitchen';
 import { connect, ConnectedProps } from 'react-redux';
-import { TState } from '../../types';
+import { TState, VisibleModalType } from '../../types';
 
 const mapStateToProps =
   (state: TState) => ({
-    isFaded: state.ui.isIngredientsStoreVisible
-      || state.ui.isRecipesVisible
-      || state.ui.isStartpageVisible,
+    isFaded: state.ui.modalType !== VisibleModalType.NONE,
   });
 
 const connector = connect(mapStateToProps);

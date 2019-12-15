@@ -2,8 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TProfile } from '../types';
 
+const defaultLives = 1;
+
 const initialState: TProfile = {
-  lives: 8,
+  lives: defaultLives,
   coins: 0,
   level: 1,
   tables: 0,
@@ -33,6 +35,17 @@ const slice = createSlice({
 
     increaseTables(state) {
       state.tables += 1;
+
+      return state;
+    },
+
+    restartProfile(state) {
+      state = {
+        tables: 0,
+        coins: 0,
+        lives: defaultLives,
+        level: state.level,
+      };
 
       return state;
     }

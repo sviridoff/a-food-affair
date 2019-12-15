@@ -1,0 +1,28 @@
+.restartpage {
+  z-index: 6;
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.restartpage--visible {
+  display: flex;
+}
+
+.restartpage__body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 40%;
+}
+
+.restartpage__btn {
+  background: var(--border-color);
+  width: 6rem;
+  height: 6rem;
+  border-radius: 100%;
+}

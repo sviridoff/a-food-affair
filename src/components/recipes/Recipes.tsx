@@ -2,18 +2,20 @@ import React, { FC } from 'react';
 import classnames from 'classnames';
 
 import './recipes.css';
-import { TState, TIngredient } from '../../types';
+import { TState, TIngredient, VisibleModalType } from '../../types';
 import { connect, ConnectedProps } from 'react-redux';
 import { selectClientIngredients } from '../../selectors';
 import { actions as uiActions } from '../../reducers/uiReducer';
 
 const mapStateToProps = (state: TState) => ({
   ingredients: selectClientIngredients(state),
-  isRecipesVisible: state.ui.isRecipesVisible,
+  isVisible: state.ui.modalType === VisibleModalType.RECIPES,
 });
 
 const mapDispatchToProps = {
-  hideRecipes: uiActions.hideRecipes,
+  hideRecipes: () => uiActions.selectVisibleModalType({
+    modalType: VisibleModalType.NONE,
+  }),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -31,15 +33,15 @@ const ingredientsList =
     );
 
 const recipesClass =
-  (isRecipesVisible: boolean) =>
+  (isVisible: boolean) =>
     classnames(
       'recipes',
-      { 'recipes--visible': isRecipesVisible },
+      { 'recipes--visible': isVisible },
     );
 
 const Recipes: FC<TProps> =
-  ({ ingredients, isRecipesVisible, hideRecipes }) =>
-    <div className={recipesClass(isRecipesVisible)}>
+  ({ ingredients, isVisible, hideRecipes }) =>
+    <div className={recipesClass(isVisible)}>
       <div className='recipe__list'>
         {ingredientsList(ingredients)}
       </div>
