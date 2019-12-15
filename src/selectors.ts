@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { reverse } from 'ramda';
 
 import {
   TState,
@@ -20,7 +21,10 @@ export const selectDish = createSelector(
   (dish: TDish) => dish,
 );
 
-export const selectTablesIds = (state: TState) => state.tables.ids;
+export const selectTablesIds = createSelector(
+  (state: TState) => state.tables.ids,
+  (ids: string[]) => reverse(ids),
+);
 
 export const selectTables = createSelector(
   (state: TState) => state.tables.data,

@@ -8,7 +8,7 @@ import { actions as clientsActions } from './reducers/clientsReducer';
 import { actions as tablesActions } from './reducers/tablesReducer';
 import { actions as profileActions } from './reducers/profileReducer';
 
-export const chooseDish = (dishId: string): TThunk =>
+export const chooseDish = (dishId: string): TThunk<void> =>
   (dispatch, getState) => {
     batch(() => {
       const { dishes, ui } = getState();
@@ -55,7 +55,7 @@ export const chooseDish = (dishId: string): TThunk =>
     });
   };
 
-export const chooseIngredient = (ingredientId: string): TThunk =>
+export const chooseIngredient = (ingredientId: string): TThunk<void> =>
   (dispatch, getState) => {
     const { ui } = getState();
     const dishId = ui.selectedDish;
@@ -69,7 +69,7 @@ export const chooseIngredient = (ingredientId: string): TThunk =>
     }
   };
 
-export const closeIngredientsStore = (): TThunk =>
+export const closeIngredientsStore = (): TThunk<void> =>
   (dispatch, getState) => {
     const { ui } = getState();
     const dishId = ui.selectedDish;
@@ -82,7 +82,7 @@ export const closeIngredientsStore = (): TThunk =>
     }
   };
 
-export const chooseClient = (clientId: string, recipeId: string): TThunk =>
+export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =>
   (dispatch, getState) => {
     batch(() => {
       const { ui, recipes, dishes } = getState();
@@ -152,7 +152,7 @@ const checkForRemoveTable =
   }
 
 
-export const clearDish = (): TThunk =>
+export const clearDish = (): TThunk<void> =>
   (dispatch, getState) => {
     batch(() => {
       const { ui } = getState();
@@ -166,12 +166,14 @@ export const clearDish = (): TThunk =>
     });
   };
 
-export const startgame = (): TThunk =>
-  (dispatch, getState) => {
-    batch(() => {
-      const { levels, profile } = getState();
-      const level = levels.data[profile.level];
+let timer: number;
 
+export const startgame = (): TThunk<void> =>
+  (dispatch, getState) => {
+    const { levels, profile } = getState();
+    const level = levels.data[profile.level];
+
+    batch(() => {
       dispatch(dishesActions.restartDishes({
         dishes: level.dishes,
       }));
@@ -180,59 +182,67 @@ export const startgame = (): TThunk =>
       dispatch(uiActions.hideStartpage());
     });
 
-    createTable(dispatch, getState);
-    createTable(dispatch, getState);
-    createTable(dispatch, getState);
+    timer = window.setInterval(() => {
+      dispatch(createTable());
+
+      const { profile } = getState();
+
+      if (profile.tables === level.maxTables) {
+        window.clearInterval(timer);
+      }
+    }, 500);
   };
 
 
-const createTable = (dispatch: any, getState: any) => {
-  const { levels, profile } = getState();
+export const createTable = (): TThunk<void> =>
+  (dispatch, getState) => {
+    const { levels, profile } = getState();
 
-  const levelId = profile.level;
-  const level: TLevel = levels.data[levelId];
-  const tableId = uuid();
-  const clientsRandom = Math.floor(Math.random() * (level.maxClients - 1)) + 1;
-  const clientsIds = Array.from(new Array(clientsRandom))
-    .map(() => uuid());
+    const levelId = profile.level;
+    const level: TLevel = levels.data[levelId];
+    const tableId = uuid();
+    const clientsRandom = Math.floor(Math.random() * level.maxClients) + 1;
+    const clientsIds = Array.from(new Array(clientsRandom))
+      .map(() => uuid());
 
-  const clients: TClients = {
-    data: {},
-    recipes: {},
-    ids: [],
-    tables: {},
-  };
-
-  clientsIds.forEach(clientId => {
-    const recipe = Math.floor(Math.random() * levels.recipes[levelId].length);
-
-    clients.data[clientId] = {
-      id: clientId,
-      status: ClientStatus.WIP,
-      coins: 100,
+    const clients: TClients = {
+      data: {},
+      recipes: {},
+      ids: [],
+      tables: {},
     };
 
-    clients.recipes[clientId] = levels.recipes[levelId][recipe];
+    clientsIds.forEach(clientId => {
+      const recipe = Math.floor(Math.random() * levels.recipes[levelId].length);
 
-    clients.ids.push(clientId);
+      clients.data[clientId] = {
+        id: clientId,
+        status: ClientStatus.WIP,
+        coins: 100,
+      };
 
-    clients.tables[clientId] = tableId;
-  });
+      clients.recipes[clientId] = levels.recipes[levelId][recipe];
 
-  const tables: TTables = {
-    data: {
-      [tableId]: {
-        id: tableId,
-      }
-    },
-    clients: {
-      [tableId]: clientsIds,
-    },
-    ids: [tableId],
-  };
+      clients.ids.push(clientId);
 
-  batch(() => {
-    dispatch(clientsActions.addClients({ clients }));
-    dispatch(tablesActions.addTable({ tables }));
-  });
-}
+      clients.tables[clientId] = tableId;
+    });
+
+    const tables: TTables = {
+      data: {
+        [tableId]: {
+          id: tableId,
+        }
+      },
+      clients: {
+        [tableId]: clientsIds,
+      },
+      ids: [tableId],
+    };
+
+    batch(() => {
+      dispatch(profileActions.increaseTables());
+      dispatch(clientsActions.addClients({ clients }));
+      dispatch(tablesActions.addTable({ tables }));
+    });
+  }

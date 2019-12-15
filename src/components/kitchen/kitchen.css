@@ -1,6 +1,6 @@
 .kitchen {
   border-top: 0.2rem solid var(--background-color);
-  padding: 0.8rem 0.8rem 4rem 0.8rem;
+  padding: 0.8rem 0.8rem 6rem 0.8rem;
   background: repeating-linear-gradient(
     to right,
     #e3a3a1,

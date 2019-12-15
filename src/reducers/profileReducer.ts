@@ -6,6 +6,7 @@ const initialState: TProfile = {
   lives: 8,
   coins: 0,
   level: 1,
+  tables: 0,
 };
 
 type TIncreaseCoinsProps = {
@@ -26,6 +27,12 @@ const slice = createSlice({
       const coins = actions.payload.coins;
 
       state.coins += coins;
+
+      return state;
+    },
+
+    increaseTables(state) {
+      state.tables += 1;
 
       return state;
     }

@@ -1,4 +1,4 @@
-import { ThunkAction } from 'redux-thunk'
+import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { Action } from '@reduxjs/toolkit'
 
 import { reducer } from "./store";
@@ -73,12 +73,14 @@ export type TProfile = {
   lives: number,
   coins: number,
   level: number,
+  tables: number,
 };
 
 export type TLevel = {
   id: string,
   dishes: number,
   maxClients: number,
+  maxTables: number,
 };
 
 export type TLevels = {
@@ -88,4 +90,6 @@ export type TLevels = {
 
 export type TState = ReturnType<typeof reducer>;
 
-export type TThunk = ThunkAction<void, TState, null, Action<string>>;
+export type TThunk<R> = ThunkAction<R, TState, null, Action<string>>;
+
+export type TThunkDispatch = ThunkDispatch<TState, null, Action<string>>;
