@@ -7,13 +7,16 @@ import {
   TClients,
   TTables,
   TLevel,
-  VisibleModalType
+  VisibleModalType,
+  GameStatus,
 } from './types';
 import { actions as dishesActions } from './reducers/dishesReducer';
 import { actions as uiActions } from './reducers/uiReducer';
 import { actions as clientsActions } from './reducers/clientsReducer';
 import { actions as tablesActions } from './reducers/tablesReducer';
 import { actions as profileActions } from './reducers/profileReducer';
+import { actions as gameActions } from './reducers/gameReducer';
+import store from './store';
 
 export const chooseDish = (dishId: string): TThunk<void> =>
   (dispatch, getState) => {
@@ -144,6 +147,7 @@ const checkForEndgame = (): TThunk<void> =>
     const { profile } = getState();
 
     if (profile.lives < 0) {
+      dispatch(gameActions.selectStatus({ status: GameStatus.PAUSE }));
       dispatch(uiActions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
       }));
@@ -190,8 +194,6 @@ export const clearDish = (): TThunk<void> =>
     });
   };
 
-let timer: number;
-
 export const startgame = (): TThunk<void> =>
   (dispatch, getState) => {
     const { levels, profile } = getState();
@@ -207,17 +209,9 @@ export const startgame = (): TThunk<void> =>
       dispatch(uiActions.selectVisibleModalType({
         modalType: VisibleModalType.NONE,
       }));
+      dispatch(gameActions.selectCreatedAt({ createdAt: Date.now() }))
+      dispatch(gameActions.selectStatus({ status: GameStatus.PLAY }));
     });
-
-    timer = window.setInterval(() => {
-      dispatch(createTable());
-
-      const { profile } = getState();
-
-      if (profile.tables === level.maxTables) {
-        window.clearInterval(timer);
-      }
-    }, 500);
   };
 
 export const createTable = (): TThunk<void> =>
@@ -239,15 +233,17 @@ export const createTable = (): TThunk<void> =>
     };
 
     clientsIds.forEach(clientId => {
-      const recipe = Math.floor(Math.random() * levels.recipes[levelId].length);
+      const recipeRandom = Math.floor(Math.random() * levels.recipes[levelId].length);
+      const recipeId = levels.recipes[levelId][recipeRandom];
 
       clients.data[clientId] = {
         id: clientId,
         status: ClientStatus.WIP,
         coins: 100,
+        createdAt: Date.now(),
       };
 
-      clients.recipes[clientId] = levels.recipes[levelId][recipe];
+      clients.recipes[clientId] = recipeId;
 
       clients.ids.push(clientId);
 
@@ -271,4 +267,21 @@ export const createTable = (): TThunk<void> =>
       dispatch(clientsActions.addClients({ clients }));
       dispatch(tablesActions.addTable({ tables }));
     });
+  };
+
+window.setInterval(() => {
+  const { game, profile, levels } = store.getState();
+
+  if (game.status === GameStatus.PAUSE) {
+    return;
   }
+
+  const level = levels.data[profile.level];
+
+  if (
+    profile.tables !== level.maxTables
+    && Date.now() - game.createdAt >= 5000 * (profile.tables + 1)
+  ) {
+    store.dispatch(createTable());
+  }
+}, 200);

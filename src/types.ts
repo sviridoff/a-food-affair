@@ -23,6 +23,7 @@ export type TClient = {
   id: string,
   status: ClientStatus,
   coins: number,
+  createdAt: number,
 };
 
 export type TClients = {
@@ -75,6 +76,11 @@ export type TRecipes = {
   ingredients: { [key: string]: string[] },
 };
 
+export enum GameStatus {
+  PLAY,
+  PAUSE,
+};
+
 export type TProfile = {
   lives: number,
   coins: number,
@@ -92,6 +98,11 @@ export type TLevel = {
 export type TLevels = {
   data: { [key: string]: TLevel },
   recipes: { [key: string]: string[] },
+};
+
+export type TGame = {
+  status: GameStatus,
+  createdAt: number,
 };
 
 export type TState = ReturnType<typeof reducer>;

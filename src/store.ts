@@ -9,6 +9,7 @@ import uiReducer from './reducers/uiReducer';
 import recipesReducer from './reducers/recipesReducer';
 import profileReducer from './reducers/profileReducer';
 import levelsReducer from './reducers/levelsReducer';
+import gameReducer from './reducers/gameReducer';
 
 export const reducer = combineReducers({
   clients: clientsReducer,
@@ -19,6 +20,7 @@ export const reducer = combineReducers({
   recipes: recipesReducer,
   profile: profileReducer,
   levels: levelsReducer,
+  game: gameReducer,
 });
 
 const middleware = process.env.NODE_ENV !== 'production' ?

@@ -12,26 +12,31 @@ const initialState: TClients = {
       id: 'c1',
       status: ClientStatus.WIP,
       coins: 100,
+      createdAt: 0,
     },
     c2: {
       id: 'c2',
       status: ClientStatus.WIP,
       coins: 100,
+      createdAt: 0,
     },
     c3: {
       id: 'c3',
       status: ClientStatus.WIP,
       coins: 100,
+      createdAt: 0,
     },
     c4: {
       id: 'c4',
       status: ClientStatus.WIP,
       coins: 100,
+      createdAt: 0,
     },
     c5: {
       id: 'c5',
       status: ClientStatus.WIP,
       coins: 100,
+      createdAt: 0,
     },
   },
   recipes: {

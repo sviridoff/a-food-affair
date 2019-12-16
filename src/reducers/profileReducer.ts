@@ -48,7 +48,7 @@ const slice = createSlice({
       };
 
       return state;
-    }
+    },
   }
 });
 
