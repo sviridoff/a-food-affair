@@ -1,5 +1,8 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 
 import clientsReducer from './reducers/clientsReducer';
 import dishesReducer from './reducers/dishesReducer';
@@ -23,11 +26,7 @@ export const reducer = combineReducers({
   game: gameReducer,
 });
 
-const middleware = process.env.NODE_ENV !== 'production' ?
-  [require('redux-immutable-state-invariant').default(), thunk] :
-  [thunk];
-
 export default configureStore({
   reducer,
-  middleware,
+  middleware: getDefaultMiddleware(),
 });

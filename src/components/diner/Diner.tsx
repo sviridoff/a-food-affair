@@ -21,9 +21,12 @@ const tablesList = (tablesIds: string[]) =>
       tableId={tableId}
       key={tableId} />);
 
+let timer = 0;
+
 const Diner: FC<TProps> =
   ({ tablesIds }) =>
     <div className='diner'>
+      {++timer}
       {tablesList(tablesIds)}
     </div>;
 

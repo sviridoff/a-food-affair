@@ -269,6 +269,8 @@ export const createTable = (): TThunk<void> =>
     });
   };
 
+let currentTime = Date.now();
+
 window.setInterval(() => {
   const { game, profile, levels } = store.getState();
 
@@ -276,11 +278,13 @@ window.setInterval(() => {
     return;
   }
 
+  currentTime += 200;
+
   const level = levels.data[profile.level];
 
   if (
     profile.tables !== level.maxTables
-    && Date.now() - game.createdAt >= 5000 * (profile.tables + 1)
+    && currentTime - game.createdAt >= 1000 * (profile.tables + 1)
   ) {
     store.dispatch(createTable());
   }
