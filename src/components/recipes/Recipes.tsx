@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import classnames from 'classnames';
 
-import './recipes.css';
+import './Recipes.css';
 import { TState, TIngredient, VisibleModalType } from '../../types';
 import { connect, ConnectedProps } from 'react-redux';
 import { selectClientIngredients } from '../../selectors';

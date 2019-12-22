@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
-import './diner.css';
+import './Diner.css';
 import { TState } from '../../types';
 import { selectTablesIds } from '../../selectors';
 import Table from '../table/Table';

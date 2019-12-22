@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
-import './dish.css';
+import './Dish.css';
 import { TState, TIngredient } from '../../types';
 import { selectDish, makeSelectIngredients } from '../../selectors';
 import { chooseDish } from '../../actions';

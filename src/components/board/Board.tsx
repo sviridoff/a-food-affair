@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import classnames from 'classnames';
 
-import './board.css';
+import './Board.css';
 import { ReactComponent as LogoSvg } from './LogoSvg.svg';
 import Profile from '../profile/Profile';
 import Diner from '../diner/Diner';

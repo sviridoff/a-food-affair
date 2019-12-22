@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
-import './kitchen.css';
+import './Kitchen.css';
 import { TState } from '../../types';
 import { selectDishesIds } from '../../selectors';
 import { clearDish } from '../../actions';

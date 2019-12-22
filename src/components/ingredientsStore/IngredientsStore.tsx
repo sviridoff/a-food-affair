@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import classnames from 'classnames';
 
-import './ingredientsStore.css';
+import './IngredientsStore.css';
 import { connect, ConnectedProps } from 'react-redux';
 import { TState, VisibleModalType } from '../../types';
 import { selectLevelIngredientsIds } from '../../selectors';

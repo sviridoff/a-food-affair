@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
-import './client.css';
+import './Client.css';
 import { TState, ClientStatus } from '../../types';
 import { selectClient, selectClientRecipe } from '../../selectors';
 import { chooseClient } from '../../actions';

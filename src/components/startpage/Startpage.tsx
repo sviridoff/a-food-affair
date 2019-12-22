@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
-import './startpage.css';
+import './Startpage.css';
 import { TState, VisibleModalType } from '../../types';
 import { startgame } from '../../actions';
 

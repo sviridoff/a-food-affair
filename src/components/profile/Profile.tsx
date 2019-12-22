@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
-import './profile.css';
+import './Profile.css';
 import { TState } from '../../types';
 
 const mapStateToProps = (state: TState) => ({
