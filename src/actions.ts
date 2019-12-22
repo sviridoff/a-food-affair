@@ -10,12 +10,12 @@ import {
   VisibleModalType,
   GameStatus,
 } from './types';
-import { actions as dishesActions } from './reducers/dishesReducer';
-import { actions as uiActions } from './reducers/uiReducer';
-import { actions as clientsActions } from './reducers/clientsReducer';
-import { actions as tablesActions } from './reducers/tablesReducer';
-import { actions as profileActions } from './reducers/profileReducer';
-import { actions as gameActions } from './reducers/gameReducer';
+import dishesSlice from './slices/dishesSlice';
+import uiSlice from './slices/uiSlice';
+import clientsSlice from './slices/clientsSlice';
+import tablesSlice from './slices/tablesSlice';
+import profileSlice from './slices/profileSlice';
+import gameSlice from './slices/gameSlice';
 import store from './store';
 
 export const chooseDish = (dishId: string): TThunk<void> =>
@@ -33,13 +33,13 @@ export const chooseDish = (dishId: string): TThunk<void> =>
           const ingredients =
             dishes.ingredients[selectedDish] || [];
 
-          dispatch(dishesActions.addIngredients({
+          dispatch(dishesSlice.actions.addIngredients({
             dishId,
             ingredients,
           }));
-          dispatch(dishesActions.removeAllIngredients({ dishId: selectedDish }));
-          dispatch(uiActions.selectDish({ dishId: null }));
-          dispatch(dishesActions.unselect({ dishId: selectedDish }));
+          dispatch(dishesSlice.actions.removeAllIngredients({ dishId: selectedDish }));
+          dispatch(uiSlice.actions.selectDish({ dishId: null }));
+          dispatch(dishesSlice.actions.unselect({ dishId: selectedDish }));
         }
 
         if (!selectedDish) {
@@ -47,13 +47,13 @@ export const chooseDish = (dishId: string): TThunk<void> =>
           const hasIngredients = Boolean(ingredients.length);
 
           if (hasIngredients) {
-            dispatch(dishesActions.select({ dishId }));
-            dispatch(uiActions.selectDish({ dishId }));
+            dispatch(dishesSlice.actions.select({ dishId }));
+            dispatch(uiSlice.actions.selectDish({ dishId }));
           }
 
           if (!hasIngredients) {
-            dispatch(uiActions.selectDish({ dishId }));
-            dispatch(uiActions.selectVisibleModalType({
+            dispatch(uiSlice.actions.selectDish({ dishId }));
+            dispatch(uiSlice.actions.selectVisibleModalType({
               modalType: VisibleModalType.INGREDIENTS_STORE,
             }));
           }
@@ -61,8 +61,8 @@ export const chooseDish = (dishId: string): TThunk<void> =>
       }
 
       if (isSelected) {
-        dispatch(dishesActions.unselect({ dishId }));
-        dispatch(uiActions.selectDish({ dishId: null }));
+        dispatch(dishesSlice.actions.unselect({ dishId }));
+        dispatch(uiSlice.actions.selectDish({ dishId: null }));
       }
     });
   };
@@ -74,9 +74,9 @@ export const chooseIngredient = (ingredientId: string): TThunk<void> =>
 
     if (dishId) {
       batch(() => {
-        dispatch(dishesActions.addIngredient({ dishId, ingredientId }));
-        dispatch(uiActions.selectDish({ dishId: null }));
-        dispatch(uiActions.selectVisibleModalType({
+        dispatch(dishesSlice.actions.addIngredient({ dishId, ingredientId }));
+        dispatch(uiSlice.actions.selectDish({ dishId: null }));
+        dispatch(uiSlice.actions.selectVisibleModalType({
           modalType: VisibleModalType.NONE,
         }));
       });
@@ -90,8 +90,8 @@ export const closeIngredientsStore = (): TThunk<void> =>
 
     if (dishId) {
       batch(() => {
-        dispatch(uiActions.selectDish({ dishId: null }));
-        dispatch(uiActions.selectVisibleModalType({
+        dispatch(uiSlice.actions.selectDish({ dishId: null }));
+        dispatch(uiSlice.actions.selectVisibleModalType({
           modalType: VisibleModalType.NONE,
         }));
       });
@@ -112,30 +112,30 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =
             .every((ingredient, index) => ingredient === dishIngredients[index]);
 
         if (areEqual) {
-          dispatch(clientsActions.updateStatus({
+          dispatch(clientsSlice.actions.updateStatus({
             status: ClientStatus.OK,
             clientId,
           }));
         }
 
         if (!areEqual) {
-          dispatch(clientsActions.updateStatus({
+          dispatch(clientsSlice.actions.updateStatus({
             status: ClientStatus.KO,
             clientId,
           }));
-          dispatch(profileActions.decreaseLive());
+          dispatch(profileSlice.actions.decreaseLive());
           dispatch(checkForEndgame());
         }
 
-        dispatch(dishesActions.removeAllIngredients({ dishId }));
-        dispatch(uiActions.selectDish({ dishId: null }));
-        dispatch(dishesActions.unselect({ dishId }));
+        dispatch(dishesSlice.actions.removeAllIngredients({ dishId }));
+        dispatch(uiSlice.actions.selectDish({ dishId: null }));
+        dispatch(dishesSlice.actions.unselect({ dishId }));
         dispatch(checkForRemoveTable(clientId));
       }
 
       if (!dishId) {
-        dispatch(uiActions.selectRecipe({ recipeId }));
-        dispatch(uiActions.selectVisibleModalType({
+        dispatch(uiSlice.actions.selectRecipe({ recipeId }));
+        dispatch(uiSlice.actions.selectVisibleModalType({
           modalType: VisibleModalType.RECIPES,
         }));
       }
@@ -147,8 +147,8 @@ const checkForEndgame = (): TThunk<void> =>
     const { profile } = getState();
 
     if (profile.lives < 0) {
-      dispatch(gameActions.selectStatus({ status: GameStatus.PAUSE }));
-      dispatch(uiActions.selectVisibleModalType({
+      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PAUSE }));
+      dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
       }));
     }
@@ -171,11 +171,11 @@ const checkForRemoveTable = (clientId: string): TThunk<void> =>
       }, 0);
 
       if (coins) {
-        dispatch(profileActions.increseCoins({ coins }));
+        dispatch(profileSlice.actions.increseCoins({ coins }));
       }
 
-      dispatch(tablesActions.removeTable({ tableId }));
-      dispatch(clientsActions.removeClients({ clientsIds: tableClientsIds }));
+      dispatch(tablesSlice.actions.removeTable({ tableId }));
+      dispatch(clientsSlice.actions.removeClients({ clientsIds: tableClientsIds }));
     }
   }
 
@@ -187,9 +187,9 @@ export const clearDish = (): TThunk<void> =>
       const dishId = ui.selectedDish;
 
       if (dishId) {
-        dispatch(dishesActions.unselect({ dishId }));
-        dispatch(dishesActions.removeAllIngredients({ dishId }));
-        dispatch(uiActions.selectDish({ dishId: null }));
+        dispatch(dishesSlice.actions.unselect({ dishId }));
+        dispatch(dishesSlice.actions.removeAllIngredients({ dishId }));
+        dispatch(uiSlice.actions.selectDish({ dishId: null }));
       }
     });
   };
@@ -200,17 +200,17 @@ export const startgame = (): TThunk<void> =>
     const level = levels.data[profile.level];
 
     batch(() => {
-      dispatch(dishesActions.restartDishes({
+      dispatch(dishesSlice.actions.restartDishes({
         dishes: level.dishes,
       }));
-      dispatch(tablesActions.restartTables());
-      dispatch(clientsActions.restartClients());
-      dispatch(profileActions.restartProfile());
-      dispatch(uiActions.selectVisibleModalType({
+      dispatch(tablesSlice.actions.restartTables());
+      dispatch(clientsSlice.actions.restartClients());
+      dispatch(profileSlice.actions.restartProfile());
+      dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.NONE,
       }));
-      dispatch(gameActions.selectCreatedAt({ createdAt: Date.now() }))
-      dispatch(gameActions.selectStatus({ status: GameStatus.PLAY }));
+      dispatch(gameSlice.actions.selectCreatedAt({ createdAt: Date.now() }))
+      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PLAY }));
     });
   };
 
@@ -263,9 +263,9 @@ export const createTable = (): TThunk<void> =>
     };
 
     batch(() => {
-      dispatch(profileActions.increaseTables());
-      dispatch(clientsActions.addClients({ clients }));
-      dispatch(tablesActions.addTable({ tables }));
+      dispatch(profileSlice.actions.increaseTables());
+      dispatch(clientsSlice.actions.addClients({ clients }));
+      dispatch(tablesSlice.actions.addTable({ tables }));
     });
   };
 

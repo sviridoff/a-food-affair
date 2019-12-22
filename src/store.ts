@@ -4,26 +4,26 @@ import {
   getDefaultMiddleware,
 } from '@reduxjs/toolkit';
 
-import clientsReducer from './reducers/clientsReducer';
-import dishesReducer from './reducers/dishesReducer';
-import tablesReducer from './reducers/tablesReducer';
-import ingredientsReducer from './reducers/ingredientsReducer';
-import uiReducer from './reducers/uiReducer';
-import recipesReducer from './reducers/recipesReducer';
-import profileReducer from './reducers/profileReducer';
-import levelsReducer from './reducers/levelsReducer';
-import gameReducer from './reducers/gameReducer';
+import clientsSlice from './slices/clientsSlice';
+import dishesSlice from './slices/dishesSlice';
+import tablesSlice from './slices/tablesSlice';
+import ingredientsSlice from './slices/ingredientsSlice';
+import uiSlice from './slices/uiSlice';
+import recipesSlice from './slices/recipesSlice';
+import profileSlice from './slices/profileSlice';
+import levelsSlice from './slices/levelsSlice';
+import gameSlice from './slices/gameSlice';
 
 export const reducer = combineReducers({
-  clients: clientsReducer,
-  dishes: dishesReducer,
-  tables: tablesReducer,
-  ingredients: ingredientsReducer,
-  ui: uiReducer,
-  recipes: recipesReducer,
-  profile: profileReducer,
-  levels: levelsReducer,
-  game: gameReducer,
+  clients: clientsSlice.reducer,
+  dishes: dishesSlice.reducer,
+  tables: tablesSlice.reducer,
+  ingredients: ingredientsSlice.reducer,
+  ui: uiSlice.reducer,
+  recipes: recipesSlice.reducer,
+  profile: profileSlice.reducer,
+  levels: levelsSlice.reducer,
+  game: gameSlice.reducer,
 });
 
 export default configureStore({

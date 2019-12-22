@@ -43,6 +43,4 @@ const slice = createSlice({
   }
 });
 
-export const actions = slice.actions;
-
-export default slice.reducer;
+export default slice;

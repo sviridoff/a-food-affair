@@ -5,7 +5,7 @@ import './recipes.css';
 import { TState, TIngredient, VisibleModalType } from '../../types';
 import { connect, ConnectedProps } from 'react-redux';
 import { selectClientIngredients } from '../../selectors';
-import { actions as uiActions } from '../../reducers/uiReducer';
+import uiSlice from '../../slices/uiSlice';
 
 const mapStateToProps = (state: TState) => ({
   ingredients: selectClientIngredients(state),
@@ -13,7 +13,7 @@ const mapStateToProps = (state: TState) => ({
 });
 
 const mapDispatchToProps = {
-  hideRecipes: () => uiActions.selectVisibleModalType({
+  hideRecipes: () => uiSlice.actions.selectVisibleModalType({
     modalType: VisibleModalType.NONE,
   }),
 };

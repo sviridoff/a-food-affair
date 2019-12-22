@@ -29,16 +29,21 @@ const slice = createSlice({
     },
 
     selectCreatedAt(
-      status,
+      state,
       action: PayloadAction<TSelectCreatedAt>
     ) {
-      status.createdAt = action.payload.createdAt;
+      state.createdAt = action.payload.createdAt;
 
-      return status;
+      return state;
     },
+
+    toggleStatus(state) {
+      state.status = state.status === GameStatus.PLAY
+        ? GameStatus.PAUSE : GameStatus.PLAY;
+
+      return state;
+    }
   }
 });
 
-export const actions = slice.actions;
-
-export default slice.reducer;
+export default slice;

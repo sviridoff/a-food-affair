@@ -8,13 +8,18 @@ import Diner from '../diner/Diner';
 import Kitchen from '../kitchen/Kitchen';
 import { connect, ConnectedProps } from 'react-redux';
 import { TState, VisibleModalType } from '../../types';
+import gameSlice from '../../slices/gameSlice';
 
 const mapStateToProps =
   (state: TState) => ({
     isFaded: state.ui.modalType !== VisibleModalType.NONE,
   });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = {
+  toggleStatus: gameSlice.actions.toggleStatus,
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type TProps = ConnectedProps<typeof connector>;
 
@@ -25,7 +30,7 @@ const boardClass = (isFaded: boolean) =>
   );
 
 const Board: FC<TProps> =
-  ({ isFaded }) =>
+  ({ isFaded, toggleStatus }) =>
     <div className={boardClass(isFaded)}>
       <Profile />
       <div className='board__body-container'>
@@ -35,7 +40,9 @@ const Board: FC<TProps> =
         <Diner />
         <div className='board__menu-controls'>
           <div className='board__sound-btn'></div>
-          <div className='board__pause-btn'></div>
+          <div
+            className='board__pause-btn'
+            onClick={() => toggleStatus}></div>
           <div className='board__replay-btn'></div>
         </div>
       </div>
