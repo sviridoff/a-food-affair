@@ -8,19 +8,43 @@ const initialState: TProfile = {
   lives: defaultLives,
   coins: 0,
   level: 1,
-  tables: 0,
 };
 
 type TIncreaseCoinsProps = {
   coins: number,
 };
 
+type TDecreaseLivesProps = {
+  lives: number,
+};
+
 const slice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
+    restartProfile(state) {
+      state = {
+        coins: 0,
+        lives: defaultLives,
+        level: state.level,
+      };
+
+      return state;
+    },
+
     decreaseLive(state) {
       state.lives -= 1;
+
+      return state;
+    },
+
+    decreaseLives(
+      state,
+      action: PayloadAction<TDecreaseLivesProps>,
+    ) {
+      const lives = action.payload.lives;
+
+      state.lives -= lives;
 
       return state;
     },
@@ -29,23 +53,6 @@ const slice = createSlice({
       const coins = actions.payload.coins;
 
       state.coins += coins;
-
-      return state;
-    },
-
-    increaseTables(state) {
-      state.tables += 1;
-
-      return state;
-    },
-
-    restartProfile(state) {
-      state = {
-        tables: 0,
-        coins: 0,
-        lives: defaultLives,
-        level: state.level,
-      };
 
       return state;
     },

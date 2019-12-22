@@ -24,6 +24,7 @@ export type TClient = {
   status: ClientStatus,
   coins: number,
   createdAt: number,
+  liveTime: number,
 };
 
 export type TClients = {
@@ -85,7 +86,6 @@ export type TProfile = {
   lives: number,
   coins: number,
   level: number,
-  tables: number,
 };
 
 export type TLevel = {
@@ -93,6 +93,7 @@ export type TLevel = {
   dishes: number,
   maxClients: number,
   maxTables: number,
+  timePerIngredient: number,
 };
 
 export type TLevels = {
@@ -102,7 +103,8 @@ export type TLevels = {
 
 export type TGame = {
   status: GameStatus,
-  createdAt: number,
+  tables: number,
+  nextTableTime: number,
 };
 
 export type TState = ReturnType<typeof reducer>;

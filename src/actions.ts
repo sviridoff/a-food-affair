@@ -209,14 +209,15 @@ export const startgame = (): TThunk<void> =>
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.NONE,
       }));
-      dispatch(gameSlice.actions.selectCreatedAt({ createdAt: Date.now() }))
       dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PLAY }));
+
+      // TODO Restart game.
     });
   };
 
 export const createTable = (): TThunk<void> =>
   (dispatch, getState) => {
-    const { levels, profile } = getState();
+    const { levels, profile, recipes } = getState();
 
     const levelId = profile.level;
     const level: TLevel = levels.data[levelId];
@@ -235,12 +236,15 @@ export const createTable = (): TThunk<void> =>
     clientsIds.forEach(clientId => {
       const recipeRandom = Math.floor(Math.random() * levels.recipes[levelId].length);
       const recipeId = levels.recipes[levelId][recipeRandom];
+      const recipeIngredients = recipes.ingredients[recipeId];
 
       clients.data[clientId] = {
         id: clientId,
         status: ClientStatus.WIP,
         coins: 100,
         createdAt: Date.now(),
+        liveTime: Date.now()
+          + (recipeIngredients.length * level.timePerIngredient),
       };
 
       clients.recipes[clientId] = recipeId;
@@ -263,10 +267,34 @@ export const createTable = (): TThunk<void> =>
     };
 
     batch(() => {
-      dispatch(profileSlice.actions.increaseTables());
+      dispatch(gameSlice.actions.increaseTables());
       dispatch(clientsSlice.actions.addClients({ clients }));
       dispatch(tablesSlice.actions.addTable({ tables }));
+      dispatch(gameSlice.actions.selectNextTableTime({
+        nextTableTime: Date.now() + 1000, // TODO: improve
+      }));
     });
+  };
+
+const checkForRemoveClients = (): TThunk<void> =>
+  (dispatch, getState) => {
+    const { clients } = getState();
+
+    const clientsToRemove = Object.values(clients.data)
+      .filter(client => currentTime >= client.liveTime);
+
+    if (clientsToRemove.length) {
+      batch(() => {
+        dispatch(clientsSlice.actions.updateStatuses({
+          status: ClientStatus.KO,
+          clientIds: clientsToRemove.map(client => client.id),
+        }));
+        dispatch(profileSlice.actions.decreaseLives({
+          lives: clientsToRemove.length,
+        }));
+        dispatch(checkForEndgame());
+      });
+    }
   };
 
 let currentTime = Date.now();
@@ -280,11 +308,13 @@ window.setInterval(() => {
 
   currentTime += 200;
 
+  store.dispatch(checkForRemoveClients());
+
   const level = levels.data[profile.level];
 
   if (
-    profile.tables !== level.maxTables
-    && currentTime - game.createdAt >= 1000 * (profile.tables + 1)
+    game.tables !== level.maxTables
+    && currentTime >= game.nextTableTime
   ) {
     store.dispatch(createTable());
   }

@@ -34,12 +34,9 @@ const tableClass = (isLast: boolean) =>
     { 'table--last': isLast },
   );
 
-let counter = 0;
-
 const Table: FC<TProps> =
   ({ clients, isLast }) =>
     <div className={tableClass(isLast)}>
-      {++counter}
       {clientsList(clients)}
     </div>;
 

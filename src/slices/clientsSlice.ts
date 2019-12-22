@@ -13,30 +13,35 @@ const initialState: TClients = {
       status: ClientStatus.WIP,
       coins: 100,
       createdAt: 0,
+      liveTime: 5000,
     },
     c2: {
       id: 'c2',
       status: ClientStatus.WIP,
       coins: 100,
       createdAt: 0,
+      liveTime: 5000,
     },
     c3: {
       id: 'c3',
       status: ClientStatus.WIP,
       coins: 100,
       createdAt: 0,
+      liveTime: 5000,
     },
     c4: {
       id: 'c4',
       status: ClientStatus.WIP,
       coins: 100,
       createdAt: 0,
+      liveTime: 5000,
     },
     c5: {
       id: 'c5',
       status: ClientStatus.WIP,
       coins: 100,
       createdAt: 0,
+      liveTime: 5000,
     },
   },
   recipes: {
@@ -61,6 +66,11 @@ type TUpdateStatusProps = {
   clientId: string,
 };
 
+type TUpdateStatusesProps = {
+  status: ClientStatus,
+  clientIds: string[],
+};
+
 type TRemoveClientsProps = {
   clientsIds: string[],
 };
@@ -77,6 +87,19 @@ const slice = createSlice({
       const { status, clientId } = action.payload;
 
       state.data[clientId].status = status;
+
+      return state;
+    },
+
+    updateStatuses(
+      state,
+      action: PayloadAction<TUpdateStatusesProps>,
+    ) {
+      const { status, clientIds } = action.payload;
+
+      clientIds.forEach(clientId => {
+        state.data[clientId].status = status;
+      });
 
       return state;
     },

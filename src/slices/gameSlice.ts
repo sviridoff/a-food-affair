@@ -4,15 +4,16 @@ import { TGame, GameStatus } from '../types';
 
 const initialState: TGame = {
   status: GameStatus.PAUSE,
-  createdAt: 0,
+  tables: 0,
+  nextTableTime: 0,
 };
 
 type TSelectStatusProps = {
   status: GameStatus,
 };
 
-type TSelectCreatedAt = {
-  createdAt: number,
+type TSelectNextTableTimeProps = {
+  nextTableTime: number,
 };
 
 const slice = createSlice({
@@ -28,11 +29,8 @@ const slice = createSlice({
       return state;
     },
 
-    selectCreatedAt(
-      state,
-      action: PayloadAction<TSelectCreatedAt>
-    ) {
-      state.createdAt = action.payload.createdAt;
+    increaseTables(state) {
+      state.tables += 1;
 
       return state;
     },
@@ -40,6 +38,15 @@ const slice = createSlice({
     toggleStatus(state) {
       state.status = state.status === GameStatus.PLAY
         ? GameStatus.PAUSE : GameStatus.PLAY;
+
+      return state;
+    },
+
+    selectNextTableTime(
+      state,
+      action: PayloadAction<TSelectNextTableTimeProps>,
+    ) {
+      state.nextTableTime = action.payload.nextTableTime;
 
       return state;
     }
