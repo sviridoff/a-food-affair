@@ -6,7 +6,7 @@
   height: 100vh;
 }
 
-.board--fade {
+.board--is-faded {
   filter: blur(1rem);
 }
 
@@ -35,16 +35,6 @@
 }
 
 .board__sound-btn {
-  background: var(--border-color);
-  width: var(--menu-btn-width);
-  height: var(--menu-btn-width);
-  border-radius: 100%;
-  float: left;
-  margin-bottom: 0.5rem;
-  clear: both;
-}
-
-.board__pause-btn {
   background: var(--border-color);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);

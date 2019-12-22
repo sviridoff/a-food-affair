@@ -12,7 +12,7 @@
   margin-right: 0 !important;
 }
 
-.dish--selected {
+.dish--is-selected {
   border: var(--border-size) solid var(--border-color-selected);
 }
 

@@ -53,7 +53,7 @@ const dishClass = (isSelected: boolean, isLast: boolean) =>
     'dish',
     {
       'dish--last': isLast,
-      'dish--selected': isSelected,
+      'dish--is-selected': isSelected,
     }
   );
 
