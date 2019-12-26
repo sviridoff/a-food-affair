@@ -206,12 +206,11 @@ export const startgame = (): TThunk<void> =>
       dispatch(tablesSlice.actions.restartTables());
       dispatch(clientsSlice.actions.restartClients());
       dispatch(profileSlice.actions.restartProfile());
+      dispatch(gameSlice.actions.restartGame());
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.NONE,
       }));
       dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PLAY }));
-
-      // TODO Restart game.
     });
   };
 

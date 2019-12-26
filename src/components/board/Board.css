@@ -6,10 +6,6 @@
   height: 100vh;
 }
 
-.board--is-faded {
-  filter: blur(1rem);
-}
-
 .board__body-container {
   position: relative;
   flex: 1;

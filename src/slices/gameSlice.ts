@@ -49,7 +49,17 @@ const slice = createSlice({
       state.nextTableTime = action.payload.nextTableTime;
 
       return state;
-    }
+    },
+
+    restartGame(state) {
+      state = {
+        status: GameStatus.PAUSE,
+        tables: 0,
+        nextTableTime: 0,
+      };
+
+      return state;
+    },
   }
 });
 
