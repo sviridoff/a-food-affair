@@ -124,13 +124,13 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =
             clientId,
           }));
           dispatch(profileSlice.actions.decreaseLive());
-          dispatch(checkForEndgame());
         }
 
         dispatch(dishesSlice.actions.removeAllIngredients({ dishId }));
         dispatch(uiSlice.actions.selectDish({ dishId: null }));
         dispatch(dishesSlice.actions.unselect({ dishId }));
         dispatch(checkForRemoveTable(clientId));
+        dispatch(checkForEndgame());
       }
 
       if (!dishId) {
@@ -144,13 +144,25 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =
 
 const checkForEndgame = (): TThunk<void> =>
   (dispatch, getState) => {
-    const { profile } = getState();
+    const { profile, game, levels, tables } = getState();
 
     if (profile.lives < 0) {
       dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PAUSE }));
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
       }));
+    }
+
+    const level = levels.data[profile.level];
+
+    if (
+      game.tables === level.maxTables
+      && !tables.ids.length
+    ) {
+      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PAUSE }));
+      dispatch(uiSlice.actions.selectVisibleModalType({
+        modalType: VisibleModalType.RESTARTPAGE,
+      })); 
     }
   }
 

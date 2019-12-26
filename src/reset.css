@@ -126,8 +126,15 @@ table {
   border-spacing: 0;
 }
 
+@font-face {
+  font-family: 'MainFont';
+  src: url('./Config Rounded Extrabold.otf') format('truetype');
+}
+
 html {
   font-size: 62.5%;
+  font-family: 'MainFont', sans-serif;
+  color: var(--border-color);
   -webkit-user-select: none;
 }
 
