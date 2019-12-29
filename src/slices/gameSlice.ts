@@ -35,13 +35,6 @@ const slice = createSlice({
       return state;
     },
 
-    toggleStatus(state) {
-      state.status = state.status === GameStatus.PLAY
-        ? GameStatus.PAUSE : GameStatus.PLAY;
-
-      return state;
-    },
-
     selectNextTableTime(
       state,
       action: PayloadAction<TSelectNextTableTimeProps>,

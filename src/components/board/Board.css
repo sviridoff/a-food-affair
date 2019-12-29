@@ -47,3 +47,13 @@
   float: left;
   clear: both;
 }
+
+.board__pause-btn {
+  background: var(--border-color);
+  width: var(--menu-btn-width);
+  height: var(--menu-btn-width);
+  border-radius: 100%;
+  float: left;
+  margin-bottom: 0.5rem;
+  clear: both;
+}

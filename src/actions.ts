@@ -164,7 +164,7 @@ const checkForEndgame = (): TThunk<void> =>
       dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PAUSE }));
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
-      })); 
+      }));
     }
   }
 
@@ -316,6 +316,24 @@ const checkForRemoveClients = (): TThunk<void> =>
         dispatch(checkForEndgame());
       });
     }
+  };
+
+export const resumePauseGame = (): TThunk<void> =>
+  (dispatch, getState) => {
+    const { ui, game } = getState();
+
+    batch(() => {
+      dispatch(gameSlice.actions.selectStatus({
+        status: game.status === GameStatus.PAUSE
+          ? GameStatus.PLAY
+          : GameStatus.PAUSE,
+      }));
+      dispatch(uiSlice.actions.selectVisibleModalType({
+        modalType: ui.modalType === VisibleModalType.NONE
+          ? VisibleModalType.RESTARTPAGE
+          : VisibleModalType.NONE,
+      }));
+    });
   };
 
 window.setInterval(() => {

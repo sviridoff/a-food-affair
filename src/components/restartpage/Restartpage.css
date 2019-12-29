@@ -28,6 +28,14 @@
   height: 6rem;
 }
 
+.restartpage__level-start > div {
+  margin-right: 2rem;
+}
+
+.restartpage__level-start > div:last-child {
+  margin-right: 0rem;
+}
+
 .restartpage__level-ctrl {
   display: flex;
   flex-direction: row;
@@ -45,6 +53,13 @@
 
 .restartpage__play-btn {
   background: var(--border-color);
+  width: 6rem;
+  height: 6rem;
+  border-radius: 100%;
+}
+
+.restartpage__resume-btn {
+  background: rgb(108, 233, 227);
   width: 6rem;
   height: 6rem;
   border-radius: 100%;
