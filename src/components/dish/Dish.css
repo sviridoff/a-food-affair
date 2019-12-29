@@ -22,17 +22,25 @@
   height: 2.5rem;
   border-radius: 100%;
   float: left;
-
   text-align: center;
   color: var(--background-color);
   line-height: 2.4rem;
 }
 
 .dish__ingredient--main {
+  width: 100%;
+  height: 100%;
+  line-height: 5rem;
+}
+
+.dish__recipe {
+  background: var(--border-color);
+  border-radius: 100%;
+  text-align: center;
+  color: var(--background-color);
   float: left;
   width: 100%;
   height: 100%;
-
   line-height: 5rem;
 }
 

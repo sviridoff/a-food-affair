@@ -17,7 +17,7 @@ const initialState: TDishes = {
   ids: ['d1', 'd2'],
   ingredients: {
     d1: ['i1', 'i2', 'i2', 'i3', 'i4'],
-    d2: ['i3'],
+    d2: ['i3', 'i2'],
   }
 };
 
