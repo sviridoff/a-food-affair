@@ -18,6 +18,10 @@ type TDecreaseLivesProps = {
   lives: number,
 };
 
+type TSelectLevelProps = {
+  level: number,
+};
+
 const slice = createSlice({
   name: 'profile',
   initialState,
@@ -28,6 +32,12 @@ const slice = createSlice({
         lives: defaultLives,
         level: state.level,
       };
+
+      return state;
+    },
+
+    selectLevel(state, action: PayloadAction<TSelectLevelProps>) {
+      state.level = action.payload.level;
 
       return state;
     },

@@ -18,6 +18,8 @@ import profileSlice from './slices/profileSlice';
 import gameSlice from './slices/gameSlice';
 import store from './store';
 
+let currentTime = Date.now();
+
 export const chooseDish = (dishId: string): TThunk<void> =>
   (dispatch, getState) => {
     batch(() => {
@@ -226,6 +228,14 @@ export const startgame = (): TThunk<void> =>
     });
   };
 
+export const startgameLavel = (level: number): TThunk<void> =>
+  (dispatch, getState) => {
+    batch(() => {
+      dispatch(profileSlice.actions.selectLevel({ level }));
+      dispatch(startgame());
+    });
+  };
+
 export const createTable = (): TThunk<void> =>
   (dispatch, getState) => {
     const { levels, profile, recipes } = getState();
@@ -253,8 +263,8 @@ export const createTable = (): TThunk<void> =>
         id: clientId,
         status: ClientStatus.WIP,
         coins: 100,
-        createdAt: Date.now(),
-        liveTime: Date.now()
+        createdAt: currentTime,
+        liveTime: currentTime
           + (recipeIngredients.length * level.timePerIngredient),
       };
 
@@ -282,7 +292,7 @@ export const createTable = (): TThunk<void> =>
       dispatch(clientsSlice.actions.addClients({ clients }));
       dispatch(tablesSlice.actions.addTable({ tables }));
       dispatch(gameSlice.actions.selectNextTableTime({
-        nextTableTime: Date.now() + 1000, // TODO: improve
+        nextTableTime: currentTime + 1000, // TODO: improve
       }));
     });
   };
@@ -307,8 +317,6 @@ const checkForRemoveClients = (): TThunk<void> =>
       });
     }
   };
-
-let currentTime = Date.now();
 
 window.setInterval(() => {
   const { game, profile, levels } = store.getState();

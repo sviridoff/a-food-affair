@@ -64,18 +64,13 @@ const Dish: FC<TProps> =
     isLast,
     ingredients,
     chooseDish
-  }) => {
-    const onClick = () => chooseDish(dishId);
-
-    return (
-      <div
-        className={dishClass(dish.isSelected, isLast)}
-        onClick={onClick}>
-        {ingredientsList(ingredients)}
-        {ingredients.length > maxIngredientsPerDish &&
-          <div className='dish__ellipsis'>...</div>}
-      </div>
-    );
-  };
+  }) =>
+    <div
+      className={dishClass(dish.isSelected, isLast)}
+      onClick={() => chooseDish(dishId)}>
+      {ingredientsList(ingredients)}
+      {ingredients.length > maxIngredientsPerDish &&
+        <div className='dish__ellipsis'>...</div>}
+    </div>;
 
 export default connector(Dish);

@@ -20,7 +20,7 @@ const initialState: TLevels = {
     },
   },
   recipes: {
-    '1': ['r1'],
+    '1': ['r1', 'r2'],
     '2': ['r2'],
   },
 };

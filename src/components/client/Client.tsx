@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './Client.css';
-import { TState, ClientStatus } from '../../types';
+import { TState, ClientStatus, TClient } from '../../types';
 import { selectClient, selectClientRecipe } from '../../selectors';
 import { chooseClient } from '../../actions';
 
@@ -30,13 +30,19 @@ const clientClass = (isLast: boolean) =>
     { 'client--last': isLast },
   );
 
+const onClickAttr = (
+  client: TClient,
+  recipeId: string,
+  chooseClient: (arg0: string, arg1: string) => void
+) =>
+  client.status === ClientStatus.WIP
+    ? { onClick: () => chooseClient(client.id, recipeId) }
+    : {};
+
 const Client: FC<TProps> =
-  ({ isLast, clientId, client, recipeId, chooseClient }) =>
+  ({ isLast, client, recipeId, chooseClient }) =>
     <div
-      {...(
-        client.status === ClientStatus.WIP
-        && { onClick: () => chooseClient(clientId, recipeId) }
-      )}
+      {...onClickAttr(client, recipeId, chooseClient)}
       className={clientClass(isLast)}>
       {client.status}
       {recipeId}

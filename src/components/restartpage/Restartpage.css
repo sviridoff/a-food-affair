@@ -21,9 +21,30 @@
   margin-top: 40%;
 }
 
-.restartpage__btn {
+.restartpage__retry-btn {
+  background: rgb(233, 108, 108);
+  width: 6rem;
+  height: 6rem;
+  border-radius: 100%;
+}
+
+.restartpage__play-btn {
   background: var(--border-color);
   width: 6rem;
   height: 6rem;
+  border-radius: 100%;
+}
+
+.restartpage__prev-level-btn {
+  background: rgb(109, 212, 164);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+}
+
+.restartpage__next-level-btn {
+  background: rgb(150, 119, 207);
+  width: 3rem;
+  height: 3rem;
   border-radius: 100%;
 }
