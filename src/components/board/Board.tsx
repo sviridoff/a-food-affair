@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ConnectedProps, connect } from 'react-redux';
 
 import './Board.css';
-import LogoSvg from './LogoSvg.svg';
+import LogoSvg from '../logoSvg/LogoSvg.svg';
 import Profile from '../profile/Profile';
 import Diner from '../diner/Diner';
 import Kitchen from '../kitchen/Kitchen';
@@ -19,9 +19,10 @@ const Board: FC<TProps> =
     <div className='board'>
       <Profile />
       <div className='board__body-container'>
-        <div className='board__game-logo'>
-          <img src={LogoSvg} width='100%' height='100%' alt='' />
-        </div>
+        <img
+          className='board__game-logo'
+          src={LogoSvg}
+          alt='' />
         <Diner />
         <div className='board__menu-controls'>
           <div

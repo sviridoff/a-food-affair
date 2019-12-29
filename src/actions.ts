@@ -16,6 +16,7 @@ import clientsSlice from './slices/clientsSlice';
 import tablesSlice from './slices/tablesSlice';
 import profileSlice from './slices/profileSlice';
 import gameSlice from './slices/gameSlice';
+import levelsSlice from './slices/levelsSlice';
 import store from './store';
 
 let currentTime = Date.now();
@@ -148,8 +149,9 @@ const checkForEndgame = (): TThunk<void> =>
   (dispatch, getState) => {
     const { profile, game, levels, tables } = getState();
 
+    // Lose.
     if (profile.lives < 0) {
-      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.STOP }));
+      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.LOSE_STOP }));
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
       }));
@@ -157,11 +159,25 @@ const checkForEndgame = (): TThunk<void> =>
 
     const level = levels.data[profile.level];
 
+    // Win.
     if (
       game.tables === level.maxTables
       && !tables.ids.length
     ) {
-      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.STOP }));
+      const nextLevel = Object.keys(levels.data).length < profile.level
+        ? profile.level + 1
+        : null;
+
+      if (nextLevel) {
+        dispatch(levelsSlice.actions.unlockLevel({
+          level: nextLevel
+        }));
+        dispatch(profileSlice.actions.selectLevel({
+          level: nextLevel
+        }));
+      }
+
+      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.WIN_STOP }));
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
       }));

@@ -78,9 +78,11 @@ export type TRecipes = {
 };
 
 export enum GameStatus {
-  PLAY,
+  FIRST_STOP,
+  LOSE_STOP,
   PAUSE,
-  STOP,
+  PLAY,
+  WIN_STOP,
 };
 
 export type TProfile = {

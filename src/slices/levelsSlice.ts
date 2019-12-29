@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TLevels } from '../types';
 
@@ -7,18 +7,18 @@ const initialState: TLevels = {
     '1': {
       id: '1',
       dishes: 2,
-      maxClients: 3,
-      maxTables: 3,
-      timePerIngredient: 4000,
+      maxClients: 1,
+      maxTables: 1,
+      timePerIngredient: 10000000,
       isLock: false,
     },
     '2': {
       id: '2',
       dishes: 2,
-      maxClients: 3,
-      maxTables: 5,
-      timePerIngredient: 4000,
-      isLock: false,
+      maxClients: 1,
+      maxTables: 1,
+      timePerIngredient: 410000000000,
+      isLock: true,
     },
     '3': {
       id: '3',
@@ -30,9 +30,9 @@ const initialState: TLevels = {
     },
   },
   recipes: {
-    '1': ['r1', 'r2'],
-    '2': ['r2'],
-    '3': ['r1'],
+    '1': ['r1'],
+    '2': ['r1'],
+    '3': ['r1', 'r2'],
   },
 };
 
@@ -40,10 +40,20 @@ type TRemoveTableProps = {
   tableId: string,
 };
 
+type TUnlockLevelProps = {
+  level: number,
+};
+
 const slice = createSlice({
   name: 'levels',
   initialState,
-  reducers: {}
+  reducers: {
+    unlockLevel(state, action: PayloadAction<TUnlockLevelProps>) {
+      state.data[action.payload.level].isLock = false;
+
+      return state;
+    }
+  }
 });
 
 export default slice;

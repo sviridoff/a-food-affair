@@ -10,6 +10,10 @@
   backdrop-filter: blur(.5rem);
 }
 
+.restartpage > *:first-child {
+  margin-top: 40%;
+}
+
 .restartpage--visible {
   display: flex;
 }
@@ -24,7 +28,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 5rem;
   height: 6rem;
 }
 
@@ -40,8 +43,21 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 40%;
   align-items: center;
+  margin-bottom: 4rem;
+}
+
+.restartpage__game-logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; 
+  margin-bottom: 4rem;
+  height: 14rem;
+}
+
+.restartpage__game-logo g {
+  fill: white;
 }
 
 .restartpage__retry-btn {
