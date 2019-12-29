@@ -14,11 +14,26 @@
   display: flex;
 }
 
-.restartpage__body {
+.restartpage__level {
+  font-size: 4rem;
+  width: 8rem;
+  text-align: center;
+}
+
+.restartpage__level-start {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5rem;
+  height: 6rem;
+}
+
+.restartpage__level-ctrl {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-top: 40%;
+  align-items: center;
 }
 
 .restartpage__retry-btn {

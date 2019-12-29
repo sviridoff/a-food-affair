@@ -22,7 +22,6 @@
 }
 
 .board__menu-controls {
-  border: 0.1rem dashed var(--border-color);
   padding: 0.5rem;
   bottom: 0;
   right: 0;

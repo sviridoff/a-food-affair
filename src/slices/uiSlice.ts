@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUi, VisibleModalType } from '../types';
 
 const initialState: TUi = {
-  modalType: VisibleModalType.RESTARTPAGE,
+  modalType: VisibleModalType.NONE,
   selectedRecipe: null,
   selectedDish: null,
 };

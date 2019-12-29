@@ -3,8 +3,10 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './Restartpage.css';
-import { TState, VisibleModalType } from '../../types';
+import { TState, VisibleModalType, TLevel } from '../../types';
 import { startgame, startgameLavel } from '../../actions';
+
+type TLevelsData = { [key: string]: TLevel };
 
 const mapStateToProps =
   (state: TState) => ({
@@ -12,6 +14,7 @@ const mapStateToProps =
     isVisible:
       state.ui.modalType === VisibleModalType.RESTARTPAGE,
     levelsNum: Object.keys(state.levels.data).length,
+    levels: state.levels.data,
   });
 
 const mapDispatchToProps = { startgame, startgameLavel };
@@ -29,7 +32,7 @@ const startpageClass =
 
 const prevLevelBtn = (
   setLocalLevel: (arg0: number) => void,
-  localLevel: number
+  localLevel: number,
 ) => {
   const onClickAttr = localLevel > 1
     ? { onClick: () => setLocalLevel(localLevel - 1) }
@@ -57,9 +60,10 @@ const nextLevelBtn = (
 const playBtn = (
   level: number,
   localLevel: number,
-  startgameLavel: (arg: number) => void
+  levels: TLevelsData,
+  startgameLavel: (arg: number) => void,
 ) =>
-  level !== localLevel
+  level !== localLevel && !levels[localLevel].isLock
     ? <div
       className='restartpage__play-btn'
       onClick={() => startgameLavel(localLevel)}></div>
@@ -68,7 +72,7 @@ const playBtn = (
 const retryBtn = (
   level: number,
   localLevel: number,
-  startgame: () => void
+  startgame: () => void,
 ) =>
   level === localLevel
     ? <div
@@ -76,11 +80,20 @@ const retryBtn = (
       onClick={startgame}></div>
     : null;
 
+const levelTxt = (
+  levels: TLevelsData,
+  localLevel: number,
+) =>
+  <div className='restartpage__level'>
+    {levels[localLevel].isLock ? '?' : localLevel}
+  </div>;
+
 const Startpage: FC<TProps> =
   ({
     isVisible,
     currentLevel,
     levelsNum,
+    levels,
     startgame,
     startgameLavel,
   }) => {
@@ -88,14 +101,14 @@ const Startpage: FC<TProps> =
       = useState(currentLevel);
 
     return <div className={startpageClass(isVisible)}>
-      <div className='restartpage__body'>
-        {retryBtn(currentLevel, localLevel, startgame)}
-        {playBtn(currentLevel, localLevel, startgameLavel)}
+      <div className='restartpage__level-ctrl'>
         {prevLevelBtn(setLocalLevel, localLevel)}
-        <div className='restartpage__level'>
-          {localLevel}
-        </div>
+        {levelTxt(levels, localLevel)}
         {nextLevelBtn(setLocalLevel, localLevel, levelsNum)}
+      </div>
+      <div className='restartpage__level-start'>
+        {retryBtn(currentLevel, localLevel, startgame)}
+        {playBtn(currentLevel, localLevel, levels, startgameLavel)}
       </div>
     </div>;
   };

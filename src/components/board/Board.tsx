@@ -17,9 +17,7 @@ const Board: FC =
         </div>
         <Diner />
         <div className='board__menu-controls'>
-          <div className='board__sound-btn'></div>
           <PauseBtn />
-          <div className='board__replay-btn'></div>
         </div>
       </div>
       <Kitchen />

@@ -94,6 +94,7 @@ export type TLevel = {
   maxClients: number,
   maxTables: number,
   timePerIngredient: number,
+  isLock: boolean,
 };
 
 export type TLevels = {

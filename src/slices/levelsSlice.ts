@@ -10,6 +10,7 @@ const initialState: TLevels = {
       maxClients: 3,
       maxTables: 3,
       timePerIngredient: 4000,
+      isLock: false,
     },
     '2': {
       id: '2',
@@ -17,11 +18,21 @@ const initialState: TLevels = {
       maxClients: 3,
       maxTables: 5,
       timePerIngredient: 4000,
+      isLock: false,
+    },
+    '3': {
+      id: '3',
+      dishes: 2,
+      maxClients: 3,
+      maxTables: 5,
+      timePerIngredient: 4000,
+      isLock: true,
     },
   },
   recipes: {
     '1': ['r1', 'r2'],
     '2': ['r2'],
+    '3': ['r1'],
   },
 };
 
