@@ -58,7 +58,6 @@ export enum VisibleModalType {
   NONE,
   INGREDIENTS_STORE,
   RECIPES,
-  STARTPAGE,
   RESTARTPAGE,
 };
 
@@ -94,6 +93,7 @@ export type TProfile = {
 export type TLevel = {
   id: string,
   dishes: number,
+  lives: number,
   maxClients: number,
   maxTables: number,
   timePerIngredient: number,

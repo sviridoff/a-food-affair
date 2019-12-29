@@ -150,7 +150,7 @@ const checkForEndgame = (): TThunk<void> =>
     const { profile, game, levels, tables } = getState();
 
     // Lose.
-    if (profile.lives < 0) {
+    if (profile.lives <= 0) {
       dispatch(gameSlice.actions.selectStatus({ status: GameStatus.LOSE_STOP }));
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
@@ -161,10 +161,11 @@ const checkForEndgame = (): TThunk<void> =>
 
     // Win.
     if (
-      game.tables === level.maxTables
+      profile.lives > 0
+      && game.tables === level.maxTables
       && !tables.ids.length
     ) {
-      const nextLevel = Object.keys(levels.data).length < profile.level
+      const nextLevel = profile.level < Object.keys(levels.data).length
         ? profile.level + 1
         : null;
 
@@ -235,7 +236,9 @@ export const startgame = (): TThunk<void> =>
       }));
       dispatch(tablesSlice.actions.restartTables());
       dispatch(clientsSlice.actions.restartClients());
-      dispatch(profileSlice.actions.restartProfile());
+      dispatch(profileSlice.actions.restartProfile({
+        lives: levels.data[profile.level].lives,
+      }));
       dispatch(gameSlice.actions.restartGame());
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.NONE,

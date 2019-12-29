@@ -15,9 +15,8 @@ const connector = connect(mapStateToProps);
 type TProps = ConnectedProps<typeof connector>;
 
 const tablesList = (tablesIds: string[]) =>
-  tablesIds.map((tableId, index) =>
+  tablesIds.map(tableId =>
     <Table
-      isLast={tablesIds.length === index + 1}
       tableId={tableId}
       key={tableId} />);
 

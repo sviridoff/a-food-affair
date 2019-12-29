@@ -7,6 +7,7 @@ const initialState: TLevels = {
     '1': {
       id: '1',
       dishes: 2,
+      lives: 1,
       maxClients: 1,
       maxTables: 1,
       timePerIngredient: 10000000,
@@ -15,6 +16,7 @@ const initialState: TLevels = {
     '2': {
       id: '2',
       dishes: 2,
+      lives: 1,
       maxClients: 1,
       maxTables: 1,
       timePerIngredient: 410000000000,
@@ -23,6 +25,7 @@ const initialState: TLevels = {
     '3': {
       id: '3',
       dishes: 2,
+      lives: 3,
       maxClients: 3,
       maxTables: 5,
       timePerIngredient: 4000,

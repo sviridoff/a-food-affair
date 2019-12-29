@@ -22,14 +22,18 @@ type TSelectLevelProps = {
   level: number,
 };
 
+type TRestartProfileProps = {
+  lives: number,
+};
+
 const slice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    restartProfile(state) {
+    restartProfile(state, action: PayloadAction<TRestartProfileProps>) {
       state = {
         coins: 0,
-        lives: defaultLives,
+        lives: action.payload.lives,
         level: state.level,
       };
 

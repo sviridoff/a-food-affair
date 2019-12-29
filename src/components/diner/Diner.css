@@ -8,3 +8,7 @@
   z-index: 2;
   border-bottom: 0.2rem solid var(--border-color);
 }
+
+.diner > div:last-child {
+  margin-bottom: 0.8rem;
+}

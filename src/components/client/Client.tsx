@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import classnames from 'classnames';
 
 import './Client.css';
 import { TState, ClientStatus, TClient } from '../../types';
@@ -8,8 +7,7 @@ import { selectClient, selectClientRecipe } from '../../selectors';
 import { chooseClient } from '../../actions';
 
 type TOwnProps = {
-  clientId: string;
-  isLast: boolean;
+  clientId: string,
 };
 
 const mapStateToProps =
@@ -24,12 +22,6 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
-const clientClass = (isLast: boolean) =>
-  classnames(
-    'client',
-    { 'client--last': isLast },
-  );
-
 const onClickAttr = (
   client: TClient,
   recipeId: string,
@@ -40,10 +32,10 @@ const onClickAttr = (
     : {};
 
 const Client: FC<TProps> =
-  ({ isLast, client, recipeId, chooseClient }) =>
+  ({ client, recipeId, chooseClient }) =>
     <div
       {...onClickAttr(client, recipeId, chooseClient)}
-      className={clientClass(isLast)}>
+      className='client'>
       {client.status}
       {recipeId}
       <div className='client__clock'></div>

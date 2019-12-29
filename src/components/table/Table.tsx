@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import classnames from 'classnames';
 
 import './Table.css';
 import { TState } from '../../types';
@@ -9,7 +8,6 @@ import Client from '../client/Client';
 
 type TOwnProps = {
   tableId: string,
-  isLast: boolean,
 };
 
 const mapStateToProps =
@@ -22,21 +20,14 @@ const connector = connect(mapStateToProps);
 type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
 const clientsList = (clients: string[]) =>
-  clients.map((id, index) =>
+  clients.map(clientId =>
     <Client
-      key={id}
-      clientId={id}
-      isLast={index + 1 === clients.length} />);
-
-const tableClass = (isLast: boolean) =>
-  classnames(
-    'table',
-    { 'table--last': isLast },
-  );
+      key={clientId}
+      clientId={clientId} />);
 
 const Table: FC<TProps> =
-  ({ clients, isLast }) =>
-    <div className={tableClass(isLast)}>
+  ({ clients }) =>
+    <div className='table'>
       {clientsList(clients)}
     </div>;
 

@@ -6,6 +6,6 @@
   float: left;
 }
 
-.table--last {
-  margin-bottom: 0.8rem;
+.table > div:last-child {
+  margin-right: 0;
 }

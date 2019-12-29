@@ -9,10 +9,6 @@
   position: relative;
 }
 
-.client--last {
-  margin-right: 0;
-}
-
 .client__clock {
   background: var(--border-color);
   width: 1.5rem;

@@ -11,7 +11,7 @@
 }
 
 .restartpage > *:first-child {
-  margin-top: 40%;
+  margin-top: 10rem;
 }
 
 .restartpage--visible {
@@ -53,7 +53,7 @@
   justify-content: center;
   align-items: center; 
   margin-bottom: 4rem;
-  height: 14rem;
+  height: 24%;
 }
 
 .restartpage__game-logo g {
