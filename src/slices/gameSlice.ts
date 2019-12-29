@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TGame, GameStatus } from '../types';
 
 const initialState: TGame = {
-  status: GameStatus.PAUSE,
+  status: GameStatus.STOP,
   tables: 0,
   nextTableTime: 0,
 };

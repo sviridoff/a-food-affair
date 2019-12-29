@@ -90,9 +90,11 @@ const levelTxtEl = (
 
 const resumeBtnEl = (
   isPaused: boolean,
+  level: number,
+  localLevel: number,
   resumePauseGame: () => void,
 ) =>
-  isPaused
+  isPaused && level === localLevel
     ? <div
       className='restartpage__resume-btn'
       onClick={resumePauseGame}></div>
@@ -121,7 +123,7 @@ const Startpage: FC<TProps> =
       <div className='restartpage__level-start'>
         {retryBtnEl(currentLevel, localLevel, startgame)}
         {playBtnEl(currentLevel, localLevel, levels, startgameLavel)}
-        {resumeBtnEl(isPaused, resumePauseGame)}
+        {resumeBtnEl(isPaused, currentLevel, localLevel, resumePauseGame)}
       </div>
     </div>;
   };

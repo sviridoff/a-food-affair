@@ -149,7 +149,7 @@ const checkForEndgame = (): TThunk<void> =>
     const { profile, game, levels, tables } = getState();
 
     if (profile.lives < 0) {
-      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PAUSE }));
+      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.STOP }));
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
       }));
@@ -161,7 +161,7 @@ const checkForEndgame = (): TThunk<void> =>
       game.tables === level.maxTables
       && !tables.ids.length
     ) {
-      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PAUSE }));
+      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.STOP }));
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.RESTARTPAGE,
       }));
@@ -339,7 +339,7 @@ export const resumePauseGame = (): TThunk<void> =>
 window.setInterval(() => {
   const { game, profile, levels } = store.getState();
 
-  if (game.status === GameStatus.PAUSE) {
+  if (game.status !== GameStatus.PLAY) {
     return;
   }
 

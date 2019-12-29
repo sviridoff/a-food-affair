@@ -80,6 +80,7 @@ export type TRecipes = {
 export enum GameStatus {
   PLAY,
   PAUSE,
+  STOP,
 };
 
 export type TProfile = {
