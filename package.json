@@ -2,6 +2,7 @@
   "name": "a-food-affair",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@reduxjs/toolkit": "^1.1.0",
     "classnames": "^2.2.6",
