@@ -197,8 +197,7 @@ const checkForRemoveTable = (clientId: string): TThunk<void> =>
     if (isTableAttended) {
       const coins = tableClientsIds.reduce((prev, id) => {
         const client = clients.data[id];
-        prev += client.status === ClientStatus.OK ? client.coins : 0;
-        return prev;
+        return prev + client.status === ClientStatus.OK ? client.coins : 0;
       }, 0);
 
       if (coins) {
@@ -239,7 +238,9 @@ export const startgame = (): TThunk<void> =>
       dispatch(profileSlice.actions.restartProfile({
         lives: levels.data[profile.level].lives,
       }));
-      dispatch(gameSlice.actions.restartGame());
+      dispatch(gameSlice.actions.restartGame({
+        nextTableTime: currentTime + 2000,
+      }));
       dispatch(uiSlice.actions.selectVisibleModalType({
         modalType: VisibleModalType.NONE,
       }));
@@ -306,12 +307,15 @@ export const createTable = (): TThunk<void> =>
       ids: [tableId],
     };
 
+    const maxLiveTime = Math.max(...Object.values(clients.data)
+      .map(client => client.liveTime - currentTime));
+
     batch(() => {
       dispatch(gameSlice.actions.increaseTables());
       dispatch(clientsSlice.actions.addClients({ clients }));
       dispatch(tablesSlice.actions.addTable({ tables }));
       dispatch(gameSlice.actions.selectNextTableTime({
-        nextTableTime: currentTime + 1000, // TODO: improve
+        nextTableTime: currentTime + (maxLiveTime * 0.65)
       }));
     });
   };
@@ -320,18 +324,26 @@ const checkForRemoveClients = (): TThunk<void> =>
   (dispatch, getState) => {
     const { clients } = getState();
 
-    const clientsToRemove = Object.values(clients.data)
-      .filter(client => currentTime >= client.liveTime);
+    const clientsIdsToRemove = Object.values(clients.data)
+      .filter(client => currentTime >= client.liveTime)
+      .map(client => client.id);
 
-    if (clientsToRemove.length) {
+    if (clientsIdsToRemove.length) {
       batch(() => {
         dispatch(clientsSlice.actions.updateStatuses({
           status: ClientStatus.KO,
-          clientIds: clientsToRemove.map(client => client.id),
+          clientIds: clientsIdsToRemove,
         }));
         dispatch(profileSlice.actions.decreaseLives({
-          lives: clientsToRemove.length,
+          lives: clientsIdsToRemove.length,
         }));
+        clientsIdsToRemove.forEach(clientId => {
+          const { clients } = getState();
+
+          if (clients.data[clientId]) {
+            dispatch(checkForRemoveTable(clientId));
+          }
+        });
         dispatch(checkForEndgame());
       });
     }

@@ -16,6 +16,10 @@ type TSelectNextTableTimeProps = {
   nextTableTime: number,
 };
 
+type TRestartGameProps = {
+  nextTableTime: number,
+};
+
 const slice = createSlice({
   name: 'game',
   initialState,
@@ -44,11 +48,11 @@ const slice = createSlice({
       return state;
     },
 
-    restartGame(state) {
+    restartGame(state, action: PayloadAction<TRestartGameProps>) {
       state = {
         status: GameStatus.PAUSE,
         tables: 0,
-        nextTableTime: 0,
+        nextTableTime: action.payload.nextTableTime,
       };
 
       return state;
