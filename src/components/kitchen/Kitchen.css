@@ -1,20 +1,20 @@
 .kitchen {
-  border-top: 0.2rem solid var(--background-color);
-  padding: 0.8rem 0.8rem 6rem 0.8rem;
+  border-top: 0.2rem solid #f0f0f0;
+  padding: 0.8rem 0.8rem 8rem 0.8rem;
   background: repeating-linear-gradient(
     to right,
-    #e3a3a1,
-    #e3a3a1 2.5rem,
-    var(--background-color) 2.5rem,
-    var(--background-color) 5rem
+    #aecfe6,
+    #aecfe6 2.5rem,
+    #dae4eb 2.5rem,
+    #dae4eb 5rem
   );
 }
 
 .kitchen__trash-btn {
-  background: var(--border-color);
+  background: url('../trashIco/TrashIco.svg') no-repeat top left;
+  background-size: var(--menu-btn-width) var(--menu-btn-width);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
-  border-radius: 100%;
   margin-right: 1rem;
   float: left;
   top: 50%;

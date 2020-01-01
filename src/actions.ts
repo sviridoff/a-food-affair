@@ -249,7 +249,7 @@ export const startgame = (): TThunk<void> =>
   };
 
 export const startgameLavel = (level: number): TThunk<void> =>
-  (dispatch, getState) => {
+  dispatch => {
     batch(() => {
       dispatch(profileSlice.actions.selectLevel({ level }));
       dispatch(startgame());

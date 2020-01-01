@@ -24,7 +24,7 @@ const Board: FC<TProps> =
           src={LogoSvg}
           alt='' />
         <Diner />
-        <div className='board__menu-controls'>
+        <div className='board__menu-ctrls'>
           <div
             className='board__pause-btn'
             onClick={resumePauseGame}></div>

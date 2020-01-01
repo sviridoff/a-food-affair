@@ -7,7 +7,7 @@ const defaultLives = 1;
 const initialState: TProfile = {
   lives: defaultLives,
   coins: 0,
-  level: 3,
+  level: 1,
 };
 
 type TIncreaseCoinsProps = {

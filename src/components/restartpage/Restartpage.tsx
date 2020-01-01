@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import './Restartpage.css';
 import { TState, VisibleModalType, TLevel, GameStatus } from '../../types';
 import { startgameLavel, resumePauseGame } from '../../actions';
-import { ReactComponent as LogoSvg } from '../logoSvg/LogoSvg.svg';
+import LogoSvg from '../logoSvg/LogoSvg.svg';
 
 type TLevelsData = { [key: string]: TLevel };
 
@@ -106,10 +106,10 @@ const resumeBtnEl = (
 
 const logoGameEl = (isFirst: boolean) =>
   isFirst
-    ? <div
-      className='restartpage__game-logo'>
-      <LogoSvg width='100%' height='100%' />
-    </div>
+    ? <img
+      className='restartpage__game-logo'
+      src={LogoSvg}
+      alt='' />
     : null;
 
 const Startpage: FC<TProps> =

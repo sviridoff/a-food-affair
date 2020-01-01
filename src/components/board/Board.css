@@ -16,12 +16,12 @@
 .board__game-logo {
   width: 13rem;
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0.8rem;
+  right: 0.8rem;
   z-index: 1;
 }
 
-.board__menu-controls {
+.board__menu-ctrls {
   padding: 0.8rem;
   bottom: 0;
   right: 0;
@@ -49,10 +49,10 @@
 }
 
 .board__pause-btn {
-  background: var(--border-color);
+  background: url('../pauseIco/PauseIco.svg') no-repeat top left;
+  background-size: var(--menu-btn-width) var(--menu-btn-width);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
-  border-radius: 100%;
   float: left;
   margin-bottom: 0.5rem;
   clear: both;

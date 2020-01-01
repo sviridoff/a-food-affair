@@ -29,10 +29,10 @@
 }
 
 .recipe__close-btn {
-  background: var(--border-color);
+  background: url('../closeIco/CloseIco.svg') no-repeat top left;
+  background-size: var(--menu-btn-width) var(--menu-btn-width);
   width: var(--menu-btn-width);
   height: var(--menu-btn-width);
-  border-radius: 100%;
   float: left;
 }
 

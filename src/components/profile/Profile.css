@@ -7,13 +7,13 @@
 
 .profile__level {
   display: inline-block;
-  padding: 0.5rem;
+  padding: 0.8rem 0.5rem 0.5rem 0.8rem;
   margin-right: 0.5rem;
 }
 
 .profile__lives {
   display: inline-block;
-  padding: 0.5rem;
+  padding: 0.8rem 0.5rem 0.5rem 0.5rem;
   margin-right: 0.5rem;
 }
 
@@ -29,7 +29,7 @@
 
 .profile__coins {
   display: inline-block;
-  padding: 0.5rem;
+  padding: 0.8rem 0.5rem 0.5rem 0.5rem;
 }
 
 .profile__coins__logo {
