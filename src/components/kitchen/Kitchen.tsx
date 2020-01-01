@@ -18,9 +18,8 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type TProps = ConnectedProps<typeof connector>;
 
 const dishesList = (dishesIds: string[]) =>
-  dishesIds.map((dishId, index) =>
+  dishesIds.map(dishId =>
     <Dish
-      isLast={dishesIds.length === index + 1}
       dishId={dishId}
       key={dishId} />);
 

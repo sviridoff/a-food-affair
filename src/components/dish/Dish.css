@@ -1,19 +1,15 @@
 .dish {
-  border-radius: 0.8rem;
-  border: var(--border-size) solid var(--border-color);
-  background: #c8e0e8;
+  background: url('../dishIco/DishIco.svg') no-repeat top left;
+  background-size: var(--dish-btn-width) var(--dish-btn-width);
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
   margin-right: 1rem;
   float: left;
 }
 
-.dish--last {
-  margin-right: 0 !important;
-}
-
 .dish--is-selected {
-  border: var(--border-size) solid var(--border-color-selected);
+  background: url('../dishIco/DishIcoSelected.svg') no-repeat top left;
+  background-size: var(--dish-btn-width) var(--dish-btn-width);
 }
 
 .dish__ingredient {

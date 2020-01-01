@@ -10,7 +10,6 @@ import { chooseDish } from '../../actions';
 const maxIngredientsPerDish = 4;
 
 type TOwnProps = {
-  isLast: boolean,
   dishId: string,
 };
 
@@ -49,13 +48,10 @@ const ingredientsList =
           {ingredient.id}
         </div>);
 
-const dishClass = (isSelected: boolean, isLast: boolean) =>
+const dishClass = (isSelected: boolean) =>
   classnames(
     'dish',
-    {
-      'dish--last': isLast,
-      'dish--is-selected': isSelected,
-    }
+    { 'dish--is-selected': isSelected }
   );
 
 const ingredientsEl = (
@@ -96,7 +92,6 @@ const Dish: FC<TProps> =
   ({
     dish,
     dishId,
-    isLast,
     ingredients,
     chooseDish,
     allRecipeIngredients,
@@ -104,7 +99,7 @@ const Dish: FC<TProps> =
     const recipeId = getRecipeId(ingredients, allRecipeIngredients);
 
     return <div
-      className={dishClass(dish.isSelected, isLast)}
+      className={dishClass(dish.isSelected)}
       onClick={() => chooseDish(dishId)}>
       {
         recipeId
