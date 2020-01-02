@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import classnames from 'classnames';
 
 import './Client.css';
 import { TState, ClientStatus, TClient } from '../../types';
@@ -31,14 +32,24 @@ const onClickAttr = (
     ? { onClick: () => chooseClient(client.id, recipeId) }
     : {};
 
+const clientStatusClass = (status: ClientStatus) =>
+  classnames({
+    'client__ok': status === ClientStatus.OK,
+    'client__ko': status === ClientStatus.KO,
+  });
+
+const clientStatusEl = (status: ClientStatus) =>
+  status !== ClientStatus.WIP
+    ? <div className={clientStatusClass(status)}></div>
+    : null;
+
 const Client: FC<TProps> =
   ({ client, recipeId, chooseClient }) =>
     <div
       {...onClickAttr(client, recipeId, chooseClient)}
       className='client'>
-      {client.status}
-      {recipeId}
-      <div className='client__clock'></div>
+      <div className='client__cloud'></div>
+      {clientStatusEl(client.status)}
     </div>;
 
 export default connector(Client);

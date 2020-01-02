@@ -1,12 +1,42 @@
 .client {
-  border-radius: 0.8rem;
-  border: var(--border-size) solid var(--border-color);
-  background: #dfebc7;
-  width: var(--dish-btn-width);
-  height: var(--dish-btn-width);
+  background: url('../catIco/CatIco.svg') no-repeat top left;
+  background-size: 8rem 6rem;
+  width: 8rem;
+  height: 6rem;
   margin-right: 0.5rem;
   float: left;
   position: relative;
+}
+
+.client__cloud {
+  background: url('../cloudIco/CloudIco.svg') no-repeat top left;
+  background-size: 8rem 7rem;
+  width: 8rem;
+  height: 7rem;
+  top: -5.2rem;
+  position: absolute;
+}
+
+.client__ok {
+  background: url('../okIco/OkIco.svg') no-repeat top left;
+  background-size: 3rem 3rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+  position: absolute;
+  top: -3.8rem;
+  left: 2.3rem;
+}
+
+.client__ko {
+  background: url('../koIco/KoIco.svg') no-repeat top left;
+  background-size: 3rem 3rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+  position: absolute;
+  top: -3.8rem;
+  left: 2.3rem;
 }
 
 .client__clock {

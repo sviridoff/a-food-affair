@@ -1,8 +1,5 @@
 .table {
-  border: 0.2rem solid var(--border-color);
-  border-radius: 0.8rem;
-  margin-top: 0.8rem;
-  padding: 0.5rem;
+  margin-top: 6rem;
   float: left;
 }
 
