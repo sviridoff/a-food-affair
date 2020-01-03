@@ -6,6 +6,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.1.0",
     "classnames": "^2.2.6",
+    "gsap": "^3.0.4",
     "ramda": "^0.26.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

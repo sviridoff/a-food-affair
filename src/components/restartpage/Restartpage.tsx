@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, SyntheticEvent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
@@ -6,6 +6,7 @@ import './Restartpage.css';
 import { TState, VisibleModalType, TLevel, GameStatus } from '../../types';
 import { startgameLavel, resumePauseGame } from '../../actions';
 import LogoSvg from '../logoSvg/LogoSvg.svg';
+import btnEffect from '../../libs/btnEffect';
 
 type TLevelsData = { [key: string]: TLevel };
 
@@ -38,8 +39,9 @@ const prevLevelBtnEl = (
   setLocalLevel: (arg0: number) => void,
   localLevel: number,
 ) => {
+  const onClick = () => setLocalLevel(localLevel - 1);
   const onClickAttr = localLevel > 1
-    ? { onClick: () => setLocalLevel(localLevel - 1) }
+    ? { onClick: (ev: SyntheticEvent) => btnEffect(onClick, ev.target) }
     : {};
 
   return <div
@@ -52,8 +54,9 @@ const nextLevelBtnEl = (
   localLevel: number,
   levelsNum: number,
 ) => {
+  const onClick = () => setLocalLevel(localLevel + 1);
   const onClickAttr = localLevel < levelsNum
-    ? { onClick: () => setLocalLevel(localLevel + 1) }
+    ? { onClick: (ev: SyntheticEvent) => btnEffect(onClick, ev.target) }
     : {};
 
   return <div
@@ -77,12 +80,15 @@ const playBtnEl = (
   levels: TLevelsData,
   isStart: boolean,
   startgameLavel: (arg: number) => void,
-) =>
-  !levels[localLevel].isLock
+) => {
+  const onClick = () => startgameLavel(localLevel);
+
+  return !levels[localLevel].isLock
     ? <div
       className={playBtnClass(currentLevel, localLevel, isStart)}
-      onClick={() => startgameLavel(localLevel)}></div>
+      onClick={(ev: SyntheticEvent) => btnEffect(onClick, ev.target)}></div>
     : null;
+}
 
 const levelTxtEl = (
   levels: TLevelsData,
@@ -101,7 +107,7 @@ const resumeBtnEl = (
   isPaused && level === localLevel
     ? <div
       className='restartpage__resume-btn'
-      onClick={resumePauseGame}></div>
+      onClick={(ev: SyntheticEvent) => btnEffect(resumePauseGame, ev.target)}></div>
     : null;
 
 const logoGameEl = (isFirst: boolean) =>

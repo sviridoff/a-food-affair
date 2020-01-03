@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import classnames from 'classnames';
 
 import './Recipes.css';
@@ -27,16 +27,16 @@ type TProps = ConnectedProps<typeof connector>;
 
 const ingredientsList =
   (ingredients: TIngredient[]) =>
-    ingredients.map((ingredient, index) => (
-      <>
+    ingredients.map((ingredient, index) =>
+      <Fragment key={`${ingredient.id}-${index}`}>
         <div
-          className={`recipes__ingredient ingredient__${ingredient.id}`}
-          key={`${ingredient.id}-${index}`}></div>
+          className={`recipes__ingredient ingredient__${ingredient.id}`}>
+        </div>
         {index !== ingredients.length - 1
           ? <div className='recipes__symbol'>+</div>
           : null
         }
-      </>));
+      </Fragment>);
 
 const recipesClass =
   (isVisible: boolean) =>
