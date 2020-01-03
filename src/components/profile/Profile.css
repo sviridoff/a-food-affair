@@ -18,11 +18,11 @@
 }
 
 .profile__lives__logo {
-  background: var(--border-color);
+  background: url('../liveIco/LiveIco.svg') no-repeat top left;
+  background-size: 2rem 2rem;
   width: 2rem;
   height: 2rem;
   margin-right: 0.5rem;
-  border-radius: 100%;
   display: inline-block;
   vertical-align: bottom;
 }
@@ -33,11 +33,11 @@
 }
 
 .profile__coins__logo {
-  background: var(--border-color);
+  background: url('../coinsIco/CoinsIco.svg') no-repeat top left;
+  background-size: 2rem 2rem;
   width: 2rem;
   height: 2rem;
   margin-right: 0.5rem;
-  border-radius: 100%;
   display: inline-block;
   vertical-align: bottom;
 }
