@@ -8,6 +8,7 @@ import { TState, TIngredient, VisibleModalType } from '../../types';
 import { connect, ConnectedProps } from 'react-redux';
 import { selectClientIngredients } from '../../selectors';
 import uiSlice from '../../slices/uiSlice';
+import btnEffect from '../../libs/btnEffect';
 
 const mapStateToProps = (state: TState) => ({
   ingredients: selectClientIngredients(state),
@@ -56,7 +57,7 @@ const Recipes: FC<TProps> =
       <div className='recipes__controls'>
         <div
           className='recipes__close-btn'
-          onClick={hideRecipes}></div>
+          onClick={btnEffect(hideRecipes)}></div>
       </div>
     </div>;
 

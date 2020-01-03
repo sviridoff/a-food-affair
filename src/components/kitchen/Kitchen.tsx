@@ -6,6 +6,7 @@ import { TState } from '../../types';
 import { selectDishesIds } from '../../selectors';
 import { clearDish } from '../../actions';
 import Dish from '../dish/Dish';
+import btnEffect from '../../libs/btnEffect';
 
 const mapStateToProps = (state: TState) => ({
   dishesIds: selectDishesIds(state),
@@ -28,7 +29,7 @@ const Kitchen: FC<TProps> =
     <div className='kitchen'>
       <div
         className='kitchen__trash-btn'
-        onClick={clearDish}></div>
+        onClick={btnEffect(clearDish)}></div>
       {dishesList(dishesIds)}
     </div>;
 

@@ -7,6 +7,7 @@ import Profile from '../profile/Profile';
 import Diner from '../diner/Diner';
 import Kitchen from '../kitchen/Kitchen';
 import { resumePauseGame } from '../../actions';
+import btnEffect from '../../libs/btnEffect';
 
 const mapDispatchToProps = { resumePauseGame };
 
@@ -27,7 +28,7 @@ const Board: FC<TProps> =
         <div className='board__menu-ctrls'>
           <div
             className='board__pause-btn'
-            onClick={resumePauseGame}></div>
+            onClick={btnEffect(resumePauseGame)}></div>
         </div>
       </div>
       <Kitchen />

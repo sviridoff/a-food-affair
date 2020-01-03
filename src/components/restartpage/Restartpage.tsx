@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, SyntheticEvent } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
@@ -41,7 +41,7 @@ const prevLevelBtnEl = (
 ) => {
   const onClick = () => setLocalLevel(localLevel - 1);
   const onClickAttr = localLevel > 1
-    ? { onClick: (ev: SyntheticEvent) => btnEffect(onClick, ev.target) }
+    ? { onClick: btnEffect(onClick) }
     : {};
 
   return <div
@@ -56,7 +56,7 @@ const nextLevelBtnEl = (
 ) => {
   const onClick = () => setLocalLevel(localLevel + 1);
   const onClickAttr = localLevel < levelsNum
-    ? { onClick: (ev: SyntheticEvent) => btnEffect(onClick, ev.target) }
+    ? { onClick: btnEffect(onClick) }
     : {};
 
   return <div
@@ -86,7 +86,7 @@ const playBtnEl = (
   return !levels[localLevel].isLock
     ? <div
       className={playBtnClass(currentLevel, localLevel, isStart)}
-      onClick={(ev: SyntheticEvent) => btnEffect(onClick, ev.target)}></div>
+      onClick={btnEffect(onClick)}></div>
     : null;
 }
 
@@ -107,7 +107,7 @@ const resumeBtnEl = (
   isPaused && level === localLevel
     ? <div
       className='restartpage__resume-btn'
-      onClick={(ev: SyntheticEvent) => btnEffect(resumePauseGame, ev.target)}></div>
+      onClick={btnEffect(resumePauseGame)}></div>
     : null;
 
 const logoGameEl = (isFirst: boolean) =>

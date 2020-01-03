@@ -7,6 +7,7 @@ import '../../recipe.css';
 import { TState, ClientStatus, TClient } from '../../types';
 import { selectClient, selectClientRecipe } from '../../selectors';
 import { chooseClient } from '../../actions';
+import btnEffect from '../../libs/btnEffect';
 
 type TOwnProps = {
   clientId: string,
@@ -30,7 +31,7 @@ const onClickAttr = (
   chooseClient: (arg0: string, arg1: string) => void
 ) =>
   client.status === ClientStatus.WIP
-    ? { onClick: () => chooseClient(client.id, recipeId) }
+    ? { onClick: btnEffect(() => chooseClient(client.id, recipeId)) }
     : {};
 
 const clientStatusClass = (status: ClientStatus) =>

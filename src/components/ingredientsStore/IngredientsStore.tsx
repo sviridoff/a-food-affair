@@ -7,6 +7,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { TState, VisibleModalType } from '../../types';
 import { selectLevelIngredientsIds } from '../../selectors';
 import { chooseIngredient, closeIngredientsStore } from '../../actions';
+import btnEffect from '../../libs/btnEffect';
 
 const mapStateToProps =
   (state: TState) => ({
@@ -33,9 +34,10 @@ const ingredientsList =
       <div
         className={`ingredients-store__ingredient ingredient__${ingredientId}`}
         key={ingredientId}
-        onClick={() => chooseIngredient(ingredientId)}>
+        onClick={btnEffect(() => chooseIngredient(ingredientId))}>
       </div>
     );
+
 
 const ingredientsStoreClass =
   (isVisible: boolean) =>
@@ -59,7 +61,7 @@ const IngredientsStore: FC<TProps> =
       <div className='ingredients-store__controls'>
         <div
           className='ingredients-store__close-btn'
-          onClick={closeIngredientsStore}></div>
+          onClick={btnEffect(closeIngredientsStore)}></div>
       </div>
     </div>
 
