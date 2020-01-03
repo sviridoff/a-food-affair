@@ -11,6 +11,7 @@ export enum ClientStatus {
 
 export type TTable = {
   id: string,
+  liveTime: number,
 };
 
 export type TTables = {
@@ -98,6 +99,7 @@ export type TLevel = {
   maxTables: number,
   timePerIngredient: number,
   isLock: boolean,
+  randomTables: boolean,
 };
 
 export type TLevels = {

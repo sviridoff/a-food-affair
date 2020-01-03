@@ -39,6 +39,12 @@ const slice = createSlice({
 
     selectDish(state, action: PayloadAction<TSelectDishProp>) {
       state.selectedDish = action.payload.dishId;
+    },
+
+    restartUi(state) {
+      state.selectedDish = null;
+
+      return state;
     }
   }
 });

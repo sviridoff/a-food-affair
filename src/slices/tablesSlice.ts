@@ -10,12 +10,15 @@ const initialState: TTables = {
   data: {
     t1: {
       id: 't1',
+      liveTime: 0,
     },
     t2: {
       id: 't2',
+      liveTime: 0,
     },
     t3: {
       id: 't3',
+      liveTime: 0,
     },
   },
   clients: {
@@ -32,6 +35,15 @@ type TRemoveTableProps = {
 
 type TAddTableProps = {
   tables: TTables,
+};
+
+type TRemoveTablesProps = {
+  tablesIds: string[],
+};
+
+type TSelectLiveTimeProps = {
+  liveTime: number,
+  tableId: string,
 };
 
 const slice = createSlice({
@@ -62,6 +74,26 @@ const slice = createSlice({
       const tables = action.payload.tables;
 
       state = mergeDeepWith(concatValues, state, tables);
+
+      return state;
+    },
+
+    removeTables(state, action: PayloadAction<TRemoveTablesProps>) {
+      const tableIds = action.payload.tablesIds;
+
+      tableIds.forEach(tableId => {
+        delete state.data[tableId];
+        delete state.clients[tableId];
+        state.ids = state.ids.filter(id => tableId !== id);
+      });
+
+      return state;
+    },
+
+    selectLiveTime(state, action: PayloadAction<TSelectLiveTimeProps>) {
+      const { tableId, liveTime } = action.payload;
+
+      state.data[tableId].liveTime = liveTime;
 
       return state;
     }
