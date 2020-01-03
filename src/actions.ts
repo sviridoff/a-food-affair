@@ -1,5 +1,6 @@
 import { batch } from 'react-redux';
 import uuid from 'uuid/v4';
+import { SyntheticEvent } from 'react';
 
 import {
   TThunk,
@@ -18,24 +19,28 @@ import profileSlice from './slices/profileSlice';
 import gameSlice from './slices/gameSlice';
 import levelsSlice from './slices/levelsSlice';
 import store from './store';
+import { btnEffect, wiggleEffect } from './libs/btnEffect';
 
 let currentTime = Date.now();
 
-export const chooseDish = (dishId: string): TThunk<void> =>
+export const chooseDish = (
+  dishId: string,
+  event: SyntheticEvent,
+): TThunk<void> =>
   (dispatch, getState) => {
-    batch(() => {
-      const { dishes, ui } = getState();
-      const isSelected = dishes.data[dishId].isSelected;
+    const { dishes, ui } = getState();
+    const isSelected = dishes.data[dishId].isSelected;
 
-      if (!isSelected) {
-        const selectedDish = ui.selectedDish && dishId !== ui.selectedDish
-          ? ui.selectedDish
-          : null;
+    if (!isSelected) {
+      const selectedDish = ui.selectedDish && dishId !== ui.selectedDish
+        ? ui.selectedDish
+        : null;
 
-        if (selectedDish) {
-          const ingredients =
-            dishes.ingredients[selectedDish] || [];
+      if (selectedDish) {
+        const ingredients =
+          dishes.ingredients[selectedDish] || [];
 
+        batch(() => {
           dispatch(dishesSlice.actions.addIngredients({
             dishId,
             ingredients,
@@ -43,31 +48,45 @@ export const chooseDish = (dishId: string): TThunk<void> =>
           dispatch(dishesSlice.actions.removeAllIngredients({ dishId: selectedDish }));
           dispatch(uiSlice.actions.selectDish({ dishId: null }));
           dispatch(dishesSlice.actions.unselect({ dishId: selectedDish }));
-        }
+        });
 
-        if (!selectedDish) {
-          const ingredients = dishes.ingredients[dishId] || [];
-          const hasIngredients = Boolean(ingredients.length);
-
-          if (hasIngredients) {
-            dispatch(dishesSlice.actions.select({ dishId }));
-            dispatch(uiSlice.actions.selectDish({ dishId }));
-          }
-
-          if (!hasIngredients) {
-            dispatch(uiSlice.actions.selectDish({ dishId }));
-            dispatch(uiSlice.actions.selectVisibleModalType({
-              modalType: VisibleModalType.INGREDIENTS_STORE,
-            }));
-          }
-        }
+        wiggleEffect(() => { })(event);
       }
 
-      if (isSelected) {
-        dispatch(dishesSlice.actions.unselect({ dishId }));
-        dispatch(uiSlice.actions.selectDish({ dishId: null }));
+      if (!selectedDish) {
+        const ingredients = dishes.ingredients[dishId] || [];
+        const hasIngredients = Boolean(ingredients.length);
+
+        if (hasIngredients) {
+          btnEffect(
+            () => batch(() => {
+              dispatch(dishesSlice.actions.select({ dishId }));
+              dispatch(uiSlice.actions.selectDish({ dishId }));
+            })
+          )(event);
+        }
+
+        if (!hasIngredients) {
+          btnEffect(
+            () => batch(() => {
+              dispatch(uiSlice.actions.selectDish({ dishId }));
+              dispatch(uiSlice.actions.selectVisibleModalType({
+                modalType: VisibleModalType.INGREDIENTS_STORE,
+              }));
+            })
+          )(event);
+        }
       }
-    });
+    }
+
+    if (isSelected) {
+      btnEffect(
+        () => batch(() => {
+          dispatch(dishesSlice.actions.unselect({ dishId }));
+          dispatch(uiSlice.actions.selectDish({ dishId: null }));
+        })
+      )(event);
+    }
   };
 
 export const chooseIngredient = (ingredientId: string): TThunk<void> =>
@@ -101,13 +120,18 @@ export const closeIngredientsStore = (): TThunk<void> =>
     }
   };
 
-export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =>
+export const chooseClient = (
+  clientId: string,
+  recipeId: string,
+  event: SyntheticEvent,
+): TThunk<void> =>
   (dispatch, getState) => {
-    batch(() => {
-      const { ui, recipes, dishes } = getState();
-      const dishId = ui.selectedDish;
+    const { ui, recipes, dishes } = getState();
+    const dishId = ui.selectedDish;
 
-      if (dishId) {
+    if (dishId) {
+
+      batch(() => {
         const recipeIngredients = recipes.ingredients[recipeId].slice().sort();
         const dishIngredients = dishes.ingredients[dishId].slice().sort();
         const areEqual = recipeIngredients.length === dishIngredients.length
@@ -134,15 +158,21 @@ export const chooseClient = (clientId: string, recipeId: string): TThunk<void> =
         dispatch(dishesSlice.actions.unselect({ dishId }));
         dispatch(checkForRemoveTable(clientId));
         dispatch(checkForEndgame());
-      }
+      });
+      
+      wiggleEffect(() => { })(event);
+    }
 
-      if (!dishId) {
-        dispatch(uiSlice.actions.selectRecipe({ recipeId }));
-        dispatch(uiSlice.actions.selectVisibleModalType({
-          modalType: VisibleModalType.RECIPES,
-        }));
-      }
-    });
+    if (!dishId) {
+      btnEffect(
+        () => batch(() => {
+          dispatch(uiSlice.actions.selectRecipe({ recipeId }));
+          dispatch(uiSlice.actions.selectVisibleModalType({
+            modalType: VisibleModalType.RECIPES,
+          }));
+        })
+      )(event);
+    }
   };
 
 const checkForEndgame = (): TThunk<void> =>

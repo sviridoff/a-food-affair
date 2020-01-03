@@ -8,7 +8,6 @@ import '../../recipe.css';
 import { TState, TIngredient } from '../../types';
 import { selectDish, makeSelectIngredients } from '../../selectors';
 import { chooseDish } from '../../actions';
-import btnEffect from '../../libs/btnEffect';
 
 const maxIngredientsPerDish = 4;
 
@@ -102,7 +101,7 @@ const Dish: FC<TProps> =
 
     return <div
       className={dishClass(dish.isSelected)}
-      onClick={btnEffect(() => chooseDish(dishId))}>
+      onClick={(event) => chooseDish(dishId, event)}>
       {
         recipeId
           ? <div className={`dish__recipe recipe__${recipeId}`}></div>

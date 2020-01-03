@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, SyntheticEvent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
@@ -7,7 +7,6 @@ import '../../recipe.css';
 import { TState, ClientStatus, TClient } from '../../types';
 import { selectClient, selectClientRecipe } from '../../selectors';
 import { chooseClient } from '../../actions';
-import btnEffect from '../../libs/btnEffect';
 
 type TOwnProps = {
   clientId: string,
@@ -28,10 +27,10 @@ type TProps = ConnectedProps<typeof connector> & TOwnProps;
 const onClickAttr = (
   client: TClient,
   recipeId: string,
-  chooseClient: (arg0: string, arg1: string) => void
+  chooseClient: (arg0: string, arg1: string, arg3: SyntheticEvent) => void
 ) =>
   client.status === ClientStatus.WIP
-    ? { onClick: btnEffect(() => chooseClient(client.id, recipeId)) }
+    ? { onClick: (event: SyntheticEvent) => chooseClient(client.id, recipeId, event) }
     : {};
 
 const clientStatusClass = (status: ClientStatus) =>

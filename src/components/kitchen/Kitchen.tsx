@@ -6,7 +6,7 @@ import { TState } from '../../types';
 import { selectDishesIds } from '../../selectors';
 import { clearDish } from '../../actions';
 import Dish from '../dish/Dish';
-import btnEffect from '../../libs/btnEffect';
+import { btnEffect } from '../../libs/btnEffect';
 
 const mapStateToProps = (state: TState) => ({
   dishesIds: selectDishesIds(state),

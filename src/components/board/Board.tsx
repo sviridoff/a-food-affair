@@ -7,7 +7,7 @@ import Profile from '../profile/Profile';
 import Diner from '../diner/Diner';
 import Kitchen from '../kitchen/Kitchen';
 import { resumePauseGame } from '../../actions';
-import btnEffect from '../../libs/btnEffect';
+import { btnEffect } from '../../libs/btnEffect';
 
 const mapDispatchToProps = { resumePauseGame };
 

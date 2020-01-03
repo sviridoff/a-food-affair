@@ -7,7 +7,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { TState, VisibleModalType } from '../../types';
 import { selectLevelIngredientsIds } from '../../selectors';
 import { chooseIngredient, closeIngredientsStore } from '../../actions';
-import btnEffect from '../../libs/btnEffect';
+import { btnEffect } from '../../libs/btnEffect';
 
 const mapStateToProps =
   (state: TState) => ({

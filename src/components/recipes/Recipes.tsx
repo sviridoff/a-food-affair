@@ -8,7 +8,7 @@ import { TState, TIngredient, VisibleModalType } from '../../types';
 import { connect, ConnectedProps } from 'react-redux';
 import { selectClientIngredients } from '../../selectors';
 import uiSlice from '../../slices/uiSlice';
-import btnEffect from '../../libs/btnEffect';
+import { btnEffect } from '../../libs/btnEffect';
 
 const mapStateToProps = (state: TState) => ({
   ingredients: selectClientIngredients(state),

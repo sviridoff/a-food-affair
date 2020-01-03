@@ -6,7 +6,7 @@ import './Restartpage.css';
 import { TState, VisibleModalType, TLevel, GameStatus } from '../../types';
 import { startgameLavel, resumePauseGame } from '../../actions';
 import LogoSvg from '../logoSvg/LogoSvg.svg';
-import btnEffect from '../../libs/btnEffect';
+import { btnEffect } from '../../libs/btnEffect';
 
 type TLevelsData = { [key: string]: TLevel };
 
