@@ -20,7 +20,7 @@ const initialState: TLevels = {
       maxClients: 1,
       maxTables: 1,
       timePerIngredient: 410000000000,
-      isLock: true,
+      isLock: false,
     },
     '3': {
       id: '3',
@@ -33,9 +33,9 @@ const initialState: TLevels = {
     },
   },
   recipes: {
-    '1': ['r1'],
-    '2': ['r1'],
-    '3': ['r1', 'r2'],
+    '1': ['donut-kitkat'],
+    '2': ['donut-oreo'],
+    '3': ['donut-kitkat', 'donut-oreo'],
   },
 };
 

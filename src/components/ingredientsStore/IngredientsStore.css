@@ -29,16 +29,11 @@
 }
 
 .ingredients-store__ingredient {
-  background: var(--border-color);
+  background-size: var(--dish-btn-width) var(--dish-btn-width) !important;
   width: var(--dish-btn-width);
   height: var(--dish-btn-width);
-  border-radius: 100%;
   margin-right: 2rem;
   margin-top: 2rem;
-
-  text-align: center;
-  color: var(--background-color);
-  line-height: 5rem;
 }
 
 .ingredients-store__close-btn {

@@ -1,0 +1,11 @@
+.ingredient__oreo {
+  background: url('components/oreoIco/OreoIco.svg') no-repeat top left;
+}
+
+.ingredient__kitkat {
+  background: url('components/donutIco/DonutIco.svg') no-repeat top left;
+}
+
+.ingredient__donut {
+  background: url('components/donutIco/DonutIco.svg') no-repeat top left;
+}

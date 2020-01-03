@@ -1,0 +1,7 @@
+.recipe__donut-oreo {
+  background: url('components/donutOreoIco/DonutOreoIco.svg') no-repeat top left;
+}
+
+.recipe__donut-kitkat {
+  background: url('components/donutKitKatIco/DonutKitkatIco.svg') no-repeat top left;
+}

@@ -3,6 +3,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './Dish.css';
+import '../../ingredient.css';
+import '../../recipe.css';
 import { TState, TIngredient } from '../../types';
 import { selectDish, makeSelectIngredients } from '../../selectors';
 import { chooseDish } from '../../actions';
@@ -29,9 +31,10 @@ const connector = connect(makeMapStateToProps, mapDispatchToProps);
 
 type TProps = ConnectedProps<typeof connector> & TOwnProps;
 
-const ingredientClass = (length: number) =>
+const ingredientClass = (length: number, ingredientId: string) =>
   classnames(
     'dish__ingredient',
+    `ingredient__${ingredientId}`,
     {
       'dish__ingredient--main': length === 1,
     }
@@ -43,10 +46,8 @@ const ingredientsList =
       .slice(0, ingredients.length <= maxIngredientsPerDish ? ingredients.length : 3)
       .map((ingredient, index) =>
         <div
-          className={ingredientClass(ingredients.length)}
-          key={`${ingredient.id}-${index}`}>
-          {ingredient.id}
-        </div>);
+          className={ingredientClass(ingredients.length, ingredient.id)}
+          key={`${ingredient.id}-${index}`}></div>);
 
 const dishClass = (isSelected: boolean) =>
   classnames(
@@ -103,7 +104,7 @@ const Dish: FC<TProps> =
       onClick={() => chooseDish(dishId)}>
       {
         recipeId
-          ? <div className='dish__recipe'>{recipeId}</div>
+          ? <div className={`dish__recipe recipe__${recipeId}`}></div>
           : ingredientsEl(ingredients, maxIngredientsPerDish)
       }
     </div>;

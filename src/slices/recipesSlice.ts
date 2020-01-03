@@ -4,16 +4,16 @@ import { TRecipes } from '../types';
 
 const initialState: TRecipes = {
   data: {
-    r1: {
-      id: 'r1',
+    'donut-kitkat': {
+      id: 'donut-kitkat',
     },
-    r2: {
-      id: 'r2',
+    'donut-oreo': {
+      id: 'donut-oreo',
     },
   },
   ingredients: {
-    'r1': ['i1', 'i2'],
-    'r2': ['i2', 'i3'],
+    'donut-kitkat': ['donut', 'kitkat'],
+    'donut-oreo': ['donut', 'oreo'],
   }
 };
 

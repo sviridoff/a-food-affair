@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import classnames from 'classnames';
 
 import './IngredientsStore.css';
+import '../../ingredient.css';
 import { connect, ConnectedProps } from 'react-redux';
 import { TState, VisibleModalType } from '../../types';
 import { selectLevelIngredientsIds } from '../../selectors';
@@ -30,10 +31,9 @@ const ingredientsList =
   ) =>
     ingredientsIds.map(ingredientId =>
       <div
-        className='ingredients-store__ingredient'
+        className={`ingredients-store__ingredient ingredient__${ingredientId}`}
         key={ingredientId}
         onClick={() => chooseIngredient(ingredientId)}>
-        {ingredientId}
       </div>
     );
 

@@ -45,11 +45,9 @@ const initialState: TClients = {
     },
   },
   recipes: {
-    c1: 'r1',
-    c2: 'r2',
-    c3: 'r2',
-    c4: 'r2',
-    c5: 'r2',
+    c1: 'donut-kitkat',
+    c2: 'donut-kitkat',
+    c4: 'donut-oreo',
   },
   ids: ['c1', 'c2', 'c3', 'c4', 'c5'],
   tables: {

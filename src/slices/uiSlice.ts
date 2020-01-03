@@ -4,7 +4,7 @@ import { TUi, VisibleModalType } from '../types';
 
 const initialState: TUi = {
   modalType: VisibleModalType.RESTARTPAGE,
-  selectedRecipe: null,
+  selectedRecipe: 'donut-oreo',
   selectedDish: null,
 };
 

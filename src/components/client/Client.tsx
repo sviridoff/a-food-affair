@@ -3,6 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
 import './Client.css';
+import '../../recipe.css';
 import { TState, ClientStatus, TClient } from '../../types';
 import { selectClient, selectClientRecipe } from '../../selectors';
 import { chooseClient } from '../../actions';
@@ -43,6 +44,11 @@ const clientStatusEl = (status: ClientStatus) =>
     ? <div className={clientStatusClass(status)}></div>
     : null;
 
+const clientRecipeEl = (status: ClientStatus, recipeId: string) =>
+  status === ClientStatus.WIP
+    ? <div className={`client__recipe recipe__${recipeId}`}></div>
+    : null;
+
 const Client: FC<TProps> =
   ({ client, recipeId, chooseClient }) =>
     <div
@@ -50,6 +56,7 @@ const Client: FC<TProps> =
       className='client'>
       <div className='client__cloud'></div>
       {clientStatusEl(client.status)}
+      {clientRecipeEl(client.status, recipeId)}
     </div>;
 
 export default connector(Client);

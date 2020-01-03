@@ -4,23 +4,17 @@ import { TIngredients } from '../types';
 
 const initialState: TIngredients = {
   data: {
-    i1: {
-      id: 'i1',
+    donut: {
+      id: 'donut',
     },
-    i2: {
-      id: 'i2',
+    oreo: {
+      id: 'oreo',
     },
-    i3: {
-      id: 'i3',
-    },
-    i4: {
-      id: 'i4',
-    },
-    i5: {
-      id: 'i5',
+    kitkat: {
+      id: 'kitkat',
     },
   },
-  ids: ['i1', 'i2', 'i3', 'i4', 'i5'],
+  ids: ['donut', 'oreo', 'kitkat'],
 };
 
 const slice = createSlice({
