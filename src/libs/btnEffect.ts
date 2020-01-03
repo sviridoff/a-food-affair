@@ -34,7 +34,9 @@ export const wiggleEffect = (onComplete: () => void) =>
   }
 
 export const btnEffect = (onComplete: () => void) =>
-  (event: SyntheticEvent) =>
+  (event: SyntheticEvent) => {
+    gsap.killTweensOf(event.currentTarget);
+    gsap.to(event.currentTarget, 0, { y: 0 });
     gsap.to(
       event.currentTarget,
       0.1,
@@ -44,4 +46,5 @@ export const btnEffect = (onComplete: () => void) =>
         repeat: 1,
         onComplete,
       });
+  }
 
