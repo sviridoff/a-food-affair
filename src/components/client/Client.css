@@ -1,8 +1,4 @@
 .client {
-  background: url('../catIco/CatIco.svg') no-repeat top left;
-  background-size: 8rem 6rem;
-  width: 8rem;
-  height: 6rem;
   margin-right: 0.5rem;
   float: left;
   position: relative;
@@ -15,6 +11,7 @@
   height: 7rem;
   top: -5.2rem;
   position: absolute;
+  z-index: 1;
 }
 
 .client__ok {
@@ -26,6 +23,7 @@
   position: absolute;
   top: -3.8rem;
   left: 2.3rem;
+  z-index: 2;
 }
 
 .client__ko {
@@ -37,6 +35,7 @@
   position: absolute;
   top: -3.8rem;
   left: 2.3rem;
+  z-index: 2;
 }
 
 .client__recipe {
@@ -46,6 +45,7 @@
   top: -4.8rem;
   left: 1.5rem;
   background-size: 5rem 5rem !important;
+  z-index: 2;
 }
 
 .client__clock {
@@ -56,4 +56,13 @@
   top: 0.2rem;
   right: 0.2rem;
   position: absolute;
+}
+
+.client__client {
+  background: url('../catIco/CatIco.svg') no-repeat top left;
+  background-size: 8rem 6rem;
+  width: 8rem;
+  height: 6rem;
+  position: relative;
+  z-index: 3;
 }

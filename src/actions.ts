@@ -19,7 +19,13 @@ import profileSlice from './slices/profileSlice';
 import gameSlice from './slices/gameSlice';
 import levelsSlice from './slices/levelsSlice';
 import store from './store';
-import { btnEffect, wiggleEffect } from './libs/btnEffect';
+import {
+  btnEffect,
+  wiggleEffect,
+  tableHideEffect,
+  tableShowEffect,
+  clientWiggleEffect,
+} from './libs/btnEffect';
 import areIngredientsEqual from './libs/areIngredientsEqual';
 
 let currentTime = Date.now();
@@ -132,7 +138,8 @@ export const chooseClient = (
           }));
         }
 
-        dispatch(checkForRemoveTable(clientId));
+        setTimeout(() => dispatch(checkForEndgame()), 1500);
+        dispatch(checkRemoveClientTable(clientId));
       });
 
       wiggleEffect(() => { })(event);
@@ -189,16 +196,11 @@ const checkForEndgame = (): TThunk<void> =>
     });
   }
 
-const checkForRemoveTable = (clientId: string): TThunk<void> =>
+const checkRemoveClientTable = (clientId: string): TThunk<void> =>
   (dispatch, getState) => {
     const { clients, tables } = getState();
 
     const tableId = clients.tables[clientId];
-
-    if (tables.data[tableId].liveTime) {
-      return;
-    }
-
     const tableClientsIds = tables.clients[tableId];
     const isTableAttended = tableClientsIds
       .every(id => clients.data[id].status !== ClientStatus.WIP);
@@ -213,10 +215,11 @@ const checkForRemoveTable = (clientId: string): TThunk<void> =>
         dispatch(profileSlice.actions.increseCoins({ coins }));
       }
 
-      dispatch(tablesSlice.actions.selectLiveTime({
-        tableId,
-        liveTime: currentTime + 2000,
-      }));
+      tableHideEffect(`.table__${tableId}`, () => {
+        dispatch(tablesSlice.actions.removeTable({
+          tableId,
+        }));
+      });
     }
   }
 
@@ -292,8 +295,7 @@ export const createTable = (): TThunk<void> =>
       data: {
         [tableId]: {
           id: tableId,
-          liveTime: 0,
-        }
+        },
       },
       clients: {
         [tableId]: clientsIds,
@@ -309,9 +311,11 @@ export const createTable = (): TThunk<void> =>
       clients,
       nextTableTime: currentTime + (maxLiveTime * 0.65),
     }));
+
+    tableShowEffect(`.table__${tableId}`);
   };
 
-const checkForRemoveClients = (): TThunk<void> =>
+const checkRemoveClients = (): TThunk<void> =>
   (dispatch, getState) => {
     const { clients, profile } = getState();
 
@@ -328,17 +332,23 @@ const checkForRemoveClients = (): TThunk<void> =>
           clientIds: clientsIdsToRemove,
         }));
 
+        clientWiggleEffect(clientsIdsToRemove.map(c => `.client__${c}`).join(','));
+
         dispatch(profileSlice.actions.decreaseLives({
           lives: clientsIdsToRemove.length > profile.lives
             ? profile.lives
             : clientsIdsToRemove.length,
         }));
 
+        if (profile.lives - clientsIdsToRemove.length <= 0) {
+          setTimeout(() => dispatch(checkForEndgame()), 1500);
+        }
+
         clientsIdsToRemove.forEach(clientId => {
           const { clients } = getState();
 
           if (clients.data[clientId]) {
-            dispatch(checkForRemoveTable(clientId));
+            dispatch(checkRemoveClientTable(clientId));
           }
         });
       });
@@ -359,22 +369,8 @@ export const togglePausegame = (): TThunk<void> =>
     }));
   };
 
-const removeTables = (tablesIds: string[]): TThunk<void> =>
-  (dispatch, getState) => {
-    const { tables } = getState();
-
-    batch(() => {
-      dispatch(tablesSlice.actions.removeTables({
-        tablesIds,
-        clientsIds: tablesIds
-          .flatMap(tableId => tables.clients[tableId]),
-      }));
-      dispatch(checkForEndgame());
-    });
-  }
-
 window.setInterval(() => {
-  const { game, profile, levels, tables } = store.getState();
+  const { game, profile, levels } = store.getState();
 
   if (game.status !== GameStatus.PLAY) {
     return;
@@ -382,18 +378,7 @@ window.setInterval(() => {
 
   currentTime += 200;
 
-  store.dispatch(checkForRemoveClients());
-
-  // Start clean tables
-  const tablesIds = tables.ids.filter(tableId =>
-    tables.data[tableId].liveTime
-    && currentTime >= tables.data[tableId].liveTime
-  );
-
-  if (tablesIds.length) {
-    store.dispatch(removeTables(tablesIds));
-  }
-  // End clean tables
+  store.dispatch(checkRemoveClients());
 
   // Start create table
   const level = levels.data[profile.levelId];

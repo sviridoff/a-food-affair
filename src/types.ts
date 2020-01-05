@@ -11,7 +11,6 @@ export enum ClientStatus {
 
 export type TTable = {
   id: string,
-  liveTime: number,
 };
 
 export type TTables = {

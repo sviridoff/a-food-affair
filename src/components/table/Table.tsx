@@ -26,8 +26,8 @@ const clientsList = (clients: string[]) =>
       clientId={clientId} />);
 
 const Table: FC<TProps> =
-  ({ clients }) =>
-    <div className='table'>
+  ({ clients, tableId }) =>
+    <div className={`table table__${tableId}`}>
       {clientsList(clients)}
     </div>;
 

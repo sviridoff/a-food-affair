@@ -50,13 +50,14 @@ const clientRecipeEl = (status: ClientStatus, recipeId: string) =>
     : null;
 
 const Client: FC<TProps> =
-  ({ client, recipeId, chooseClient }) =>
-    <div
-      {...onClickAttr(client, recipeId, chooseClient)}
-      className='client'>
+  ({ client, recipeId, chooseClient, clientId }) =>
+    <div className={`client client__${clientId}`}>
       <div className='client__cloud'></div>
       {clientStatusEl(client.status)}
       {clientRecipeEl(client.status, recipeId)}
+      <div
+        {...onClickAttr(client, recipeId, chooseClient)}
+        className='client__client'></div>
     </div>;
 
 export default connector(Client);

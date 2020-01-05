@@ -1,6 +1,7 @@
 .table {
   margin-top: 6rem;
   float: left;
+  opacity: 0;
 }
 
 .table > div:last-child {
