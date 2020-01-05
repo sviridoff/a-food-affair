@@ -21,15 +21,6 @@ const initialState: TDishes = {
   }
 };
 
-type TSelectProps = {
-  dishId: string,
-};
-
-type TAddIngredientsProps = {
-  dishId: string,
-  ingredients: string[],
-};
-
 type TAddIngredientProps = {
   dishId: string,
   ingredientId: string,
@@ -39,36 +30,19 @@ type TClearProps = {
   dishId: string,
 };
 
+type TCopyProps = {
+  dishId: string,
+  selectedDishId: string,
+};
+
+export type TSelectProps = {
+  dishId: string,
+};
+
 const slice = createSlice({
   name: 'dishes',
   initialState,
   reducers: {
-    select(state, action: PayloadAction<TSelectProps>) {
-      const dishId = action.payload.dishId;
-
-      state.data[dishId].isSelected = true;
-
-      return state;
-    },
-
-    unselect(state, action: PayloadAction<TSelectProps>) {
-      const dishId = action.payload.dishId;
-
-      state.data[dishId].isSelected = false;
-
-      return state;
-    },
-
-    addIngredients(state, action: PayloadAction<TAddIngredientsProps>) {
-      const { dishId, ingredients } = action.payload;
-
-      state.ingredients[dishId] = state.ingredients[dishId] || [];
-      state.ingredients[dishId] =
-        state.ingredients[dishId].concat(ingredients);
-
-      return state;
-    },
-
     addIngredient(state, action: PayloadAction<TAddIngredientProps>) {
       const { dishId, ingredientId } = action.payload;
 
@@ -89,11 +63,42 @@ const slice = createSlice({
 
       state.ingredients[dishId] = [];
       state.data[dishId].isSelected = false;
-    }
+    },
+
+    copy(state, action: PayloadAction<TCopyProps>) {
+      const {
+        dishId,
+        selectedDishId,
+      } = action.payload;
+      const ingredientsIds = state.ingredients[selectedDishId];
+
+      state.ingredients[dishId] =
+        (state.ingredients[dishId] || []).concat(ingredientsIds || []);
+      state.ingredients[selectedDishId] = [];
+      state.data[selectedDishId].isSelected = false;
+    },
+
+    select(
+      state,
+      action: PayloadAction<TSelectProps>,
+    ) {
+      const dishId = action.payload.dishId;
+
+      state.data[dishId].isSelected = true;
+    },
+
+    unselect(
+      state,
+      action: PayloadAction<TSelectProps>,
+    ) {
+      const dishId = action.payload.dishId;
+
+      state.data[dishId].isSelected = false;
+    },
   },
   extraReducers: {
     [gameSlice.actions.startgame.type](
-      state,
+      _,
       action: PayloadAction<TStartgameProps>,
     ): TDishes {
       const dishesIds = action.payload.dishesIds;

@@ -5,7 +5,7 @@ import gameSlice, {
   TStartgameProps,
   TToggleResumegameProps,
 } from './gameSlice';
-import dishesSlice from './dishesSlice';
+import dishesSlice, { TSelectProps } from './dishesSlice';
 
 const initialState: TUi = {
   modalType: VisibleModalType.RESTARTPAGE,
@@ -23,6 +23,10 @@ type TSelectRecipeProp = {
 
 type TSelectDishProp = {
   dishId: string | null,
+};
+
+type TShowIngredientsStoreProps = {
+  dishId: string,
 };
 
 const slice = createSlice({
@@ -48,10 +52,18 @@ const slice = createSlice({
       state.selectedDish = null;
       state.modalType = VisibleModalType.NONE;
     },
+
+    showIngredientsStore(
+      state,
+      action: PayloadAction<TShowIngredientsStoreProps>,
+    ) {
+      state.selectedDish = action.payload.dishId;
+      state.modalType = VisibleModalType.INGREDIENTS_STORE;
+    },
   },
   extraReducers: {
     [gameSlice.actions.startgame.type](
-      state,
+      _,
       action: PayloadAction<TStartgameProps>,
     ): TUi {
       return {
@@ -75,6 +87,21 @@ const slice = createSlice({
     [dishesSlice.actions.addIngredient.type](state) {
       state.selectedDish = null;
       state.modalType = VisibleModalType.NONE;
+    },
+
+    [dishesSlice.actions.copy.type](state) {
+      state.selectedDish = null;
+    },
+
+    [dishesSlice.actions.select.type](
+      state,
+      action: PayloadAction<TSelectProps>,
+    ) {
+      state.selectedDish = action.payload.dishId;
+    },
+
+    [dishesSlice.actions.unselect.type](state) {
+      state.selectedDish = null;
     },
   },
 });

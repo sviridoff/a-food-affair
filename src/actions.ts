@@ -37,18 +37,10 @@ export const chooseDish = (
         : null;
 
       if (selectedDish) {
-        const ingredients =
-          dishes.ingredients[selectedDish] || [];
-
-        batch(() => {
-          dispatch(dishesSlice.actions.addIngredients({
-            dishId,
-            ingredients,
-          }));
-          dispatch(dishesSlice.actions.removeAllIngredients({ dishId: selectedDish }));
-          dispatch(uiSlice.actions.selectDish({ dishId: null }));
-          dispatch(dishesSlice.actions.unselect({ dishId: selectedDish }));
-        });
+        dispatch(dishesSlice.actions.copy({
+          dishId,
+          selectedDishId: selectedDish,
+        }));
 
         wiggleEffect(() => { })(event);
       }
@@ -58,33 +50,28 @@ export const chooseDish = (
         const hasIngredients = Boolean(ingredients.length);
 
         if (hasIngredients) {
-          btnEffect(
-            () => batch(() => {
-              dispatch(dishesSlice.actions.select({ dishId }));
-              dispatch(uiSlice.actions.selectDish({ dishId }));
-            })
+          btnEffect(() =>
+            dispatch(dishesSlice.actions.select({
+              dishId,
+            }))
           )(event);
         }
 
         if (!hasIngredients) {
-          btnEffect(
-            () => batch(() => {
-              dispatch(uiSlice.actions.selectDish({ dishId }));
-              dispatch(uiSlice.actions.selectVisibleModalType({
-                modalType: VisibleModalType.INGREDIENTS_STORE,
-              }));
-            })
+          btnEffect(() =>
+            dispatch(uiSlice.actions.showIngredientsStore({
+              dishId,
+            }))
           )(event);
         }
       }
     }
 
     if (isSelected) {
-      btnEffect(
-        () => batch(() => {
-          dispatch(dishesSlice.actions.unselect({ dishId }));
-          dispatch(uiSlice.actions.selectDish({ dishId: null }));
-        })
+      btnEffect(() =>
+        dispatch(dishesSlice.actions.unselect({
+          dishId,
+        }))
       )(event);
     }
   };
