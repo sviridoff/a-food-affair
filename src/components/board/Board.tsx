@@ -6,17 +6,17 @@ import LogoSvg from '../logoSvg/LogoSvg.svg';
 import Profile from '../profile/Profile';
 import Diner from '../diner/Diner';
 import Kitchen from '../kitchen/Kitchen';
-import { resumePauseGame } from '../../actions';
+import { togglePausegame } from '../../actions';
 import { btnEffect } from '../../libs/btnEffect';
 
-const mapDispatchToProps = { resumePauseGame };
+const mapDispatchToProps = { togglePausegame };
 
 const connector = connect(null, mapDispatchToProps);
 
 type TProps = ConnectedProps<typeof connector>;
 
 const Board: FC<TProps> =
-  ({ resumePauseGame }) =>
+  ({ togglePausegame }) =>
     <div className='board'>
       <Profile />
       <div className='board__body-container'>
@@ -28,7 +28,7 @@ const Board: FC<TProps> =
         <div className='board__menu-ctrls'>
           <div
             className='board__pause-btn'
-            onClick={btnEffect(resumePauseGame)}></div>
+            onClick={btnEffect(togglePausegame)}></div>
         </div>
       </div>
       <Kitchen />

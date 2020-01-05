@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 
-import { TGame, GameStatus } from '../types';
+import { TGame, GameStatus, VisibleModalType } from '../types';
+import { TAddTableProps } from './tablesSlice';
 
 const initialState: TGame = {
   status: GameStatus.FIRST_STOP,
@@ -12,19 +13,16 @@ type TSelectStatusProps = {
   status: GameStatus,
 };
 
-type TSelectNextTableTimeProps = {
-  nextTableTime: number,
-};
-
-type TRestartGameProps = {
-  nextTableTime: number,
-};
-
 export type TStartgameProps = {
   currentTime: number,
   lives: number,
   dishesIds: string[],
   levelId: number,
+};
+
+export type TToggleResumegameProps = {
+  status: GameStatus,
+  modalType: VisibleModalType,
 };
 
 const slice = createSlice({
@@ -36,27 +34,10 @@ const slice = createSlice({
       action: PayloadAction<TSelectStatusProps>
     ) {
       state.status = action.payload.status;
-
-      return state;
-    },
-
-    increaseTables(state) {
-      state.tables += 1;
-
-      return state;
-    },
-
-    selectNextTableTime(
-      state,
-      action: PayloadAction<TSelectNextTableTimeProps>,
-    ) {
-      state.nextTableTime = action.payload.nextTableTime;
-
-      return state;
     },
 
     startgame(
-      state,
+      _,
       action: PayloadAction<TStartgameProps>,
     ): TGame {
       return {
@@ -65,7 +46,23 @@ const slice = createSlice({
         nextTableTime: action.payload.currentTime + 2000,
       };
     },
-  }
+
+    togglePausegame(
+      state,
+      action: PayloadAction<TToggleResumegameProps>,
+    ) {
+      state.status = action.payload.status;
+    },
+  },
+  extraReducers: {
+    [createAction('tables/addTable').type](
+      state,
+      action: PayloadAction<TAddTableProps>,
+    ) {
+      state.tables += 1;
+      state.nextTableTime = action.payload.nextTableTime;
+    },
+  },
 });
 
 export default slice;

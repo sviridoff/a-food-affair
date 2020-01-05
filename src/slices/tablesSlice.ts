@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { mergeDeepWith, concat } from 'ramda';
 
-import { TTables } from '../types';
+import { TTables, TClients } from '../types';
 import gameSlice, { TStartgameProps } from './gameSlice';
 
 const concatValues = (l: any, r: any) =>
@@ -34,12 +34,15 @@ type TRemoveTableProps = {
   tableId: string,
 };
 
-type TAddTableProps = {
+export type TAddTableProps = {
   tables: TTables,
+  clients: TClients,
+  nextTableTime: number,
 };
 
-type TRemoveTablesProps = {
+export type TRemoveTablesProps = {
   tablesIds: string[],
+  clientsIds: string[],
 };
 
 type TSelectLiveTimeProps = {
@@ -61,12 +64,15 @@ const slice = createSlice({
       return state;
     },
 
-    addTable(state, action: PayloadAction<TAddTableProps>) {
-      const tables = action.payload.tables;
-
-      state = mergeDeepWith(concatValues, state, tables);
-
-      return state;
+    addTable(
+      state,
+      action: PayloadAction<TAddTableProps>,
+    ) {
+      return mergeDeepWith(
+        concatValues,
+        state,
+        action.payload.tables,
+      );
     },
 
     removeTables(state, action: PayloadAction<TRemoveTablesProps>) {
@@ -90,11 +96,10 @@ const slice = createSlice({
     }
   },
   extraReducers: {
-    // @ts-ignore
-    [gameSlice.actions.startgame](
+    [gameSlice.actions.startgame.type](
       state,
       action: PayloadAction<TStartgameProps>,
-    ): TTables {
+    ) {
       return {
         data: {},
         clients: {},

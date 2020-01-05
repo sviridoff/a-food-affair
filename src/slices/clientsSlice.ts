@@ -3,6 +3,10 @@ import { mergeDeepWith, concat } from 'ramda';
 
 import { TClients, ClientStatus } from '../types';
 import gameSlice, { TStartgameProps } from './gameSlice';
+import tablesSlice, {
+  TRemoveTablesProps,
+  TAddTableProps,
+} from './tablesSlice';
 
 const concatValues = (l: any, r: any) =>
   Array.isArray(l) ? concat(l, r) : r;
@@ -70,14 +74,6 @@ type TUpdateStatusesProps = {
   clientIds: string[],
 };
 
-type TRemoveClientsProps = {
-  clientsIds: string[],
-};
-
-type TAddClientsProps = {
-  clients: TClients,
-};
-
 const slice = createSlice({
   name: 'clients',
   initialState,
@@ -102,32 +98,9 @@ const slice = createSlice({
 
       return state;
     },
-
-    removeClients(state, action: PayloadAction<TRemoveClientsProps>) {
-      const clientsIds = action.payload.clientsIds;
-
-      clientsIds.forEach(id => {
-        delete state.data[id];
-        delete state.recipes[id];
-        delete state.tables[id];
-      });
-
-      state.ids = state.ids.filter(id => !clientsIds.includes(id));
-
-      return state;
-    },
-
-    addClients(state, action: PayloadAction<TAddClientsProps>) {
-      const clients = action.payload.clients;
-
-      state = mergeDeepWith(concatValues, state, clients);
-
-      return state;
-    }
   },
   extraReducers: {
-    // @ts-ignore
-    [gameSlice.actions.startgame](
+    [gameSlice.actions.startgame.type](
       state,
       action: PayloadAction<TStartgameProps>,
     ): TClients {
@@ -138,7 +111,35 @@ const slice = createSlice({
         tables: {},
       };
     },
+
+    [tablesSlice.actions.removeTables.type](
+      state,
+      action: PayloadAction<TRemoveTablesProps>,
+    ) {
+      const clientsIds = action.payload.clientsIds;
+
+      clientsIds.forEach(id => {
+        delete state.data[id];
+        delete state.recipes[id];
+        delete state.tables[id];
+      });
+
+      state.ids = state.ids
+        .filter(id => !clientsIds.includes(id));
+    },
+
+    [tablesSlice.actions.addTable.type](
+      state,
+      action: PayloadAction<TAddTableProps>,
+    ) {
+      return mergeDeepWith(
+        concatValues,
+        state,
+        action.payload.clients,
+      );
+    }
   },
 });
+
 
 export default slice;

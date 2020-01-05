@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import './Restartpage.css';
 import { TState, VisibleModalType, TLevel, GameStatus } from '../../types';
-import { startgameLavel, resumePauseGame } from '../../actions';
+import { startgameLavel, togglePausegame } from '../../actions';
 import LogoSvg from '../logoSvg/LogoSvg.svg';
 import { btnEffect } from '../../libs/btnEffect';
 
@@ -22,7 +22,7 @@ const mapStateToProps =
     levels: state.levels.data,
   });
 
-const mapDispatchToProps = { startgameLavel, resumePauseGame };
+const mapDispatchToProps = { startgameLavel, togglePausegame };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
@@ -102,12 +102,12 @@ const resumeBtnEl = (
   isPaused: boolean,
   currentLevelId: number,
   localLevelId: number,
-  resumePauseGame: () => void,
+  togglePausegame: () => void,
 ) =>
   isPaused && currentLevelId === localLevelId
     ? <div
       className='restartpage__resume-btn'
-      onClick={btnEffect(resumePauseGame)}></div>
+      onClick={btnEffect(togglePausegame)}></div>
     : null;
 
 const logoGameEl = (isFirst: boolean) =>
@@ -125,7 +125,7 @@ const Startpage: FC<TProps> =
     levelsNum,
     levels,
     startgameLavel,
-    resumePauseGame,
+    togglePausegame,
     isPaused,
     isFirst,
     isStart,
@@ -146,7 +146,7 @@ const Startpage: FC<TProps> =
       </div>
       <div className='restartpage__level-start'>
         {playBtnEl(currentLevelId, localLevelId, levels, isStart, startgameLavel)}
-        {resumeBtnEl(isPaused, currentLevelId, localLevelId, resumePauseGame)}
+        {resumeBtnEl(isPaused, currentLevelId, localLevelId, togglePausegame)}
       </div>
     </div>;
   };

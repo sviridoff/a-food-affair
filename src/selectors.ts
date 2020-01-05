@@ -100,7 +100,7 @@ export const selectClientIngredients = createSelector(
 
 export const makeSelectRecipeId = () =>
   createSelector(
-    (state: TState, dishId: string) => state.dishes.ingredients[dishId],
+    (state: TState, dishId: string) => state.dishes.ingredients[dishId] || [],
     (state: TState) => state.recipes.ingredients,
     (dishIngredientsIds, recipesIngredientsIds) => {
       const sortedDishIngredientsIds = dishIngredientsIds

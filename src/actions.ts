@@ -95,13 +95,10 @@ export const chooseIngredient = (ingredientId: string): TThunk<void> =>
     const dishId = ui.selectedDish;
 
     if (dishId) {
-      batch(() => {
-        dispatch(dishesSlice.actions.addIngredient({ dishId, ingredientId }));
-        dispatch(uiSlice.actions.selectDish({ dishId: null }));
-        dispatch(uiSlice.actions.selectVisibleModalType({
-          modalType: VisibleModalType.NONE,
-        }));
-      });
+      dispatch(dishesSlice.actions.addIngredient({
+        dishId,
+        ingredientId,
+      }));
     }
   };
 
@@ -111,12 +108,7 @@ export const closeIngredientsStore = (): TThunk<void> =>
     const dishId = ui.selectedDish;
 
     if (dishId) {
-      batch(() => {
-        dispatch(uiSlice.actions.selectDish({ dishId: null }));
-        dispatch(uiSlice.actions.selectVisibleModalType({
-          modalType: VisibleModalType.NONE,
-        }));
-      });
+      dispatch(uiSlice.actions.closeIngredientsStore());
     }
   };
 
@@ -182,40 +174,42 @@ const checkForEndgame = (): TThunk<void> =>
   (dispatch, getState) => {
     const { profile, game, levels, tables } = getState();
 
-    // Lose.
-    if (profile.lives <= 0) {
-      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.LOSE_STOP }));
-      dispatch(uiSlice.actions.selectVisibleModalType({
-        modalType: VisibleModalType.RESTARTPAGE,
-      }));
-    }
-
-    const level = levels.data[profile.levelId];
-
-    // Win.
-    if (
-      profile.lives > 0
-      && game.tables === level.maxTables
-      && !tables.ids.length
-    ) {
-      const nextLevel = profile.levelId < Object.keys(levels.data).length
-        ? profile.levelId + 1
-        : null;
-
-      if (nextLevel) {
-        dispatch(levelsSlice.actions.unlockLevel({
-          level: nextLevel
-        }));
-        dispatch(profileSlice.actions.selectLevel({
-          levelId: nextLevel
+    batch(() => {
+      // Lose.
+      if (profile.lives <= 0) {
+        dispatch(gameSlice.actions.selectStatus({ status: GameStatus.LOSE_STOP }));
+        dispatch(uiSlice.actions.selectVisibleModalType({
+          modalType: VisibleModalType.RESTARTPAGE,
         }));
       }
 
-      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.WIN_STOP }));
-      dispatch(uiSlice.actions.selectVisibleModalType({
-        modalType: VisibleModalType.RESTARTPAGE,
-      }));
-    }
+      const level = levels.data[profile.levelId];
+
+      // Win.
+      if (
+        profile.lives > 0
+        && game.tables === level.maxTables
+        && !tables.ids.length
+      ) {
+        const nextLevel = profile.levelId < Object.keys(levels.data).length
+          ? profile.levelId + 1
+          : null;
+
+        if (nextLevel) {
+          dispatch(levelsSlice.actions.unlockLevel({
+            level: nextLevel
+          }));
+          dispatch(profileSlice.actions.selectLevel({
+            levelId: nextLevel
+          }));
+        }
+
+        dispatch(gameSlice.actions.selectStatus({ status: GameStatus.WIN_STOP }));
+        dispatch(uiSlice.actions.selectVisibleModalType({
+          modalType: VisibleModalType.RESTARTPAGE,
+        }));
+      }
+    });
   }
 
 const checkForRemoveTable = (clientId: string): TThunk<void> =>
@@ -252,16 +246,14 @@ const checkForRemoveTable = (clientId: string): TThunk<void> =>
 
 export const clearDish = (): TThunk<void> =>
   (dispatch, getState) => {
-    batch(() => {
-      const { ui } = getState();
-      const dishId = ui.selectedDish;
+    const { ui } = getState();
+    const dishId = ui.selectedDish;
 
-      if (dishId) {
-        dispatch(dishesSlice.actions.unselect({ dishId }));
-        dispatch(dishesSlice.actions.removeAllIngredients({ dishId }));
-        dispatch(uiSlice.actions.selectDish({ dishId: null }));
-      }
-    });
+    if (dishId) {
+      dispatch(dishesSlice.actions.clear({
+        dishId,
+      }));
+    }
   };
 
 export const startgameLavel = (levelId: number): TThunk<void> =>
@@ -335,14 +327,11 @@ export const createTable = (): TThunk<void> =>
     const maxLiveTime = Math.max(...Object.values(clients.data)
       .map(client => client.liveTime - currentTime));
 
-    batch(() => {
-      dispatch(gameSlice.actions.increaseTables());
-      dispatch(clientsSlice.actions.addClients({ clients }));
-      dispatch(tablesSlice.actions.addTable({ tables }));
-      dispatch(gameSlice.actions.selectNextTableTime({
-        nextTableTime: currentTime + (maxLiveTime * 0.65)
-      }));
-    });
+    dispatch(tablesSlice.actions.addTable({
+      tables,
+      clients,
+      nextTableTime: currentTime + (maxLiveTime * 0.65),
+    }));
   };
 
 const checkForRemoveClients = (): TThunk<void> =>
@@ -379,32 +368,32 @@ const checkForRemoveClients = (): TThunk<void> =>
     }
   };
 
-export const resumePauseGame = (): TThunk<void> =>
+export const togglePausegame = (): TThunk<void> =>
   (dispatch, getState) => {
     const { ui, game } = getState();
 
-    batch(() => {
-      dispatch(gameSlice.actions.selectStatus({
-        status: game.status === GameStatus.PAUSE
-          ? GameStatus.PLAY
-          : GameStatus.PAUSE,
-      }));
-      dispatch(uiSlice.actions.selectVisibleModalType({
-        modalType: ui.modalType === VisibleModalType.NONE
-          ? VisibleModalType.RESTARTPAGE
-          : VisibleModalType.NONE,
-      }));
-    });
+    dispatch(gameSlice.actions.togglePausegame({
+      status: game.status === GameStatus.PAUSE
+        ? GameStatus.PLAY
+        : GameStatus.PAUSE,
+      modalType: ui.modalType === VisibleModalType.NONE
+        ? VisibleModalType.RESTARTPAGE
+        : VisibleModalType.NONE,
+    }));
   };
 
 const removeTables = (tablesIds: string[]): TThunk<void> =>
   (dispatch, getState) => {
     const { tables } = getState();
-    const tablesClientsIds = tablesIds.flatMap(tableId => tables.clients[tableId]);
 
-    dispatch(tablesSlice.actions.removeTables({ tablesIds }));
-    dispatch(clientsSlice.actions.removeClients({ clientsIds: tablesClientsIds }));
-    dispatch(checkForEndgame());
+    batch(() => {
+      dispatch(tablesSlice.actions.removeTables({
+        tablesIds,
+        clientsIds: tablesIds
+          .flatMap(tableId => tables.clients[tableId]),
+      }));
+      dispatch(checkForEndgame());
+    });
   }
 
 window.setInterval(() => {

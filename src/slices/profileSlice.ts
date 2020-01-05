@@ -23,10 +23,6 @@ type TSelectLevelProps = {
   levelId: number,
 };
 
-type TRestartProfileProps = {
-  lives: number,
-};
-
 const slice = createSlice({
   name: 'profile',
   initialState,
@@ -63,8 +59,7 @@ const slice = createSlice({
     },
   },
   extraReducers: {
-    // @ts-ignore
-    [gameSlice.actions.startgame](
+    [gameSlice.actions.startgame.type](
       state,
       action: PayloadAction<TStartgameProps>,
     ): TProfile {

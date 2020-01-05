@@ -4,7 +4,7 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@reduxjs/toolkit": "^1.1.0",
+    "@reduxjs/toolkit": "^1.2.1",
     "classnames": "^2.2.6",
     "gsap": "^3.0.4",
     "ramda": "^0.26.1",
@@ -37,9 +37,9 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
-    "@types/jest": "^24.0.24",
-    "@types/node": "^12.12.21",
-    "@types/ramda": "^0.26.38",
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.4",
+    "@types/ramda": "^0.26.39",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@types/react-redux": "^7.1.5",

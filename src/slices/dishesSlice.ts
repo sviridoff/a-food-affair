@@ -35,8 +35,8 @@ type TAddIngredientProps = {
   ingredientId: string,
 };
 
-type TCreateDishesProps = {
-  dishes: number,
+type TClearProps = {
+  dishId: string,
 };
 
 const slice = createSlice({
@@ -83,10 +83,16 @@ const slice = createSlice({
 
       return state;
     },
+
+    clear(state, action: PayloadAction<TClearProps>) {
+      const dishId = action.payload.dishId;
+
+      state.ingredients[dishId] = [];
+      state.data[dishId].isSelected = false;
+    }
   },
   extraReducers: {
-    // @ts-ignore
-    [gameSlice.actions.startgame](
+    [gameSlice.actions.startgame.type](
       state,
       action: PayloadAction<TStartgameProps>,
     ): TDishes {
