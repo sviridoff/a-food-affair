@@ -6,7 +6,11 @@ import './Dish.css';
 import '../../ingredient.css';
 import '../../recipe.css';
 import { TState, TIngredient } from '../../types';
-import { selectDish, makeSelectIngredients } from '../../selectors';
+import {
+  selectDish,
+  makeSelectIngredients,
+  makeSelectRecipeId,
+} from '../../selectors';
 import { chooseDish } from '../../actions';
 
 const maxIngredientsPerDish = 4;
@@ -17,11 +21,12 @@ type TOwnProps = {
 
 const makeMapStateToProps = () => {
   const selectIngredients = makeSelectIngredients();
+  const selectRecipeId = makeSelectRecipeId();
 
   return (state: TState, ownProps: TOwnProps) => ({
     dish: selectDish(state, ownProps.dishId),
     ingredients: selectIngredients(state, ownProps.dishId),
-    allRecipeIngredients: state.recipes.ingredients,
+    recipeId: selectRecipeId(state, ownProps.dishId),
   });
 };
 
@@ -65,41 +70,15 @@ const ingredientsEl = (
       <div className='dish__ellipsis'>...</div>}
   </>;
 
-const getRecipeId = (
-  ingredients: TIngredient[],
-  allRecipeIngredients: { [key: string]: string[] },
-) => {
-  const dishIngredients = ingredients
-    .map(ingredient => ingredient.id)
-    .slice()
-    .sort();
-  const recipe = Object.entries(allRecipeIngredients)
-    .find(([recipeId, ingredientsIds]) =>
-      dishIngredients.length === ingredientsIds.length
-      && ingredientsIds
-        .slice()
-        .sort()
-        .every((ingredientId, index) => ingredientId === dishIngredients[index]));
-  let recipeId;
-
-  if (recipe) {
-    recipeId = recipe[0];
-  }
-
-  return recipeId;
-};
-
 const Dish: FC<TProps> =
   ({
     dish,
     dishId,
     ingredients,
     chooseDish,
-    allRecipeIngredients,
-  }) => {
-    const recipeId = getRecipeId(ingredients, allRecipeIngredients);
-
-    return <div
+    recipeId,
+  }) =>
+    <div
       className={dishClass(dish.isSelected)}
       onClick={(event) => chooseDish(dishId, event)}>
       {
@@ -108,6 +87,5 @@ const Dish: FC<TProps> =
           : ingredientsEl(ingredients, maxIngredientsPerDish)
       }
     </div>;
-  }
 
 export default connector(Dish);

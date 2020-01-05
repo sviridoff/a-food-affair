@@ -4,7 +4,7 @@ import { TUi, VisibleModalType } from '../types';
 import gameSlice, { TStartgameProps } from './gameSlice';
 
 const initialState: TUi = {
-  modalType: VisibleModalType.RESTARTPAGE,
+  modalType: VisibleModalType.NONE,
   selectedRecipe: 'donut-oreo',
   selectedDish: null,
 };

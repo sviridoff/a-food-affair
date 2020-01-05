@@ -97,3 +97,24 @@ export const selectClientIngredients = createSelector(
     return ingredients;
   }
 );
+
+export const makeSelectRecipeId = () =>
+  createSelector(
+    (state: TState, dishId: string) => state.dishes.ingredients[dishId],
+    (state: TState) => state.recipes.ingredients,
+    (dishIngredientsIds, recipesIngredientsIds) => {
+      const sortedDishIngredientsIds = dishIngredientsIds
+        .slice()
+        .sort();
+      const recipe = Object.entries(recipesIngredientsIds)
+        .find(([_, ingredientsIds]) =>
+          sortedDishIngredientsIds.length === ingredientsIds.length
+          && ingredientsIds
+            .slice()
+            .sort()
+            .every((ingredientId, index) =>
+              ingredientId === sortedDishIngredientsIds[index]));
+
+      return recipe ? recipe[0] : null;
+    },
+  );
