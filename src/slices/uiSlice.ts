@@ -10,7 +10,7 @@ import dishesSlice, { TSelectProps } from './dishesSlice';
 const initialState: TUi = {
   modalType: VisibleModalType.RESTARTPAGE,
   selectedRecipe: 'donut-oreo',
-  selectedDish: null,
+  selectedDishId: null,
 };
 
 type TSelectVisibleModalType = {
@@ -45,11 +45,11 @@ const slice = createSlice({
     },
 
     selectDish(state, action: PayloadAction<TSelectDishProp>) {
-      state.selectedDish = action.payload.dishId;
+      state.selectedDishId = action.payload.dishId;
     },
 
     closeIngredientsStore(state) {
-      state.selectedDish = null;
+      state.selectedDishId = null;
       state.modalType = VisibleModalType.NONE;
     },
 
@@ -57,7 +57,7 @@ const slice = createSlice({
       state,
       action: PayloadAction<TShowIngredientsStoreProps>,
     ) {
-      state.selectedDish = action.payload.dishId;
+      state.selectedDishId = action.payload.dishId;
       state.modalType = VisibleModalType.INGREDIENTS_STORE;
     },
   },
@@ -67,7 +67,7 @@ const slice = createSlice({
       action: PayloadAction<TStartgameProps>,
     ): TUi {
       return {
-        selectedDish: null,
+        selectedDishId: null,
         selectedRecipe: initialState.selectedRecipe,
         modalType: VisibleModalType.NONE,
       };
@@ -81,27 +81,27 @@ const slice = createSlice({
     },
 
     [dishesSlice.actions.clear.type](state) {
-      state.selectedDish = null;
+      state.selectedDishId = null;
     },
 
     [dishesSlice.actions.addIngredient.type](state) {
-      state.selectedDish = null;
+      state.selectedDishId = null;
       state.modalType = VisibleModalType.NONE;
     },
 
     [dishesSlice.actions.copy.type](state) {
-      state.selectedDish = null;
+      state.selectedDishId = null;
     },
 
     [dishesSlice.actions.select.type](
       state,
       action: PayloadAction<TSelectProps>,
     ) {
-      state.selectedDish = action.payload.dishId;
+      state.selectedDishId = action.payload.dishId;
     },
 
     [dishesSlice.actions.unselect.type](state) {
-      state.selectedDish = null;
+      state.selectedDishId = null;
     },
   },
 });

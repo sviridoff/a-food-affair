@@ -32,22 +32,22 @@ export const chooseDish = (
     const isSelected = dishes.data[dishId].isSelected;
 
     if (!isSelected) {
-      const selectedDish = ui.selectedDish && dishId !== ui.selectedDish
-        ? ui.selectedDish
+      const selectedDishId = ui.selectedDishId && dishId !== ui.selectedDishId
+        ? ui.selectedDishId
         : null;
 
-      if (selectedDish) {
+      if (selectedDishId) {
         dispatch(dishesSlice.actions.copy({
           dishId,
-          selectedDishId: selectedDish,
+          selectedDishId,
         }));
 
         wiggleEffect(() => { })(event);
       }
 
-      if (!selectedDish) {
-        const ingredients = dishes.ingredients[dishId] || [];
-        const hasIngredients = Boolean(ingredients.length);
+      if (!selectedDishId) {
+        const ingredientsIds = dishes.ingredients[dishId] || [];
+        const hasIngredients = Boolean(ingredientsIds.length);
 
         if (hasIngredients) {
           btnEffect(() =>
@@ -79,7 +79,7 @@ export const chooseDish = (
 export const chooseIngredient = (ingredientId: string): TThunk<void> =>
   (dispatch, getState) => {
     const { ui } = getState();
-    const dishId = ui.selectedDish;
+    const dishId = ui.selectedDishId;
 
     if (dishId) {
       dispatch(dishesSlice.actions.addIngredient({
@@ -92,7 +92,7 @@ export const chooseIngredient = (ingredientId: string): TThunk<void> =>
 export const closeIngredientsStore = (): TThunk<void> =>
   (dispatch, getState) => {
     const { ui } = getState();
-    const dishId = ui.selectedDish;
+    const dishId = ui.selectedDishId;
 
     if (dishId) {
       dispatch(uiSlice.actions.closeIngredientsStore());
@@ -106,7 +106,7 @@ export const chooseClient = (
 ): TThunk<void> =>
   (dispatch, getState) => {
     const { ui, recipes, dishes, profile } = getState();
-    const dishId = ui.selectedDish;
+    const dishId = ui.selectedDishId;
 
     if (profile.lives <= 0) {
       return;
@@ -234,7 +234,7 @@ const checkForRemoveTable = (clientId: string): TThunk<void> =>
 export const clearDish = (): TThunk<void> =>
   (dispatch, getState) => {
     const { ui } = getState();
-    const dishId = ui.selectedDish;
+    const dishId = ui.selectedDishId;
 
     if (dishId) {
       dispatch(dishesSlice.actions.clear({
