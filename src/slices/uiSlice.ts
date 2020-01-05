@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TUi, VisibleModalType } from '../types';
+import gameSlice, { TStartgameProps } from './gameSlice';
 
 const initialState: TUi = {
   modalType: VisibleModalType.RESTARTPAGE,
@@ -40,13 +41,20 @@ const slice = createSlice({
     selectDish(state, action: PayloadAction<TSelectDishProp>) {
       state.selectedDish = action.payload.dishId;
     },
-
-    restartUi(state) {
-      state.selectedDish = null;
-
-      return state;
-    }
-  }
+  },
+  extraReducers: {
+    // @ts-ignore
+    [gameSlice.actions.startgame](
+      state,
+      action: PayloadAction<TStartgameProps>,
+    ): TUi {
+      return {
+        selectedDish: null,
+        selectedRecipe: initialState.selectedRecipe,
+        modalType: VisibleModalType.NONE,
+      };
+    },
+  },
 });
 
 export default slice;

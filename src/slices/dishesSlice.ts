@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import uuid from 'uuid/v4';
 
 import { TDishes, TDish } from '../types';
+import gameSlice, { TStartgameProps } from './gameSlice';
 
 const initialState: TDishes = {
   data: {
@@ -83,28 +83,30 @@ const slice = createSlice({
 
       return state;
     },
-
-    restartDishes(state, action: PayloadAction<TCreateDishesProps>) {
-      const dishes = action.payload.dishes;
-
-      const newDishes: TDish[] = Array.from(new Array(dishes))
-        .map(() => ({
-          id: uuid(),
+  },
+  extraReducers: {
+    // @ts-ignore
+    [gameSlice.actions.startgame](
+      state,
+      action: PayloadAction<TStartgameProps>,
+    ): TDishes {
+      const dishesIds = action.payload.dishesIds;
+      const newDishes: TDish[] = dishesIds
+        .map(dishId => ({
+          id: dishId,
           isSelected: false,
         }));
 
-      state.data = newDishes.reduce<{ [key: string]: TDish }>((prev, curr) => {
-        prev[curr.id] = curr;
-        return prev;
-      }, {});
-
-      state.ids = newDishes.map(dish => dish.id);
-
-      state.ingredients = {};
-
-      return state;
-    }
-  }
+      return {
+        data: newDishes.reduce<{ [key: string]: TDish }>((prev, curr) => {
+          prev[curr.id] = curr;
+          return prev;
+        }, {}),
+        ids: dishesIds,
+        ingredients: {},
+      };
+    },
+  },
 });
 
 export default slice;

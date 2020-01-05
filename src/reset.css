@@ -132,7 +132,7 @@ table {
 }
 
 html {
-  font-size: 68.5%; /* 62.5% */
+  font-size: 75.5%; /* 62.5% */
   font-family: 'MainFont', sans-serif;
   color: var(--border-color);
   -webkit-user-select: none;

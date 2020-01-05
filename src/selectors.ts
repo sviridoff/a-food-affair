@@ -56,14 +56,14 @@ export const makeSelectIngredients = () => {
 };
 
 export const selectLevelIngredientsIds = createSelector(
-  (state: TState) => state.profile.level,
+  (state: TState) => state.profile.levelId,
   (state: TState) => state.levels.recipes,
   (state: TState) => state.recipes.ingredients,
   (
-    level: number,
+    levelId: number,
     levelsRecipes: { [key: string]: string[] },
     recipeIngredients: { [key: string]: string[] },
-  ) => Array.from(new Set(levelsRecipes[level]
+  ) => Array.from(new Set(levelsRecipes[levelId]
     .flatMap(recipeId => recipeIngredients[recipeId]))),
 );
 

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { mergeDeepWith, concat } from 'ramda';
 
 import { TClients, ClientStatus } from '../types';
+import gameSlice, { TStartgameProps } from './gameSlice';
 
 const concatValues = (l: any, r: any) =>
   Array.isArray(l) ? concat(l, r) : r;
@@ -116,17 +117,6 @@ const slice = createSlice({
       return state;
     },
 
-    restartClients(state) {
-      state = {
-        data: {},
-        recipes: {},
-        ids: [],
-        tables: {},
-      };
-
-      return state;
-    },
-
     addClients(state, action: PayloadAction<TAddClientsProps>) {
       const clients = action.payload.clients;
 
@@ -134,7 +124,21 @@ const slice = createSlice({
 
       return state;
     }
-  }
+  },
+  extraReducers: {
+    // @ts-ignore
+    [gameSlice.actions.startgame](
+      state,
+      action: PayloadAction<TStartgameProps>,
+    ): TClients {
+      return {
+        data: {},
+        recipes: {},
+        ids: [],
+        tables: {},
+      };
+    },
+  },
 });
 
 export default slice;

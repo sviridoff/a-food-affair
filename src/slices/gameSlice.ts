@@ -20,6 +20,13 @@ type TRestartGameProps = {
   nextTableTime: number,
 };
 
+export type TStartgameProps = {
+  currentTime: number,
+  lives: number,
+  dishesIds: string[],
+  levelId: number,
+};
+
 const slice = createSlice({
   name: 'game',
   initialState,
@@ -48,14 +55,15 @@ const slice = createSlice({
       return state;
     },
 
-    restartGame(state, action: PayloadAction<TRestartGameProps>) {
-      state = {
-        status: GameStatus.PAUSE,
+    startgame(
+      state,
+      action: PayloadAction<TStartgameProps>,
+    ): TGame {
+      return {
+        status: GameStatus.PLAY,
         tables: 0,
-        nextTableTime: action.payload.nextTableTime,
+        nextTableTime: action.payload.currentTime + 2000,
       };
-
-      return state;
     },
   }
 });

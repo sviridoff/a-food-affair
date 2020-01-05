@@ -190,7 +190,7 @@ const checkForEndgame = (): TThunk<void> =>
       }));
     }
 
-    const level = levels.data[profile.level];
+    const level = levels.data[profile.levelId];
 
     // Win.
     if (
@@ -198,8 +198,8 @@ const checkForEndgame = (): TThunk<void> =>
       && game.tables === level.maxTables
       && !tables.ids.length
     ) {
-      const nextLevel = profile.level < Object.keys(levels.data).length
-        ? profile.level + 1
+      const nextLevel = profile.levelId < Object.keys(levels.data).length
+        ? profile.levelId + 1
         : null;
 
       if (nextLevel) {
@@ -207,7 +207,7 @@ const checkForEndgame = (): TThunk<void> =>
           level: nextLevel
         }));
         dispatch(profileSlice.actions.selectLevel({
-          level: nextLevel
+          levelId: nextLevel
         }));
       }
 
@@ -264,44 +264,25 @@ export const clearDish = (): TThunk<void> =>
     });
   };
 
-export const startgame = (): TThunk<void> =>
+export const startgameLavel = (levelId: number): TThunk<void> =>
   (dispatch, getState) => {
-    const { levels, profile } = getState();
-    const level = levels.data[profile.level];
+    const { levels } = getState();
+    const level = levels.data[levelId];
 
-    batch(() => {
-      dispatch(dishesSlice.actions.restartDishes({
-        dishes: level.dishes,
-      }));
-      dispatch(tablesSlice.actions.restartTables());
-      dispatch(clientsSlice.actions.restartClients());
-      dispatch(profileSlice.actions.restartProfile({
-        lives: levels.data[profile.level].lives,
-      }));
-      dispatch(gameSlice.actions.restartGame({
-        nextTableTime: currentTime + 2000,
-      }));
-      dispatch(uiSlice.actions.restartUi());
-      dispatch(uiSlice.actions.selectVisibleModalType({
-        modalType: VisibleModalType.NONE,
-      }));
-      dispatch(gameSlice.actions.selectStatus({ status: GameStatus.PLAY }));
-    });
-  };
-
-export const startgameLavel = (level: number): TThunk<void> =>
-  dispatch => {
-    batch(() => {
-      dispatch(profileSlice.actions.selectLevel({ level }));
-      dispatch(startgame());
-    });
+    dispatch(gameSlice.actions.startgame({
+      currentTime,
+      levelId,
+      lives: level.lives,
+      dishesIds: Array.from(new Array(level.dishes))
+        .map(() => uuid()),
+    }));
   };
 
 export const createTable = (): TThunk<void> =>
   (dispatch, getState) => {
     const { levels, profile, recipes } = getState();
 
-    const levelId = profile.level;
+    const levelId = profile.levelId;
     const level: TLevel = levels.data[levelId];
     const tableId = uuid();
     const clientsRandom = level.randomTables
@@ -449,7 +430,7 @@ window.setInterval(() => {
   // End clean tables
 
   // Start create table
-  const level = levels.data[profile.level];
+  const level = levels.data[profile.levelId];
 
   if (
     profile.lives > 0

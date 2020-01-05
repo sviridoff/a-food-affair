@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TProfile } from '../types';
+import gameSlice, { TStartgameProps } from './gameSlice';
 
 const defaultLives = 1;
 
 const initialState: TProfile = {
   lives: defaultLives,
   coins: 0,
-  level: 1,
+  levelId: 1,
 };
 
 type TIncreaseCoinsProps = {
@@ -19,7 +20,7 @@ type TDecreaseLivesProps = {
 };
 
 type TSelectLevelProps = {
-  level: number,
+  levelId: number,
 };
 
 type TRestartProfileProps = {
@@ -30,18 +31,8 @@ const slice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    restartProfile(state, action: PayloadAction<TRestartProfileProps>) {
-      state = {
-        coins: 0,
-        lives: action.payload.lives,
-        level: state.level,
-      };
-
-      return state;
-    },
-
     selectLevel(state, action: PayloadAction<TSelectLevelProps>) {
-      state.level = action.payload.level;
+      state.levelId = action.payload.levelId;
 
       return state;
     },
@@ -70,6 +61,19 @@ const slice = createSlice({
 
       return state;
     },
+  },
+  extraReducers: {
+    // @ts-ignore
+    [gameSlice.actions.startgame](
+      state,
+      action: PayloadAction<TStartgameProps>,
+    ): TProfile {
+      return {
+        coins: 0,
+        lives: action.payload.lives,
+        levelId: action.payload.levelId,
+      };
+    }
   }
 });
 

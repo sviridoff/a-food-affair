@@ -12,7 +12,7 @@ type TLevelsData = { [key: string]: TLevel };
 
 const mapStateToProps =
   (state: TState) => ({
-    currentLevel: state.profile.level,
+    currentLevelId: state.profile.levelId,
     isVisible: state.ui.modalType === VisibleModalType.RESTARTPAGE,
     isPaused: state.game.status === GameStatus.PAUSE,
     isFirst: state.game.status === GameStatus.FIRST_STOP,
@@ -36,11 +36,11 @@ const startpageClass =
     );
 
 const prevLevelBtnEl = (
-  setLocalLevel: (arg0: number) => void,
-  localLevel: number,
+  setLocalLevelId: (arg0: number) => void,
+  localLevelId: number,
 ) => {
-  const onClick = () => setLocalLevel(localLevel - 1);
-  const onClickAttr = localLevel > 1
+  const onClick = () => setLocalLevelId(localLevelId - 1);
+  const onClickAttr = localLevelId > 1
     ? { onClick: btnEffect(onClick) }
     : {};
 
@@ -50,12 +50,12 @@ const prevLevelBtnEl = (
 }
 
 const nextLevelBtnEl = (
-  setLocalLevel: (arg0: number) => void,
-  localLevel: number,
+  setLocalLevelId: (arg0: number) => void,
+  localLevelId: number,
   levelsNum: number,
 ) => {
-  const onClick = () => setLocalLevel(localLevel + 1);
-  const onClickAttr = localLevel < levelsNum
+  const onClick = () => setLocalLevelId(localLevelId + 1);
+  const onClickAttr = localLevelId < levelsNum
     ? { onClick: btnEffect(onClick) }
     : {};
 
@@ -65,46 +65,46 @@ const nextLevelBtnEl = (
 };
 
 const playBtnClass = (
-  currentLevel: number,
-  localLevel: number,
+  currentLevelId: number,
+  localLevelId: number,
   isStart: boolean,
 ) =>
   classnames({
-    'restartpage__play-btn': currentLevel !== localLevel || isStart,
-    'restartpage__retry-btn': currentLevel === localLevel || !isStart,
+    'restartpage__play-btn': currentLevelId !== localLevelId || isStart,
+    'restartpage__retry-btn': currentLevelId === localLevelId || !isStart,
   });
 
 const playBtnEl = (
-  currentLevel: number,
-  localLevel: number,
+  currentLevelId: number,
+  localLevelId: number,
   levels: TLevelsData,
   isStart: boolean,
   startgameLavel: (arg: number) => void,
 ) => {
-  const onClick = () => startgameLavel(localLevel);
+  const onClick = () => startgameLavel(localLevelId);
 
-  return !levels[localLevel].isLock
+  return !levels[localLevelId].isLock
     ? <div
-      className={playBtnClass(currentLevel, localLevel, isStart)}
+      className={playBtnClass(currentLevelId, localLevelId, isStart)}
       onClick={btnEffect(onClick)}></div>
     : null;
 }
 
 const levelTxtEl = (
   levels: TLevelsData,
-  localLevel: number,
+  localLevelId: number,
 ) =>
   <div className='restartpage__level'>
-    {levels[localLevel].isLock ? '?' : localLevel}
+    {levels[localLevelId].isLock ? '?' : localLevelId}
   </div>;
 
 const resumeBtnEl = (
   isPaused: boolean,
-  level: number,
-  localLevel: number,
+  currentLevelId: number,
+  localLevelId: number,
   resumePauseGame: () => void,
 ) =>
-  isPaused && level === localLevel
+  isPaused && currentLevelId === localLevelId
     ? <div
       className='restartpage__resume-btn'
       onClick={btnEffect(resumePauseGame)}></div>
@@ -121,7 +121,7 @@ const logoGameEl = (isFirst: boolean) =>
 const Startpage: FC<TProps> =
   ({
     isVisible,
-    currentLevel,
+    currentLevelId,
     levelsNum,
     levels,
     startgameLavel,
@@ -130,23 +130,23 @@ const Startpage: FC<TProps> =
     isFirst,
     isStart,
   }) => {
-    const [localLevel, setLocalLevel]
-      = useState(currentLevel);
+    const [localLevelId, setLocalLevelId]
+      = useState(currentLevelId);
 
     useEffect(() => {
-      setLocalLevel(currentLevel);
-    }, [currentLevel]);
+      setLocalLevelId(currentLevelId);
+    }, [currentLevelId]);
 
     return <div className={startpageClass(isVisible)}>
       {logoGameEl(isFirst)}
       <div className='restartpage__level-ctrl'>
-        {prevLevelBtnEl(setLocalLevel, localLevel)}
-        {levelTxtEl(levels, localLevel)}
-        {nextLevelBtnEl(setLocalLevel, localLevel, levelsNum)}
+        {prevLevelBtnEl(setLocalLevelId, localLevelId)}
+        {levelTxtEl(levels, localLevelId)}
+        {nextLevelBtnEl(setLocalLevelId, localLevelId, levelsNum)}
       </div>
       <div className='restartpage__level-start'>
-        {playBtnEl(currentLevel, localLevel, levels, isStart, startgameLavel)}
-        {resumeBtnEl(isPaused, currentLevel, localLevel, resumePauseGame)}
+        {playBtnEl(currentLevelId, localLevelId, levels, isStart, startgameLavel)}
+        {resumeBtnEl(isPaused, currentLevelId, localLevelId, resumePauseGame)}
       </div>
     </div>;
   };

@@ -7,7 +7,7 @@ import { TState } from '../../types';
 const mapStateToProps = (state: TState) => ({
   lives: state.profile.lives,
   coins: state.profile.coins,
-  level: state.profile.level,
+  levelId: state.profile.levelId,
 });
 
 const connector = connect(mapStateToProps);
@@ -15,10 +15,10 @@ const connector = connect(mapStateToProps);
 type TProps = ConnectedProps<typeof connector>;
 
 const Profile: FC<TProps> =
-  ({ lives, coins, level }) =>
+  ({ lives, coins, levelId }) =>
     <div className='profile'>
       <div className='profile__level'>
-        Lv {level}
+        Lv {levelId}
       </div>
       <div className='profile__lives'>
         <div className='profile__lives__logo'></div>

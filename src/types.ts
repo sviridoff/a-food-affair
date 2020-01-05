@@ -88,7 +88,7 @@ export enum GameStatus {
 export type TProfile = {
   lives: number,
   coins: number,
-  level: number,
+  levelId: number,
 };
 
 export type TLevel = {
