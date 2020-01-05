@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TDishes, TDish } from '../types';
 import gameSlice, { TStartgameProps } from './gameSlice';
+import clientsSlice, { TSetOkProps } from './clientsSlice';
 
 const initialState: TDishes = {
   data: {
@@ -48,14 +49,6 @@ const slice = createSlice({
 
       state.ingredients[dishId] = state.ingredients[dishId] || [];
       state.ingredients[dishId].push(ingredientId);
-    },
-
-    removeAllIngredients(state, action: PayloadAction<TSelectProps>) {
-      const dishId = action.payload.dishId;
-
-      state.ingredients[dishId] = [];
-
-      return state;
     },
 
     clear(state, action: PayloadAction<TClearProps>) {
@@ -116,6 +109,26 @@ const slice = createSlice({
         ids: dishesIds,
         ingredients: {},
       };
+    },
+
+    [clientsSlice.actions.setOk.type](
+      state,
+      action: PayloadAction<TSetOkProps>,
+    ) {
+      const dishId = action.payload.dishId;
+
+      state.ingredients[dishId] = [];
+      state.data[dishId].isSelected = false;
+    },
+
+    [clientsSlice.actions.setKo.type](
+      state,
+      action: PayloadAction<TSetOkProps>,
+    ) {
+      const dishId = action.payload.dishId;
+
+      state.ingredients[dishId] = [];
+      state.data[dishId].isSelected = false;
     },
   },
 });

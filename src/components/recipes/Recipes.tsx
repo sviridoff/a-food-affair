@@ -12,7 +12,7 @@ import { btnEffect } from '../../libs/btnEffect';
 
 const mapStateToProps = (state: TState) => ({
   ingredients: selectClientIngredients(state),
-  recipeId: state.ui.selectedRecipe,
+  recipeId: state.ui.selectedRecipeId,
   isVisible: state.ui.modalType === VisibleModalType.RECIPES,
 });
 

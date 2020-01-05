@@ -78,7 +78,7 @@ export const selectClientRecipe = createSelector(
 );
 
 export const selectClientIngredients = createSelector(
-  (state: TState) => state.ui.selectedRecipe,
+  (state: TState) => state.ui.selectedRecipeId,
   (state: TState) => state.recipes.ingredients,
   (state: TState) => state.ingredients.data,
   (

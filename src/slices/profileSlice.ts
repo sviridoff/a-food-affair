@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TProfile } from '../types';
 import gameSlice, { TStartgameProps } from './gameSlice';
+import clientsSlice from './clientsSlice';
 
 const defaultLives = 1;
 
@@ -33,12 +34,6 @@ const slice = createSlice({
       return state;
     },
 
-    decreaseLive(state) {
-      state.lives -= 1;
-
-      return state;
-    },
-
     decreaseLives(
       state,
       action: PayloadAction<TDecreaseLivesProps>,
@@ -60,7 +55,7 @@ const slice = createSlice({
   },
   extraReducers: {
     [gameSlice.actions.startgame.type](
-      state,
+      _,
       action: PayloadAction<TStartgameProps>,
     ): TProfile {
       return {
@@ -68,7 +63,11 @@ const slice = createSlice({
         lives: action.payload.lives,
         levelId: action.payload.levelId,
       };
-    }
+    },
+
+    [clientsSlice.actions.setKo.type](state) {
+      state.lives -= 1;
+    },
   }
 });
 

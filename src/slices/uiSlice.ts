@@ -6,10 +6,11 @@ import gameSlice, {
   TToggleResumegameProps,
 } from './gameSlice';
 import dishesSlice, { TSelectProps } from './dishesSlice';
+import clientsSlice from './clientsSlice';
 
 const initialState: TUi = {
   modalType: VisibleModalType.RESTARTPAGE,
-  selectedRecipe: 'donut-oreo',
+  selectedRecipeId: 'donut-oreo',
   selectedDishId: null,
 };
 
@@ -17,16 +18,12 @@ type TSelectVisibleModalType = {
   modalType: VisibleModalType,
 };
 
-type TSelectRecipeProp = {
-  recipeId: string | null,
-};
-
-type TSelectDishProp = {
-  dishId: string | null,
-};
-
 type TShowIngredientsStoreProps = {
   dishId: string,
+};
+
+type TShowRecipes = {
+  recipeId: string,
 };
 
 const slice = createSlice({
@@ -38,14 +35,6 @@ const slice = createSlice({
       action: PayloadAction<TSelectVisibleModalType>
     ) {
       state.modalType = action.payload.modalType;
-    },
-
-    selectRecipe(state, action: PayloadAction<TSelectRecipeProp>) {
-      state.selectedRecipe = action.payload.recipeId;
-    },
-
-    selectDish(state, action: PayloadAction<TSelectDishProp>) {
-      state.selectedDishId = action.payload.dishId;
     },
 
     closeIngredientsStore(state) {
@@ -60,6 +49,14 @@ const slice = createSlice({
       state.selectedDishId = action.payload.dishId;
       state.modalType = VisibleModalType.INGREDIENTS_STORE;
     },
+
+    showRecipes(
+      state,
+      action: PayloadAction<TShowRecipes>,
+    ) {
+      state.selectedRecipeId = action.payload.recipeId;
+      state.modalType = VisibleModalType.RECIPES;
+    },
   },
   extraReducers: {
     [gameSlice.actions.startgame.type](
@@ -68,7 +65,7 @@ const slice = createSlice({
     ): TUi {
       return {
         selectedDishId: null,
-        selectedRecipe: initialState.selectedRecipe,
+        selectedRecipeId: initialState.selectedRecipeId,
         modalType: VisibleModalType.NONE,
       };
     },
@@ -101,6 +98,14 @@ const slice = createSlice({
     },
 
     [dishesSlice.actions.unselect.type](state) {
+      state.selectedDishId = null;
+    },
+
+    [clientsSlice.actions.setOk.type](state) {
+      state.selectedDishId = null;
+    },
+
+    [clientsSlice.actions.setKo.type](state) {
       state.selectedDishId = null;
     },
   },

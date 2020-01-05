@@ -64,7 +64,7 @@ export enum VisibleModalType {
 
 export type TUi = {
   modalType: VisibleModalType,
-  selectedRecipe: string | null,
+  selectedRecipeId: string | null,
   selectedDishId: string | null,
 };
 

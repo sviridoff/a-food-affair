@@ -74,6 +74,11 @@ type TUpdateStatusesProps = {
   clientIds: string[],
 };
 
+export type TSetOkProps = {
+  clientId: string,
+  dishId: string,
+};
+
 const slice = createSlice({
   name: 'clients',
   initialState,
@@ -82,8 +87,6 @@ const slice = createSlice({
       const { status, clientId } = action.payload;
 
       state.data[clientId].status = status;
-
-      return state;
     },
 
     updateStatuses(
@@ -95,13 +98,29 @@ const slice = createSlice({
       clientIds.forEach(clientId => {
         state.data[clientId].status = status;
       });
+    },
 
-      return state;
+    setOk(
+      state,
+      action: PayloadAction<TSetOkProps>,
+    ) {
+      const clientId = action.payload.clientId;
+
+      state.data[clientId].status = ClientStatus.OK;
+    },
+
+    setKo(
+      state,
+      action: PayloadAction<TSetOkProps>,
+    ) {
+      const clientId = action.payload.clientId;
+
+      state.data[clientId].status = ClientStatus.KO;
     },
   },
   extraReducers: {
     [gameSlice.actions.startgame.type](
-      state,
+      _,
       action: PayloadAction<TStartgameProps>,
     ): TClients {
       return {

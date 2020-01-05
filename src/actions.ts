@@ -20,6 +20,7 @@ import gameSlice from './slices/gameSlice';
 import levelsSlice from './slices/levelsSlice';
 import store from './store';
 import { btnEffect, wiggleEffect } from './libs/btnEffect';
+import areIngredientsEqual from './libs/areIngredientsEqual';
 
 let currentTime = Date.now();
 
@@ -32,9 +33,7 @@ export const chooseDish = (
     const isSelected = dishes.data[dishId].isSelected;
 
     if (!isSelected) {
-      const selectedDishId = ui.selectedDishId && dishId !== ui.selectedDishId
-        ? ui.selectedDishId
-        : null;
+      const selectedDishId = ui.selectedDishId;
 
       if (selectedDishId) {
         dispatch(dishesSlice.actions.copy({
@@ -113,31 +112,25 @@ export const chooseClient = (
     }
 
     if (dishId) {
-      batch(() => {
-        const recipeIngredients = recipes.ingredients[recipeId].slice().sort();
-        const dishIngredients = dishes.ingredients[dishId].slice().sort();
-        const areEqual = recipeIngredients.length === dishIngredients.length
-          && recipeIngredients
-            .every((ingredient, index) => ingredient === dishIngredients[index]);
+      const areEqual = areIngredientsEqual(
+        recipes.ingredients[recipeId].slice(),
+        dishes.ingredients[dishId].slice(),
+      );
 
+      batch(() => {
         if (areEqual) {
-          dispatch(clientsSlice.actions.updateStatus({
-            status: ClientStatus.OK,
+          dispatch(clientsSlice.actions.setOk({
             clientId,
+            dishId,
           }));
         }
 
         if (!areEqual) {
-          dispatch(clientsSlice.actions.updateStatus({
-            status: ClientStatus.KO,
+          dispatch(clientsSlice.actions.setKo({
             clientId,
+            dishId,
           }));
-          dispatch(profileSlice.actions.decreaseLive());
         }
-
-        dispatch(dishesSlice.actions.removeAllIngredients({ dishId }));
-        dispatch(uiSlice.actions.selectDish({ dishId: null }));
-        dispatch(dishesSlice.actions.unselect({ dishId }));
 
         dispatch(checkForRemoveTable(clientId));
       });
@@ -146,13 +139,10 @@ export const chooseClient = (
     }
 
     if (!dishId) {
-      btnEffect(
-        () => batch(() => {
-          dispatch(uiSlice.actions.selectRecipe({ recipeId }));
-          dispatch(uiSlice.actions.selectVisibleModalType({
-            modalType: VisibleModalType.RECIPES,
-          }));
-        })
+      btnEffect(() =>
+        dispatch(uiSlice.actions.showRecipes({
+          recipeId,
+        }))
       )(event);
     }
   };
