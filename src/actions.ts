@@ -209,7 +209,7 @@ const checkRemoveClientTable = (clientId: string): TThunk<void> =>
     if (isTableAttended) {
       const coins = tableClientsIds.reduce((prev, id) => {
         const client = clients.data[id];
-        return prev + client.status === ClientStatus.OK ? client.coins : 0;
+        return prev + (client.status === ClientStatus.OK ? client.coins : 0);
       }, 0);
 
       if (coins) {

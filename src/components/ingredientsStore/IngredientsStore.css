@@ -10,6 +10,10 @@
   backdrop-filter: blur(.5rem);
 }
 
+.ingredients-store > *:first-child {
+  margin-top: 10rem;
+}
+
 .ingredients-store--visible {
   display: flex;
 }
@@ -18,7 +22,6 @@
   display: flex;
   justify-content: center;
   margin: 0 2rem 4rem 4rem;
-  margin-top: 40%;
   flex-wrap: wrap;
 }
 

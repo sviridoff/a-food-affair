@@ -21,7 +21,7 @@ const initialState: TLevels = {
       maxClients: 2,
       maxTables: 1,
       timePerIngredient: 1000 * 60 * 60,
-      isLock: true,
+      isLock: false,
       randomTables: false,
     },
     '3': {
@@ -31,7 +31,7 @@ const initialState: TLevels = {
       maxClients: 2,
       maxTables: 1,
       timePerIngredient: 10000,
-      isLock: false,
+      isLock: true,
       randomTables: false,
     },
     '4': {
