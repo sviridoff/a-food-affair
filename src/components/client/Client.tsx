@@ -7,6 +7,7 @@ import '../../recipe.css';
 import { TState, ClientStatus, TClient } from '../../types';
 import { selectClient, selectClientRecipe } from '../../selectors';
 import { chooseClient } from '../../actions';
+import Clock from '../clock/Clock';
 
 type TOwnProps = {
   clientId: string,
@@ -58,6 +59,9 @@ const Client: FC<TProps> =
       <div
         {...onClickAttr(client, recipeId, chooseClient)}
         className='client__client'></div>
+      <Clock
+        createdAt={client.createdAt}
+        liveTime={client.liveTime} />
     </div>;
 
 export default connector(Client);

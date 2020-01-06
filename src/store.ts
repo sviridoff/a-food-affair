@@ -13,6 +13,7 @@ import recipesSlice from './slices/recipesSlice';
 import profileSlice from './slices/profileSlice';
 import levelsSlice from './slices/levelsSlice';
 import gameSlice from './slices/gameSlice';
+import timerSlice from './slices/timerSlice';
 
 export const reducer = combineReducers({
   clients: clientsSlice.reducer,
@@ -24,6 +25,7 @@ export const reducer = combineReducers({
   profile: profileSlice.reducer,
   levels: levelsSlice.reducer,
   game: gameSlice.reducer,
+  timer: timerSlice.reducer,
 });
 
 export default configureStore({

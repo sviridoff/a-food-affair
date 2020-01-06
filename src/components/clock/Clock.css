@@ -1,0 +1,13 @@
+.clock {
+  width: 2rem;
+  background: white;
+  border-radius: 50%;
+  float: right;
+}
+
+.clock circle {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 32;
+  transition: all 0.25s linear;
+}

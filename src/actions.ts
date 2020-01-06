@@ -18,6 +18,7 @@ import tablesSlice from './slices/tablesSlice';
 import profileSlice from './slices/profileSlice';
 import gameSlice from './slices/gameSlice';
 import levelsSlice from './slices/levelsSlice';
+import timerSlice from './slices/timerSlice';
 import store from './store';
 import {
   btnEffect,
@@ -376,7 +377,11 @@ window.setInterval(() => {
     return;
   }
 
-  currentTime += 200;
+  currentTime += 400;
+
+  store.dispatch(timerSlice.actions.set({
+    currentTime,
+  }));
 
   store.dispatch(checkRemoveClients());
 
@@ -391,4 +396,4 @@ window.setInterval(() => {
     store.dispatch(createTable());
   }
   // End create table
-}, 200);
+}, 400);

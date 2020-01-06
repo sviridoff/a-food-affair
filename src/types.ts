@@ -9,6 +9,10 @@ export enum ClientStatus {
   KO,
 };
 
+export type TTimer = {
+  currentTime: number,
+};
+
 export type TTable = {
   id: string,
 };

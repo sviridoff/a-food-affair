@@ -27,11 +27,11 @@ const initialState: TLevels = {
     '3': {
       id: '3',
       dishes: 2,
-      lives: 1,
+      lives: 2,
       maxClients: 3,
       maxTables: 5,
       timePerIngredient: 8000,
-      isLock: true,
+      isLock: false,
       randomTables: true,
     },
   },
