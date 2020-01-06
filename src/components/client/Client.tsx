@@ -52,14 +52,15 @@ const clientRecipeEl = (status: ClientStatus, recipeId: string) =>
 
 const Client: FC<TProps> =
   ({ client, recipeId, chooseClient, clientId }) =>
-    <div className={`client client__${clientId}`}>
+    <div className='client'>
       <div className='client__cloud'></div>
       {clientStatusEl(client.status)}
       {clientRecipeEl(client.status, recipeId)}
       <div
         {...onClickAttr(client, recipeId, chooseClient)}
-        className='client__client'></div>
+        className={`client__client client__${clientId}`}></div>
       <Clock
+        isWaiting={client.status === ClientStatus.WIP}
         createdAt={client.createdAt}
         liveTime={client.liveTime} />
     </div>;

@@ -7,6 +7,7 @@ import { TState } from '../../types';
 type TOwnProps = {
   createdAt: number,
   liveTime: number,
+  isWaiting: boolean,
 };
 
 const mapStateToProps =
@@ -22,12 +23,19 @@ const getStyle = (
   liveTime: number,
   createdAt: number,
   currentTime: number,
-) => ({
-  strokeDasharray: `${(currentTime - createdAt) * 100 / (liveTime - createdAt)} 100`
-});
+  isWaiting: boolean,
+) => {
+  const perc = isWaiting
+    ? (currentTime - createdAt) * 100 / (liveTime - createdAt)
+    : 100;
+
+  return {
+    strokeDasharray: `${perc} 100`,
+  };
+};
 
 const Clock: FC<TProps> =
-  ({ createdAt, liveTime, currentTime }) =>
+  ({ createdAt, liveTime, currentTime, isWaiting }) =>
     <svg
       className='clock'
       viewBox='0 0 64 64'
@@ -36,7 +44,7 @@ const Clock: FC<TProps> =
         r='25%'
         cx='50%'
         cy='50%'
-        style={getStyle(liveTime, createdAt, currentTime)}>
+        style={getStyle(liveTime, createdAt, currentTime, isWaiting)}>
       </circle>
     </svg>;
 
