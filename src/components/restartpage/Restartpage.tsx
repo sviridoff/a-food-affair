@@ -18,8 +18,10 @@ const mapStateToProps =
     isFirst: state.game.status === GameStatus.FIRST_STOP,
     isStart: state.game.status === GameStatus.WIN_STOP
       || state.game.status === GameStatus.FIRST_STOP,
+    isEndgame: state.game.status === GameStatus.WIN_STOP,
     levelsNum: Object.keys(state.levels.data).length,
     levels: state.levels.data,
+    coins: state.profile.coins,
   });
 
 const mapDispatchToProps = { startgameLavel, togglePausegame };
@@ -118,6 +120,14 @@ const logoGameEl = (isFirst: boolean) =>
       alt='' />
     : null;
 
+const coinsEl = (coins: number, isEndgame: boolean) =>
+  isEndgame
+    ? <div className='restartpage__coins'>
+      <div className='restartpage__coins__logo'></div>
+      <div className='restartpage__coins__txt'>{coins}</div>
+    </div>
+    : null;
+
 const Startpage: FC<TProps> =
   ({
     isVisible,
@@ -129,6 +139,8 @@ const Startpage: FC<TProps> =
     isPaused,
     isFirst,
     isStart,
+    isEndgame,
+    coins,
   }) => {
     const [localLevelId, setLocalLevelId]
       = useState(currentLevelId);
@@ -139,6 +151,7 @@ const Startpage: FC<TProps> =
 
     return <div className={startpageClass(isVisible)}>
       {logoGameEl(isFirst)}
+      {coinsEl(coins, isEndgame)}
       <div className='restartpage__level-ctrl'>
         {prevLevelBtnEl(setLocalLevelId, localLevelId)}
         {levelTxtEl(levels, localLevelId)}

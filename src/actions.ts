@@ -143,7 +143,7 @@ export const chooseClient = (
         dispatch(checkRemoveClientTable(clientId));
       });
 
-      wiggleEffect(() => { })(event);
+      clientWiggleEffect(`.client__${clientId}`);
     }
 
     if (!dishId) {
