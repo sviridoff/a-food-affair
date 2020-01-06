@@ -10,7 +10,7 @@ const initialState: TLevels = {
       lives: 1,
       maxClients: 1,
       maxTables: 1,
-      timePerIngredient: 1000 * 60 * 60,
+      timePerIngredient: 1000 * 60 * 60 * 10,
       isLock: false,
       randomTables: false,
     },
@@ -20,8 +20,8 @@ const initialState: TLevels = {
       lives: 1,
       maxClients: 2,
       maxTables: 1,
-      timePerIngredient: 1000 * 60 * 60,
-      isLock: false,
+      timePerIngredient: 1000 * 60 * 60 * 10,
+      isLock: true,
       randomTables: false,
     },
     '3': {
@@ -49,6 +49,7 @@ const initialState: TLevels = {
     '1': ['donut-kitkat'],
     '2': ['donut-oreo'],
     '3': ['donut-kitkat', 'donut-oreo'],
+    '4': ['donut-kitkat', 'donut-oreo'],
   },
 };
 
