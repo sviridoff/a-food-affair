@@ -8,6 +8,7 @@ import Diner from '../diner/Diner';
 import Kitchen from '../kitchen/Kitchen';
 import { togglePausegame } from '../../actions';
 import { btnEffect } from '../../libs/btnEffect';
+import Combo from '../combo/Combo';
 
 const mapDispatchToProps = { togglePausegame };
 
@@ -19,6 +20,7 @@ const Board: FC<TProps> =
   ({ togglePausegame }) =>
     <div className='board'>
       <Profile />
+      <Combo />
       <div className='board__body-container'>
         <img
           className='board__game-logo'

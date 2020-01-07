@@ -114,6 +114,7 @@ export type TGame = {
   status: GameStatus,
   tables: number,
   nextTableTime: number,
+  combo: number,
 };
 
 export type TState = ReturnType<typeof reducer>;

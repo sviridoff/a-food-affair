@@ -110,3 +110,22 @@ export const tableShowEffect = (
       opacity: 1,
       ease: 'Quad.easeInOut',
     });
+
+export const comboEffect = (
+  el: HTMLElement,
+) => {
+  const timeline = gsap.timeline();
+
+  timeline.fromTo(
+    el,
+    1.2,
+    {
+      scale: .5,
+      display: 'inline-block'
+    },
+    {
+      scale: 1.3,
+      ease: 'elastic'
+    });
+  timeline.to(el, 0, { display: 'none' });
+};

@@ -7,6 +7,7 @@ const initialState: TGame = {
   status: GameStatus.FIRST_STOP,
   tables: 0,
   nextTableTime: 0,
+  combo: 0,
 };
 
 type TSelectStatusProps = {
@@ -44,6 +45,7 @@ const slice = createSlice({
         status: GameStatus.PLAY,
         tables: 0,
         nextTableTime: action.payload.currentTime + 2000,
+        combo: 0,
       };
     },
 
@@ -61,6 +63,14 @@ const slice = createSlice({
     ) {
       state.tables += 1;
       state.nextTableTime = action.payload.nextTableTime;
+    },
+
+    [createAction('clients/setOk').type](state) {
+      state.combo += 1;
+    },
+
+    [createAction('clients/setKo').type](state) {
+      state.combo = 0;
     },
   },
 });
