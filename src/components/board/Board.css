@@ -2,7 +2,8 @@
   background: var(--background-color);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
+  height: 100vh;
 }
 
 .board__body-container {

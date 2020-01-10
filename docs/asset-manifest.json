@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "./static/css/main.43e53109.chunk.css",
+    "main.css": "./static/css/main.78c600bf.chunk.css",
     "main.js": "./static/js/main.1f02a5ab.chunk.js",
     "main.js.map": "./static/js/main.1f02a5ab.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.4e188a33.js",
@@ -8,14 +8,14 @@
     "static/js/2.c52b14d9.chunk.js": "./static/js/2.c52b14d9.chunk.js",
     "static/js/2.c52b14d9.chunk.js.map": "./static/js/2.c52b14d9.chunk.js.map",
     "index.html": "./index.html",
-    "precache-manifest.5b4adfdc0e3a828151059b4ab1aaca2b.js": "./precache-manifest.5b4adfdc0e3a828151059b4ab1aaca2b.js",
+    "precache-manifest.7d9b2d7c7a3ec76be927ea577e578324.js": "./precache-manifest.7d9b2d7c7a3ec76be927ea577e578324.js",
     "service-worker.js": "./service-worker.js",
-    "static/css/main.43e53109.chunk.css.map": "./static/css/main.43e53109.chunk.css.map",
+    "static/css/main.78c600bf.chunk.css.map": "./static/css/main.78c600bf.chunk.css.map",
     "static/js/2.c52b14d9.chunk.js.LICENSE": "./static/js/2.c52b14d9.chunk.js.LICENSE",
     "static/media/Client.css": "./static/media/OkIco.ecc87057.svg",
     "static/media/Recipes.css": "./static/media/CloseIco.e0d133e1.svg",
     "static/media/Restartpage.css": "./static/media/RetryIco.ac7b441b.svg",
-    "static/media/reset.css": "./static/media/background-pattern.76ac6a88.jpg",
+    "static/media/reset.css": "./static/media/Config Rounded Extrabold.210b348d.otf",
     "static/media/Dish.css": "./static/media/DishIcoSelected.578bd998.svg",
     "static/media/ingredient.css": "./static/media/OreoIco.ac85b91e.svg",
     "static/media/recipe.css": "./static/media/DonutOreoIco.3de6a3e9.svg",
@@ -27,7 +27,7 @@
   "entrypoints": [
     "static/js/runtime-main.4e188a33.js",
     "static/js/2.c52b14d9.chunk.js",
-    "static/css/main.43e53109.chunk.css",
+    "static/css/main.78c600bf.chunk.css",
     "static/js/main.1f02a5ab.chunk.js"
   ]
 }

@@ -161,4 +161,9 @@ body {
     overflow: hidden;
     font-size: 1.2rem;
   }
+
+  .board, .recipes, .restartpage, .ingredients-store {
+    min-height: 100% !important;
+    height: 100% !important;
+  }
 }
