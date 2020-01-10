@@ -11,8 +11,10 @@ type TOwnProps = {
 };
 
 const mapStateToProps =
-  (state: TState) => ({
-    currentTime: state.timer.currentTime,
+  (state: TState, ownProps: TOwnProps) => ({
+    currentTime: ownProps.isWaiting
+      ? state.timer.currentTime
+      : ownProps.liveTime,
   });
 
 const connector = connect(mapStateToProps);
