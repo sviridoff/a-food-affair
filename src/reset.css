@@ -137,7 +137,7 @@ html {
   color: var(--border-color);
   -webkit-user-select: none;
 
-  background: url('/background-pattern.jpg');
+  background: var(--background-color);
 }
 
 body {

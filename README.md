@@ -1,6 +1,6 @@
 # a-food-affair
 
-The demo is available here https://sviridoff.github.io/a-food-affair
+The demo is available here https://sviridoff.github.io/a-food-affair/
 
 ## Installation
 
