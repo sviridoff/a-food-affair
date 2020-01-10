@@ -2,8 +2,7 @@
   z-index: 6;
   position: absolute;
   width: 100%;
-  min-height: 100vh;
-  height: 100vh;
+  height: 100%;
   display: none;
   justify-content: center;
   flex-direction: column;

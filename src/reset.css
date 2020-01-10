@@ -136,8 +136,29 @@ html {
   font-family: 'MainFont', sans-serif;
   color: var(--border-color);
   -webkit-user-select: none;
+
+  background: url('/background-pattern.jpg');
 }
 
 body {
   font-size: 1.6rem;
+}
+
+#root {
+  border: none;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+@media all and (min-width: 600px) {
+  #root {
+    width: 414px;
+    height: 736px;
+    position: relative;
+    border: 5px solid black;
+    margin: 20px;
+    overflow: hidden;
+    font-size: 1.2rem;
+  }
 }

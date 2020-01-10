@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import './reset.css';
 import './variables.css';
+import './reset.css';
 import store from './store';
 import IngredientsStore from './components/ingredientsStore/IngredientsStore';
 import Recipes from './components/recipes/Recipes';
