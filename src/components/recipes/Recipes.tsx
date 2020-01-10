@@ -48,17 +48,19 @@ const recipesClass =
 
 const Recipes: FC<TProps> =
   ({ ingredients, recipeId, isVisible, hideRecipes }) =>
-    <div className={recipesClass(isVisible)}>
-      <div className='recipes__list'>
-        {ingredientsList(ingredients)}
-        <div className='recipes__symbol'>=</div>
-        <div className={`recipes__recipe recipe__${recipeId}`}></div>
+    isVisible
+      ? <div className={recipesClass(isVisible)}>
+        <div className='recipes__list'>
+          {ingredientsList(ingredients)}
+          <div className='recipes__symbol'>=</div>
+          <div className={`recipes__recipe recipe__${recipeId}`}></div>
+        </div>
+        <div className='recipes__controls'>
+          <div
+            className='recipes__close-btn'
+            onClick={btnEffect(hideRecipes)}></div>
+        </div>
       </div>
-      <div className='recipes__controls'>
-        <div
-          className='recipes__close-btn'
-          onClick={btnEffect(hideRecipes)}></div>
-      </div>
-    </div>;
+      : null;
 
 export default connector(Recipes);

@@ -38,7 +38,7 @@ const slice = createSlice({
     },
 
     startgame(
-      _,
+      state,
       action: PayloadAction<TStartgameProps>,
     ): TGame {
       return {
@@ -66,11 +66,16 @@ const slice = createSlice({
     },
 
     [createAction('clients/setOk').type](state) {
+      state.combo = state.combo < 2
+        ? 2
+        : state.combo;
       state.combo += 1;
     },
 
     [createAction('clients/setKo').type](state) {
-      state.combo = 0;
+      state.combo = state.combo === 2
+        ? 1
+        : 2;
     },
   },
 });

@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, memo } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 
@@ -37,10 +37,13 @@ const startpageClass =
       { 'restartpage--visible': isVisible },
     );
 
-const prevLevelBtnEl = (
+const PrevLevelBtn: FC<{
   setLocalLevelId: (arg0: number) => void,
   localLevelId: number,
-) => {
+}> = memo(({
+  setLocalLevelId,
+  localLevelId,
+}) => {
   const onClick = () => setLocalLevelId(localLevelId - 1);
   const onClickAttr = localLevelId > 1
     ? { onClick: btnEffect(onClick) }
@@ -49,13 +52,17 @@ const prevLevelBtnEl = (
   return <div
     className='restartpage__prev-level-btn'
     {...onClickAttr}></div>;
-}
+});
 
-const nextLevelBtnEl = (
+const NextLevelBtn: FC<{
   setLocalLevelId: (arg0: number) => void,
   localLevelId: number,
   levelsNum: number,
-) => {
+}> = memo(({
+  setLocalLevelId,
+  localLevelId,
+  levelsNum,
+}) => {
   const onClick = () => setLocalLevelId(localLevelId + 1);
   const onClickAttr = localLevelId < levelsNum
     ? { onClick: btnEffect(onClick) }
@@ -64,7 +71,7 @@ const nextLevelBtnEl = (
   return <div
     className='restartpage__next-level-btn'
     {...onClickAttr}></div>;
-};
+});
 
 const playBtnClass = (
   currentLevelId: number,
@@ -76,13 +83,19 @@ const playBtnClass = (
     'restartpage__retry-btn': currentLevelId === localLevelId || !isStart,
   });
 
-const playBtnEl = (
+const PlayBtn: FC<{
   currentLevelId: number,
   localLevelId: number,
   levels: TLevelsData,
   isStart: boolean,
   startgameLavel: (arg: number) => void,
-) => {
+}> = memo(({
+  currentLevelId,
+  localLevelId,
+  levels,
+  isStart,
+  startgameLavel,
+}) => {
   const onClick = () => startgameLavel(localLevelId);
 
   return !levels[localLevelId].isLock
@@ -90,43 +103,53 @@ const playBtnEl = (
       className={playBtnClass(currentLevelId, localLevelId, isStart)}
       onClick={btnEffect(onClick)}></div>
     : null;
-}
+});
 
-const levelTxtEl = (
+const LevelTxt: FC<{
   levels: TLevelsData,
   localLevelId: number,
-) =>
+}> = memo(({
+  levels,
+  localLevelId,
+}) =>
   <div className='restartpage__level'>
     {levels[localLevelId].isLock ? '?' : localLevelId}
-  </div>;
+  </div>);
 
-const resumeBtnEl = (
+const ResumeBtn: FC<{
   isPaused: boolean,
   currentLevelId: number,
   localLevelId: number,
   togglePausegame: () => void,
-) =>
+}> = memo(({
+  isPaused,
+  currentLevelId,
+  localLevelId,
+  togglePausegame,
+}) =>
   isPaused && currentLevelId === localLevelId
     ? <div
       className='restartpage__resume-btn'
       onClick={btnEffect(togglePausegame)}></div>
-    : null;
+    : null);
 
-const logoGameEl = (isFirst: boolean) =>
+const LogoGame: FC<{ isFirst: boolean }> = memo(({ isFirst }) =>
   isFirst
     ? <img
       className='restartpage__game-logo'
       src={LogoSvg}
       alt='' />
-    : null;
+    : null);
 
-const coinsEl = (coins: number, isEndgame: boolean) =>
+const Coins: FC<{
+  coins: number, isEndgame: boolean
+}> = memo(({ coins, isEndgame }) =>
   isEndgame
     ? <div className='restartpage__coins'>
       <div className='restartpage__coins__logo'></div>
       <div className='restartpage__coins__txt'>{coins}</div>
     </div>
-    : null;
+    : null);
 
 const Startpage: FC<TProps> =
   ({
@@ -150,16 +173,34 @@ const Startpage: FC<TProps> =
     }, [currentLevelId]);
 
     return <div className={startpageClass(isVisible)}>
-      {logoGameEl(isFirst)}
-      {coinsEl(coins, isEndgame)}
+      <LogoGame isFirst={isFirst} />
+      <Coins
+        coins={coins}
+        isEndgame={isEndgame} />
       <div className='restartpage__level-ctrl'>
-        {prevLevelBtnEl(setLocalLevelId, localLevelId)}
-        {levelTxtEl(levels, localLevelId)}
-        {nextLevelBtnEl(setLocalLevelId, localLevelId, levelsNum)}
+        <PrevLevelBtn
+          setLocalLevelId={setLocalLevelId}
+          localLevelId={localLevelId} />
+        <LevelTxt
+          levels={levels}
+          localLevelId={localLevelId} />
+        <NextLevelBtn
+          setLocalLevelId={setLocalLevelId}
+          localLevelId={localLevelId}
+          levelsNum={levelsNum} />
       </div>
       <div className='restartpage__level-start'>
-        {playBtnEl(currentLevelId, localLevelId, levels, isStart, startgameLavel)}
-        {resumeBtnEl(isPaused, currentLevelId, localLevelId, togglePausegame)}
+        <PlayBtn
+          currentLevelId={currentLevelId}
+          localLevelId={localLevelId}
+          levels={levels}
+          isStart={isStart}
+          startgameLavel={startgameLavel} />
+        <ResumeBtn
+          isPaused={isPaused}
+          currentLevelId={currentLevelId}
+          localLevelId={localLevelId}
+          togglePausegame={togglePausegame} />
       </div>
     </div>;
   };
