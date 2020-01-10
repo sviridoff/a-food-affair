@@ -77,6 +77,12 @@ const slice = createSlice({
         ? 1
         : 2;
     },
+
+    [createAction('clients/updateStatuses').type](state) {
+      state.combo = state.combo === 2
+        ? 1
+        : 2;
+    },
   },
 });
 
